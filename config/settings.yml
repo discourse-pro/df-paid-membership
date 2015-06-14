@@ -2,6 +2,3 @@ plugins:
   «Paid_Membership»_Enabled:
     default: true
     client: true
-  «Paid_Membership»_Enabled:
-    default: true
-    client: true
