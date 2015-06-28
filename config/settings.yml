@@ -1,4 +1,4 @@
-plugins:
+paid_membership:
   «Paid_Membership»_Enabled:
     default: true
     client: true
