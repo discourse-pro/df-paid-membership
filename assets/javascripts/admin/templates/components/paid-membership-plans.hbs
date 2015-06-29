@@ -1,0 +1,32 @@
+{{#if items}}
+	<div class='items'>
+		{{#each item in items}}
+			<div class='item'>
+				<div class='row-1'>
+					[{{input type='text' value=item.id autoresize=true}}]
+					{{d-button
+						action='removeItem'
+						actionParam=item
+						icon='times'
+						class='btn-small no-text'
+						title='admin.site_settings.paid_membership.plan.delete'
+					}}
+				</div>
+				{{textarea value=item.html autoresize=true rows=2 max-rows=5}}
+			</div>
+		{{/each}}
+	</div>
+{{/if}}
+<div class='item item-new'>
+	<div class='row-1'>
+		[{{input value=newId autoresize=true}}]
+		{{d-button
+			action='addItem'
+			icon='plus'
+			class='btn-primary btn-small no-text'
+			disabled=inputInvalid
+			title='admin.site_settings.paid_membership.plan.add'
+		}}
+	</div>
+	{{textarea value=newHtml autoresize=true rows=2 max-rows=5}}
+</div>

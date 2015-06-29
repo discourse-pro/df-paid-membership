@@ -3,3 +3,5 @@
 # version: 1.0.0
 # authors: Dmitry Fedyuk
 # url: https://discourse.pro/t/35
+register_asset 'javascripts/admin.js', :admin
+register_asset 'stylesheets/main.scss'

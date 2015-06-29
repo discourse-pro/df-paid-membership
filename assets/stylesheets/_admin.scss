@@ -1,0 +1,38 @@
+.paid-membership-plans {
+	padding-right: 4px;
+	.item {
+		.row-1 {
+			width: 100%;
+			overflow: hidden;
+			margin-bottom: 0;
+			button {float: right;}
+		}
+		textarea {
+			width: 100%;
+			box-sizing: border-box;
+			color: rgb(145, 145, 145);
+			&:active, &:hover, &:focus {color: #222222;}
+		}
+		input {
+			border: 0;
+			box-shadow: none;
+			padding: 0;
+			&:active, &:hover, &:focus {color: #222222;}
+		}
+	}
+	.items {
+		margin-bottom: 10px;
+		.item {
+			margin-bottom: 8px;
+			button {
+				background: transparent;
+				i.fa {color: rgb(145, 145, 145);}
+				&:hover {
+					i {
+						&.fa-times {color: #e45735;}
+					}
+				}
+			}
+		}
+	}
+}

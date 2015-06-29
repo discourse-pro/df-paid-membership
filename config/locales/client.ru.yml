@@ -3,4 +3,9 @@ ru:
     admin:
       site_settings:
         categories:
-          paid_membership: 'Paid Membership'
+          paid_membership: 'Платное членство'
+        paid_membership:
+          plan:
+            add: 'добавить тариф'
+            delete: 'удалить тариф'
+            placeholder: 'описание тарифа...'

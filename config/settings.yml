@@ -2,3 +2,7 @@ paid_membership:
   «Paid_Membership»_Enabled:
     default: true
     client: true
+  «Paid_Membership»_Plans:
+    default: ''
+    client: true
+    type: paid_membership_plans

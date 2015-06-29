@@ -4,3 +4,8 @@ en:
       site_settings:
         categories:
           paid_membership: 'Paid Membership'
+        paid_membership:
+          plan:
+            add: 'Add a Membership Plan'
+            delete: 'Delete the Membership Plan'
+            placeholder: 'place a Plan description here...'
