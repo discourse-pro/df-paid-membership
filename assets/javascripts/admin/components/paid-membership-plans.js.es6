@@ -4,6 +4,12 @@ export default Ember.Component.extend({
 	,layoutName: 'javascripts/admin/templates/components/paid-membership-plans'
 	,_serialize: function() {this.set('valueS', JSON.stringify(this.get('items')));}
 	,onInit: function() {
+		this.set('selectedUserGroups', []);
+		const _this = this;
+		Discourse.Group.findAll().then(function(availableUserGroups){
+			console.log(availableUserGroups);
+			_this.set('availableUserGroups', availableUserGroups);
+		});
 		/** @type {String} */
 		const valueS = this.get('valueS');
 		/** @type {Object[]} */
