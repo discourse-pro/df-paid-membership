@@ -8,4 +8,4 @@ en:
           plan:
             add: 'Add a Membership Plan'
             delete: 'Delete the Membership Plan'
-            placeholder: 'place a Plan description here...'
+            description_placeholder: 'place a Plan description here...'

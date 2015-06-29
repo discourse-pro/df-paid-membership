@@ -12,7 +12,8 @@
 						title='admin.site_settings.paid_membership.plan.delete'
 					}}
 				</div>
-				{{textarea value=item.html autoresize=true rows=2 max-rows=5}}
+				{{df-user-groups item=item selected=item.allowedGroupIds}}
+				{{textarea value=item.description autoresize=true rows=2 max-rows=5}}
 			</div>
 		{{/each}}
 	</div>
@@ -28,6 +29,17 @@
 			title='admin.site_settings.paid_membership.plan.add'
 		}}
 	</div>
-	{{admin-group-selector selected=selectedUserGroups available=availableUserGroups}}
-	{{textarea value=newHtml autoresize=true rows=2 max-rows=5}}
+	<!--
+		2015-06-29
+		Обратите внимание, что,
+		хотя список групп нового пустого элемента предполагается пустым,
+		мы всё равно устанавливаем соответствие selected=allowedGroupIds,
+		чтобы установить связь между свойством allowedGroupIds компонента paid-membership-plans
+		и свойством selected компонента df-user-groups.
+		Такая связь позволяет нам очищать список групп
+		после добавления нового элемента в список элементов
+		(ведь тогда форму для нового элемента надо очистить, привести в начальное состояние).
+	-->
+	{{df-user-groups selected=allowedGroupIds}}
+	{{textarea value=description autoresize=true rows=2 max-rows=5}}
 </div>

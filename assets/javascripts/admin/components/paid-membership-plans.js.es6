@@ -4,12 +4,6 @@ export default Ember.Component.extend({
 	,layoutName: 'javascripts/admin/templates/components/paid-membership-plans'
 	,_serialize: function() {this.set('valueS', JSON.stringify(this.get('items')));}
 	,onInit: function() {
-		this.set('selectedUserGroups', []);
-		const _this = this;
-		Discourse.Group.findAll().then(function(availableUserGroups){
-			console.log(availableUserGroups);
-			_this.set('availableUserGroups', availableUserGroups);
-		});
 		/** @type {String} */
 		const valueS = this.get('valueS');
 		/** @type {Object[]} */
@@ -19,26 +13,31 @@ export default Ember.Component.extend({
 			items = JSON.parse(valueS);
 		}
 		catch(ignore) {
-			// Legacy support.
-			/** @type {String[]} */
-			var htmlA = valueS && valueS.length ? valueS.split("\n") : [];
 			items = [];
-			htmlA.forEach(function(html, index) {
-				items.push({id: 'membership-plan-' + (1 + index), html: html});
-			});
 		}
 		this.set('items', items);
-		this.initNewButton();
+		this.newItem();
 		this.set('initialized', true);
-	}.on('init')//.observes('valueS')
+	}.on('init')
 	,_changed: function() {
 		if (this.get('initialized')) {
 			Ember.run.once(this, '_serialize');
 		}
-	}.observes('items.@each', 'items.@each.id', 'items.@each.html')
-	,initNewButton: function() {
+	}.observes(
+		'items.@each'
+		, 'items.@each.id'
+		, 'items.@each.description'
+		/**
+		 * items.@each.allowedGroupIds не сработает,
+		 * и мы вызвваем _changed() вручную из groupChanged()
+		 */
+	)
+	,newItem: function() {
 		this.set('newId', this.generateNewId());
-		this.set('newHtml', I18n.t('admin.site_settings.paid_membership.plan.placeholder'));
+		this.set('allowedGroupIds', []);
+		this.set('description', I18n.t(
+			'admin.site_settings.paid_membership.plan.description_placeholder'
+		));
 	}
 	,generateNewId: function() {
 		var items = this.get('items');
@@ -55,8 +54,31 @@ export default Ember.Component.extend({
 			if (!this.get('inputInvalid')) {
 				var items = this.get('items');
 				var id = this.get('newId') || this.generateNewId();
-				items.addObject({id: id, html: this.get('newHtml')});
-				this.initNewButton();
+				items.addObject({
+					id: id
+					, description: this.get('description')
+					, allowedGroupIds: this.get('allowedGroupIds')
+				});
+				this.newItem();
+			}
+		}
+		,groupChanged(context) {
+			const addGroup = function(groupIds) {
+				groupIds.push(context.groupId);
+			};
+			const removeGroup = function(groupIds) {
+				var indexToRemove = groupIds.indexOf(context.groupId);
+				if (indexToRemove > -1) {
+					groupIds.splice(indexToRemove, 1);
+				}
+			};
+			var item = context.item;
+			// Если item не указан — значит, операция относится к новому элементу.
+			var groupIds = item ? item.allowedGroupIds : this.get('allowedGroupIds');
+			(context.isAdded ? addGroup : removeGroup).call(this, groupIds);
+			/** @link https://github.com/emberjs/ember.js/issues/541#issue-3401973 */
+			if (item) {
+				this._changed();
 			}
 		}
 		,removeItem(item) {
@@ -64,5 +86,5 @@ export default Ember.Component.extend({
 			items.removeObject(item);
 		}
 	}
-	,inputInvalid: Ember.computed.empty('newHtml')
+	,inputInvalid: false//Ember.computed.empty('allowedGroupIds')
 });
