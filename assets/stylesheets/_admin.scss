@@ -1,23 +1,34 @@
 .paid-membership-plans {
 	padding-right: 4px;
 	.item {
-		.row-1 {
-			width: 100%;
-			overflow: hidden;
-			margin-bottom: 0;
-			button {float: right;}
-		}
-		textarea {
-			width: 100%;
-			box-sizing: border-box;
-			color: rgb(145, 145, 145);
-			&:active, &:hover, &:focus {color: #222222;}
-		}
-		input {
-			border: 0;
-			box-shadow: none;
-			padding: 0;
-			&:active, &:hover, &:focus {color: #222222;}
+		.field {
+			// 2015-06-30
+			// Обратите внимание, что селектор :first-of-type игнорирует классы
+			// и учитывает лишь тег элемента: http://stackoverflow.com/a/8539107/254475
+			// Но нам пока и этого достаточно.
+			&:first-of-type {
+				width: 100%;
+				overflow: hidden;
+				margin-bottom: 0;
+				button {float: right;}
+			}
+			// 2015-06-30
+			// Этот размер использует ядро для экранных названий настроечных опций
+			label {font-size: 0.929em;}
+			.input {
+				textarea {
+					width: 100%;
+					box-sizing: border-box;
+					color: rgb(145, 145, 145);
+					&:active, &:hover, &:focus {color: #222222;}
+				}
+				input {
+					border: 0;
+					box-shadow: none;
+					padding: 0;
+					&:active, &:hover, &:focus {color: #222222;}
+				}
+			}
 		}
 	}
 	.items {

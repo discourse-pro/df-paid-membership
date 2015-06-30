@@ -2,8 +2,7 @@
 	<div class='items'>
 		{{#each item in items}}
 			<div class='item'>
-				<div class='row-1'>
-					[{{input type='text' value=item.id autoresize=true}}]
+				<div class='field'>
 					{{d-button
 						action='removeItem'
 						actionParam=item
@@ -11,16 +10,29 @@
 						class='btn-small no-text'
 						title='admin.site_settings.paid_membership.plan.delete'
 					}}
+					<div class='label'></div>
+					<div class='input'>
+						[{{input type='text' value=item.id autoresize=true}}]
+					</div>
 				</div>
-				{{df-user-groups item=item selected=item.allowedGroupIds}}
-				{{textarea value=item.description autoresize=true rows=2 max-rows=5}}
+				<div class='field'>
+					<div class='label'>Which user groups can order the plan:</div>
+					<div class='input'>
+						{{df-user-groups item=item selected=item.allowedGroupIds}}
+					</div>
+				</div>
+				<div class='field'>
+					<div class='label'>Plan description:</div>
+					<div class='input'>
+						{{textarea value=item.description autoresize=true rows=2 max-rows=5}}
+					</div>
+				</div>
 			</div>
 		{{/each}}
 	</div>
 {{/if}}
 <div class='item item-new'>
-	<div class='row-1'>
-		[{{input value=newId autoresize=true}}]
+	<div class='field'>
 		{{d-button
 			action='addItem'
 			icon='plus'
@@ -28,8 +40,12 @@
 			disabled=inputInvalid
 			title='admin.site_settings.paid_membership.plan.add'
 		}}
+		<div class='label'></div>
+		<div class='input'>
+			[{{input value=newId autoresize=true}}]
+		</div>
 	</div>
-	<!--
+	{{!--
 		2015-06-29
 		Обратите внимание, что,
 		хотя список групп нового пустого элемента предполагается пустым,
@@ -39,7 +55,17 @@
 		Такая связь позволяет нам очищать список групп
 		после добавления нового элемента в список элементов
 		(ведь тогда форму для нового элемента надо очистить, привести в начальное состояние).
-	-->
-	{{df-user-groups selected=allowedGroupIds}}
-	{{textarea value=description autoresize=true rows=2 max-rows=5}}
+	--}}
+	<div class='field'>
+		<div class='label'>Which user groups can order the plan:</div>
+		<div class='input'>
+			{{df-user-groups selected=allowedGroupIds}}
+		</div>
+	</div>
+	<div class='field'>
+		<div class='label'>Plan description:</div>
+		<div class='input'>
+			{{textarea value=description autoresize=true rows=2 max-rows=5}}
+		</div>
+	</div>
 </div>
