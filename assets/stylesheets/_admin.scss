@@ -1,5 +1,15 @@
 .paid-membership-plans {
 	padding-right: 4px;
+	h4 {
+		font-size: 14px;
+		//font-weight: bold;
+	}
+	// 2015-06-30
+	// Этот размер использует ядро для экранных названий настроечных опций
+	.label, h5 {
+		font-size: 0.929em;
+		font-weight: normal;
+	}
 	.item {
 		.field {
 			// 2015-06-30
@@ -13,39 +23,43 @@
 				button {float: right;}
 			}
 			&:not(:first-of-type) {margin-top: 4px;}
-			// 2015-06-30
-			// Этот размер использует ядро для экранных названий настроечных опций
-			.label {font-size: 0.929em;}
 			.input {
+				input, select, option {
+					font-size: 14px;
+				}
 				textarea {
 					width: 100%;
 					box-sizing: border-box;
 					color: rgb(145, 145, 145);
 					&:active, &:hover, &:focus {color: #222222;}
 				}
-				input {
+				input, select.periodUnits {
 					&:active, &:hover, &:focus {color: #222222;}
-					&.plan-id {
-						border: 0;
-						box-shadow: none;
-						padding: 0;
-					}
+					border: 0;
+					box-shadow: none;
+					padding: 0;
+					&.amount {padding-right: 2px;}
+				}
+				select.periodUnits {
+					width: 6em;
+					option {padding: 0;}
 				}
 			}
 		}
 	}
 	.items {
 		margin-bottom: 10px;
-		.item {
-			margin-bottom: 8px;
-			button {
-				background: transparent;
-				i.fa {color: rgb(145, 145, 145);}
-				&:hover {
-					i {
-						&.fa-times {color: #e45735;}
-					}
-				}
+		.item {margin-bottom: 8px;}
+	}
+	.paid-membership-price-tiers {
+		.item {margin-bottom: 0;}
+	}
+	button.df-simple {
+		background: transparent;
+		i.fa {color: rgb(145, 145, 145);}
+		&:hover {
+			i {
+				&.fa-times {color: #e45735;}
 			}
 		}
 	}

@@ -4,6 +4,7 @@
 	http://summitevergreen.com/why-tiered-pricing-is-the-only-way-to-price-your-product/
 --}}
 {{#if items}}
+	<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.price_tiers'}}:</div>
 	<div class='items'>
 		{{#each item in items}}
 			<div class='item'>
@@ -12,25 +13,18 @@
 						action='removeItem'
 						actionParam=item
 						icon='times'
-						class='btn-small no-text'
+						class='btn-small no-text df-simple'
 						title='admin.site_settings.paid_membership.plan.delete'
 					}}
-					<div class='label'>Price:</div>
-					<div class='input'>{{input value=item.price}}</div>
-				</div>
-				<div class='field'>
-					<div class='label'>Period:</div>
-					<div class='input'>{{input value=item.period}}</div>
-				</div>
-				<div class='field'>
-					<div class='label'>Period Units:</div>
 					<div class='input'>
+						{{input value=item.price autoresize=true class='amount'}}{{currency}}
+						for {{input value=item.period autoresize=true}}
 						{{x-select
 							value=item.periodUnits
 							content=periodUnitsOptions
 							optionValuePath='content.value'
 							optionLabelPath='content.label'
-							prompt='-- units --'
+							class='periodUnits'
 						}}
 					</div>
 				</div>
@@ -38,30 +32,25 @@
 		{{/each}}
 	</div>
 {{/if}}
+<h5>Add a Price Tier:</h5>
 <div class='item item-new'>
 	<div class='field'>
 		{{d-button
 			action='addItem'
 			icon='plus'
-			class='btn-primary btn-small no-text'
+			class='btn-primary btn-small no-text df-simple'
 			disabled=inputInvalid
 			title='admin.site_settings.paid_membership.plan.add'
 		}}
-		<div class='label'>Price:</div>
-		<div class='input'>{{input value=price}}</div>
-	</div>
-	<div class='field'>
-		<div class='label'>Period:</div>
-		<div class='input'>{{input value=period}}</div>
-	</div>
-	<div class='field'>
-		<div class='label'>Period Units:</div>
 		<div class='input'>
+			{{input value=price autoresize=true class='amount'}}{{currency}}
+			for {{input value=period autoresize=true}}
 			{{x-select
 				value=periodUnits
 				content=periodUnitsOptions
 				optionValuePath='content.value'
 				optionLabelPath='content.label'
+				class='periodUnits'
 			}}
 		</div>
 	</div>

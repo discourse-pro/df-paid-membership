@@ -7,12 +7,12 @@
 						action='removeItem'
 						actionParam=item
 						icon='times'
-						class='btn-small no-text'
+						class='btn-small no-text df-simple'
 						title='admin.site_settings.paid_membership.plan.delete'
 					}}
 					<div class='label'></div>
 					<div class='input'>
-						[{{input type='text' value=item.id autoresize=true class='plan-id'}}]
+						[{{input type='text' value=item.id autoresize=true}}]
 					</div>
 				</div>
 				<div class='field'>
@@ -28,7 +28,6 @@
 					</div>
 				</div>
 				<div class='field'>
-					<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.price_tiers'}}:</div>
 					<div class='input'>
 						{{paid-membership-price-tiers plan=item items=item.priceTiers}}
 					</div>
@@ -42,6 +41,7 @@
 			</div>
 		{{/each}}
 	</div>
+	<h4>Add a New Pricing Plan:</h4>
 {{/if}}
 <div class='item item-new'>
 	<div class='field'>
@@ -53,9 +53,7 @@
 			title='admin.site_settings.paid_membership.plan.add'
 		}}
 		<div class='label'></div>
-		<div class='input'>
-			[{{input value=newId autoresize=true}}]
-		</div>
+		<div class='input'>[{{input value=newId autoresize=true}}]</div>
 	</div>
 	{{!--
 		2015-06-29
@@ -81,7 +79,6 @@
 		</div>
 	</div>
 	<div class='field'>
-		<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.price_tiers'}}:</div>
 		<div class='input'>
 			{{paid-membership-price-tiers items=priceTiers}}
 		</div>
