@@ -28,13 +28,17 @@ export default Ember.Component.extend({
 		, 'items.@each.id'
 		, 'items.@each.description'
 		/**
-		 * items.@each.allowedGroupIds не сработает,
-		 * и мы вызвваем _changed() вручную из groupChanged()
+		 * 2015-06-29
+		 * Наблюдение за items.@each.allowedGroupIds и items.@each.allowedGroupIds не работает,
+		 * потому что наблюдение, похоже, работает не более чем на два уровня вложенности:
+		 * @link https://github.com/emberjs/ember.js/issues/541#issue-3401973
+		 * Поэтому мы вызываем _changed() вручную из groupChanged().
 		 */
 	)
 	,newItem: function() {
 		this.set('newId', this.generateNewId());
 		this.set('allowedGroupIds', []);
+		this.set('grantedGroupIds', []);
 		this.set('description', I18n.t(
 			'admin.site_settings.paid_membership.plan.description_placeholder'
 		));
@@ -58,6 +62,7 @@ export default Ember.Component.extend({
 					id: id
 					, description: this.get('description')
 					, allowedGroupIds: this.get('allowedGroupIds')
+					, grantedGroupIds: this.get('grantedGroupIds')
 				});
 				this.newItem();
 			}
@@ -73,8 +78,20 @@ export default Ember.Component.extend({
 				}
 			};
 			var item = context.item;
+			/**
+			 * У нас 2 типа: «allowed» и «granted».
+			 * @type {string}
+			 */
+			var groupPropertyName = context.type + 'GroupIds';
 			// Если item не указан — значит, операция относится к новому элементу.
-			var groupIds = item ? item.allowedGroupIds : this.get('allowedGroupIds');
+			var groupIds =
+				item
+				// 2015-06-30
+				// Такое сложное выражение — для совместимости с прежними версиями,
+				// когда свойства grantedGroupIds не существовало.
+				? (item[groupPropertyName] || (item[groupPropertyName] = []))
+				: this.get(groupPropertyName)
+			;
 			(context.isAdded ? addGroup : removeGroup).call(this, groupIds);
 			/** @link https://github.com/emberjs/ember.js/issues/541#issue-3401973 */
 			if (item) {
