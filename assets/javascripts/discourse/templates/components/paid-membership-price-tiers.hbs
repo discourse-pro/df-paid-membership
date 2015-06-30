@@ -24,7 +24,15 @@
 				</div>
 				<div class='field'>
 					<div class='label'>Period Units:</div>
-					<div class='input'>{{input value=item.periodUnits}}</div>
+					<div class='input'>
+						{{x-select
+							value=item.periodUnits
+							content=periodUnitsOptions
+							optionValuePath='content.value'
+							optionLabelPath='content.label'
+							prompt='-- units --'
+						}}
+					</div>
 				</div>
 			</div>
 		{{/each}}
@@ -48,6 +56,13 @@
 	</div>
 	<div class='field'>
 		<div class='label'>Period Units:</div>
-		<div class='input'>{{input value=periodUnits}}</div>
+		<div class='input'>
+			{{x-select
+				value=periodUnits
+				content=periodUnitsOptions
+				optionValuePath='content.value'
+				optionLabelPath='content.label'
+			}}
+		</div>
 	</div>
 </div>

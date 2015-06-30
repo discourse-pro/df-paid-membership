@@ -24,10 +24,12 @@
 					&:active, &:hover, &:focus {color: #222222;}
 				}
 				input {
-					border: 0;
-					box-shadow: none;
-					padding: 0;
 					&:active, &:hover, &:focus {color: #222222;}
+					&.plan-id {
+						border: 0;
+						box-shadow: none;
+						padding: 0;
+					}
 				}
 			}
 		}

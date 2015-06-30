@@ -6,6 +6,11 @@
 export default Ember.Component.extend({
 	classNameBindings: [':paid-membership-price-tiers']
 	,onInit: function() {
+		this.set('periodUnitsOptions', [
+			{value: 'd', label: 'days'}
+			,{value: 'm', label: 'months'}
+			,{value: 'y', label: 'years'}
+		]);
 		this.newItem();
 		this.set('initialized', true);
 	}.on('init')
@@ -24,7 +29,7 @@ export default Ember.Component.extend({
 		, 'items.@each.periodUnits'
 	)
 	,newItem: function() {
-		this.set('price', 0);
+		this.set('price', 9);
 		this.set('period', 1);
 		this.set('periodUnits', 'm');
 	}
