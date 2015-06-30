@@ -24,7 +24,13 @@
 				<div class='field'>
 					<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.groups_granted'}}</div>
 					<div class='input'>
-						{{df-user-groups  type='granted' item=item selected=item.grantedGroupIds}}
+						{{df-user-groups type='granted' item=item selected=item.grantedGroupIds}}
+					</div>
+				</div>
+				<div class='field'>
+					<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.price_tiers'}}:</div>
+					<div class='input'>
+						{{paid-membership-price-tiers plan=item items=item.priceTiers}}
 					</div>
 				</div>
 				<div class='field'>
@@ -72,6 +78,12 @@
 		<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.groups_granted'}}</div>
 		<div class='input'>
 			{{df-user-groups type='granted' selected=grantedGroupIds}}
+		</div>
+	</div>
+	<div class='field'>
+		<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.price_tiers'}}:</div>
+		<div class='input'>
+			{{paid-membership-price-tiers items=priceTiers}}
 		</div>
 	</div>
 	<div class='field'>

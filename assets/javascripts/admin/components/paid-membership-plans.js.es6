@@ -22,6 +22,15 @@ export default Ember.Component.extend({
 		catch(ignore) {
 			items = [];
 		}
+		/**
+		 * 2015-06-30
+		 * Для поддержки тех версий, когда свойства priceTiers ещё не было.
+		 */
+		items.forEach(function(item) {
+			if (!item.priceTiers) {
+				item.priceTiers = [];
+			}
+		});
 		this.set('items', items);
 		this.newItem();
 		this.set('initialized', true);
@@ -46,6 +55,7 @@ export default Ember.Component.extend({
 		this.set('newId', this.generateNewId());
 		this.set('allowedGroupIds', []);
 		this.set('grantedGroupIds', []);
+		this.set('priceTiers', []);
 		this.set('description', I18n.t(
 			'admin.site_settings.paid_membership.plan.description_placeholder'
 		));
@@ -70,6 +80,7 @@ export default Ember.Component.extend({
 					, description: this.get('description')
 					, allowedGroupIds: this.get('allowedGroupIds')
 					, grantedGroupIds: this.get('grantedGroupIds')
+					, priceTiers: this.get('priceTiers')
 				});
 				this.newItem();
 			}
@@ -105,10 +116,12 @@ export default Ember.Component.extend({
 				this._changed();
 			}
 		}
-		,removeItem(item) {
-			const items = this.get('items');
-			items.removeObject(item);
+		,priceTiersChanged(context) {
+			if (context.plan) {
+				this._changed();
+			}
 		}
+		,removeItem(item) {this.get('items').removeObject(item);}
 	}
 	,inputInvalid: false//Ember.computed.empty('allowedGroupIds')
 });

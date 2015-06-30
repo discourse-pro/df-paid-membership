@@ -12,3 +12,4 @@ en:
             description_placeholder: 'describe the Plan...'
             groups_allowed: 'Users of which groups can order the plan?'
             groups_granted: 'Which groups membership / trust levels the buyers will be granted?'
+            price_tiers: 'Price Tiers'
