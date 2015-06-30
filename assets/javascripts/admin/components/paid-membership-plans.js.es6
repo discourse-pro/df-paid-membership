@@ -1,7 +1,14 @@
 export default Ember.Component.extend({
 	classNameBindings: [':paid-membership-plans']
-	/** @link http://stackoverflow.com/a/24271614/254475 */
-	,layoutName: 'javascripts/admin/templates/components/paid-membership-plans'
+	/**
+	 * 2015-06-29
+	 * Discourse expects the components's template at
+	 * plugins/df-paid-membership/assets/javascripts/discourse/templates/components/paid-membership-plans.hbs
+	 * Until I know it I used to specify template location explicitly:
+	 * @link http://stackoverflow.com/a/24271614/254475
+	 * ,layoutName: 'javascripts/admin/templates/components/paid-membership-plans'
+	 * Now I save the explicit method for history only. May be it will be useful sometimes.
+	 */
 	,_serialize: function() {this.set('valueS', JSON.stringify(this.get('items')));}
 	,onInit: function() {
 		/** @type {String} */
