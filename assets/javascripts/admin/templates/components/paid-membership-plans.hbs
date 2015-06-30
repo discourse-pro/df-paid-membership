@@ -16,19 +16,19 @@
 					</div>
 				</div>
 				<div class='field'>
-					<div class='label'>Users of which groups can order the plan:</div>
+					<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.groups_allowed'}}</div>
 					<div class='input'>
 						{{df-user-groups type='allowed' item=item selected=item.allowedGroupIds}}
 					</div>
 				</div>
 				<div class='field'>
-					<div class='label'>Which groups membership / trust levels the buyers will be granted?</div>
+					<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.groups_granted'}}</div>
 					<div class='input'>
 						{{df-user-groups  type='granted' item=item selected=item.grantedGroupIds}}
 					</div>
 				</div>
 				<div class='field'>
-					<div class='label'>Plan description:</div>
+					<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.description'}}:</div>
 					<div class='input'>
 						{{textarea value=item.description autoresize=true rows=2 max-rows=5}}
 					</div>
@@ -63,19 +63,19 @@
 		(ведь тогда форму для нового элемента надо очистить, привести в начальное состояние).
 	--}}
 	<div class='field'>
-		<div class='label'>Users of which groups can order the plan:</div>
+		<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.groups_allowed'}}</div>
 		<div class='input'>
 			{{df-user-groups type='allowed' selected=allowedGroupIds}}
 		</div>
 	</div>
 	<div class='field'>
-		<div class='label'>Which groups membership / trust levels the buyers will be granted?</div>
+		<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.groups_granted'}}</div>
 		<div class='input'>
 			{{df-user-groups type='granted' selected=grantedGroupIds}}
 		</div>
 	</div>
 	<div class='field'>
-		<div class='label'>Plan description:</div>
+		<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.description'}}:</div>
 		<div class='input'>
 			{{textarea value=description autoresize=true rows=2 max-rows=5}}
 		</div>

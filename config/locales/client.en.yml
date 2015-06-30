@@ -8,4 +8,7 @@ en:
           plan:
             add: 'Add a Membership Plan'
             delete: 'Delete the Membership Plan'
+            description: 'Plan description'
             description_placeholder: 'describe the Plan...'
+            groups_allowed: 'Users of which groups can order the plan?'
+            groups_granted: 'Which groups membership / trust levels the buyers will be granted?'
