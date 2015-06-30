@@ -12,9 +12,10 @@
 				margin-bottom: 0;
 				button {float: right;}
 			}
+			&:not(:first-of-type) {margin-top: 4px;}
 			// 2015-06-30
 			// Этот размер использует ядро для экранных названий настроечных опций
-			label {font-size: 0.929em;}
+			.label {font-size: 0.929em;}
 			.input {
 				textarea {
 					width: 100%;

@@ -16,9 +16,15 @@
 					</div>
 				</div>
 				<div class='field'>
-					<div class='label'>Which user groups can order the plan:</div>
+					<div class='label'>Users of which groups can order the plan:</div>
 					<div class='input'>
-						{{df-user-groups item=item selected=item.allowedGroupIds}}
+						{{df-user-groups type='allowed' item=item selected=item.allowedGroupIds}}
+					</div>
+				</div>
+				<div class='field'>
+					<div class='label'>Which groups membership / trust levels the buyers will be granted?</div>
+					<div class='input'>
+						{{df-user-groups  type='granted' item=item selected=item.grantedGroupIds}}
 					</div>
 				</div>
 				<div class='field'>
@@ -57,9 +63,15 @@
 		(ведь тогда форму для нового элемента надо очистить, привести в начальное состояние).
 	--}}
 	<div class='field'>
-		<div class='label'>Which user groups can order the plan:</div>
+		<div class='label'>Users of which groups can order the plan:</div>
 		<div class='input'>
-			{{df-user-groups selected=allowedGroupIds}}
+			{{df-user-groups type='allowed' selected=allowedGroupIds}}
+		</div>
+	</div>
+	<div class='field'>
+		<div class='label'>Which groups membership / trust levels the buyers will be granted?</div>
+		<div class='input'>
+			{{df-user-groups type='granted' selected=grantedGroupIds}}
 		</div>
 	</div>
 	<div class='field'>
