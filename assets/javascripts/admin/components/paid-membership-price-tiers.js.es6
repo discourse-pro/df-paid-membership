@@ -17,7 +17,12 @@ export default Ember.Component.extend({
 				}});
 			});
 		}
-	}.observes('items.@each')
+	}.observes(
+		'items.@each'
+		, 'items.@each.price'
+		, 'items.@each.period'
+		, 'items.@each.periodUnits'
+	)
 	,newItem: function() {
 		this.set('price', 0);
 		this.set('period', 1);
