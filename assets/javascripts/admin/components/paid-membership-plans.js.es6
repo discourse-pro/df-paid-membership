@@ -31,6 +31,10 @@ export default Ember.Component.extend({
 			} */
 		});
 		this.set('items', items);
+		this.set('restrictionTypeOptions', [
+			{value: 'whitelist', label: I18n.t('paid_membership.plan.restriction_type.whitelist')}
+			,{value: 'blacklist', label: I18n.t('paid_membership.plan.restriction_type.blacklist')}
+		]);
 		this.newItem();
 		this.set('initialized', true);
 	}.on('init')
@@ -42,8 +46,10 @@ export default Ember.Component.extend({
 		}
 	}.observes(
 		'items.@each'
-		, 'items.@each.id'
 		, 'items.@each.description'
+		, 'items.@each.id'
+		, 'items.@each.restrictionType'
+		, 'items.@each.title'
 		/**
 		 * 2015-06-29
 		 * Наблюдение за items.@each.allowedGroupIds и items.@each.allowedGroupIds не работает,
@@ -55,10 +61,11 @@ export default Ember.Component.extend({
 	,newItem: function() {
 		this.set('newId', this.generateNewId());
 		this.set('allowedGroupIds', []);
+		this.set('description', I18n.t('paid_membership.plan.description_placeholder'));
 		this.set('grantedGroupIds', []);
 		this.set('priceTiers', []);
+		this.set('restrictionType', 'whitelist');
 		this.set('title', I18n.t('paid_membership.plan.title_placeholder'));
-		this.set('description', I18n.t('paid_membership.plan.description_placeholder'));
 	}
 	,generateNewId: function() {
 		var items = this.get('items');
@@ -76,12 +83,13 @@ export default Ember.Component.extend({
 				var items = this.get('items');
 				var id = this.get('newId') || this.generateNewId();
 				items.addObject({
-					id: id
-					, title: this.get('title')
+					allowedGroupIds: this.get('allowedGroupIds')
 					, description: this.get('description')
-					, allowedGroupIds: this.get('allowedGroupIds')
 					, grantedGroupIds: this.get('grantedGroupIds')
+					, id: id
 					, priceTiers: this.get('priceTiers')
+					, restrictionType: this.get('restrictionType')
+					, title: this.get('title')
 				});
 				this.newItem();
 			}

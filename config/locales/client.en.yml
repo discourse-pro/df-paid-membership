@@ -10,9 +10,13 @@ en:
         delete: 'Delete the Membership Plan'
         description: 'Plan description'
         description_placeholder: 'describe the Plan...'
-        groups_allowed: 'Users of which groups can order the plan?'
+        groups_allowed: 'Users of which groups can (if whitelist) of can not (if blacklist) order the plan?'
         groups_granted: 'Which groups membership / trust levels the buyers will be granted?'
         heading_new: 'Add a New Pricing Plan'
+        restriction_type:
+          whitelist: 'whitelist'
+          blacklist: 'blacklist'
+        restriction_type_heading: 'Restriction Type'
         title: 'Title'
         title_placeholder: '<Title>'
       price_tier:

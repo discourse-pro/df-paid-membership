@@ -16,7 +16,7 @@
 						class='btn-small no-text df-simple'
 						title='paid_membership.plan.delete'
 					}}
-					<div class='input'>
+					<div>
 						{{input value=item.price autoresize=true class='amount'}}{{currency}}
 						{{i18n 'paid_membership.price_tier.for'}}
 						{{input value=item.period autoresize=true}}
@@ -43,9 +43,10 @@
 			disabled=inputInvalid
 			title='paid_membership.plan.add'
 		}}
-		<div class='input'>
+		<div>
 			{{input value=price autoresize=true class='amount'}}{{currency}}
-			for {{input value=period autoresize=true}}
+			{{i18n 'paid_membership.price_tier.for'}}
+			{{input value=period autoresize=true}}
 			{{x-select
 				value=periodUnits
 				content=periodUnitsOptions

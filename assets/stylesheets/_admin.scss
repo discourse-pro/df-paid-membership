@@ -1,14 +1,12 @@
 .paid-membership-plans {
 	padding-right: 4px;
-	h4 {
-		font-size: 14px;
-		//font-weight: bold;
-	}
+	h4 {font-size: 14px;}
 	// 2015-06-30
 	// Этот размер использует ядро для экранных названий настроечных опций
 	.label, h5 {
 		font-size: 0.929em;
 		font-weight: normal;
+		line-height: 1.2em;
 	}
 	.item {
 		.field {
@@ -23,27 +21,24 @@
 				button {float: right;}
 			}
 			&:not(:first-of-type) {margin-top: 4px;}
-			.input {
-				input, select, option {
-					font-size: 14px;
-				}
-				textarea {
-					width: 100%;
-					box-sizing: border-box;
-					color: rgb(145, 145, 145);
-					&:active, &:hover, &:focus {color: #222222;}
-				}
-				input, select.periodUnits {
-					&:active, &:hover, &:focus {color: #222222;}
-					border: 0;
-					box-shadow: none;
-					padding: 0;
-					&.amount {padding-right: 2px;}
-				}
-				select.periodUnits {
-					width: 6em;
-					option {padding: 0;}
-				}
+			input, select, option {
+				font-size: 14px;
+			}
+			textarea {
+				width: 100%;
+				box-sizing: border-box;
+				color: rgb(145, 145, 145);
+				&:active, &:hover, &:focus {color: #222222;}
+			}
+			input, select {
+				&:active, &:hover, &:focus {color: #222222;}
+				border: 0;
+				box-shadow: none;
+				padding: 0;
+				&.amount {padding-right: 2px;}
+				option {padding: 0;}
+				&.periodUnits {width: 6em;}
+				&.restrictionType {width: 6em;}
 			}
 		}
 	}
@@ -56,6 +51,10 @@
 	}
 	button.df-simple {
 		background: transparent;
+		padding: {
+			top: 0;
+			bottom: 0;
+		}
 		i.fa {color: rgb(145, 145, 145);}
 		&:hover {
 			i {

@@ -10,39 +10,39 @@
 						class='btn-small no-text df-simple'
 						title='paid_membership.plan.delete'
 					}}
-					<div class='input'>
+					<div>
 						<span class='label'>BBCode: </span>
 						[{{input type='text' value=item.id autoresize=true}}]
 					</div>
 				</div>
 				<div class='field'>
-					<div class='input'>
-						<span class='label'>{{i18n 'paid_membership.plan.title'}}:</span>
-						{{input value=item.title autoresize=true}}
-					</div>
+					<span class='label'>{{i18n 'paid_membership.plan.title'}}:</span>
+					{{input value=item.title autoresize=true}}
+				</div>
+				<div class='field'>
+					<span class='label'>Restriction Type:</span>
+					{{x-select
+						value=item.restrictionType
+						content=restrictionTypeOptions
+						optionValuePath='content.value'
+						optionLabelPath='content.label'
+						class='restrictionType'
+					}}
 				</div>
 				<div class='field'>
 					<div class='label'>{{i18n 'paid_membership.plan.groups_allowed'}}</div>
-					<div class='input'>
-						{{df-user-groups type='allowed' item=item selected=item.allowedGroupIds}}
-					</div>
+					{{df-user-groups type='allowed' item=item selected=item.allowedGroupIds}}
 				</div>
 				<div class='field'>
 					<div class='label'>{{i18n 'paid_membership.plan.groups_granted'}}</div>
-					<div class='input'>
-						{{df-user-groups type='granted' item=item selected=item.grantedGroupIds}}
-					</div>
+					{{df-user-groups type='granted' item=item selected=item.grantedGroupIds}}
 				</div>
 				<div class='field'>
-					<div class='input'>
-						{{paid-membership-price-tiers plan=item items=item.priceTiers}}
-					</div>
+					{{paid-membership-price-tiers plan=item items=item.priceTiers}}
 				</div>
 				<div class='field'>
 					<div class='label'>{{i18n 'paid_membership.plan.description'}}:</div>
-					<div class='input'>
-						{{textarea value=item.description autoresize=true rows=2 max-rows=5}}
-					</div>
+					{{textarea value=item.description autoresize=true rows=2 max-rows=5}}
 				</div>
 			</div>
 		{{/each}}
@@ -58,15 +58,23 @@
 			disabled=inputInvalid
 			title='paid_membership.plan.add'
 		}}
-		<div class='input'>
-			<span class='label'>BBCode: </span>[{{input value=newId autoresize=true}}]
-		</div>
+		<div><span class='label'>BBCode: </span>[{{input value=newId autoresize=true}}]</div>
 	</div>
 	<div class='field'>
 		<div class='input'>
 			<span class='label'>{{i18n 'paid_membership.plan.title'}}: </span>
 			{{input value=title autoresize=true}}
 		</div>
+	</div>
+	<div class='field'>
+		<span class='label'>{{i18n 'paid_membership.plan.restriction_type_heading'}}:</span>
+		{{x-select
+			value=restrictionType
+			content=restrictionTypeOptions
+			optionValuePath='content.value'
+			optionLabelPath='content.label'
+			class='restrictionType'
+		}}
 	</div>
 	{{!--
 		2015-06-29
@@ -81,25 +89,17 @@
 	--}}
 	<div class='field'>
 		<div class='label'>{{i18n 'paid_membership.plan.groups_allowed'}}</div>
-		<div class='input'>
-			{{df-user-groups type='allowed' selected=allowedGroupIds}}
-		</div>
+		{{df-user-groups type='allowed' selected=allowedGroupIds}}
 	</div>
 	<div class='field'>
 		<div class='label'>{{i18n 'paid_membership.plan.groups_granted'}}</div>
-		<div class='input'>
-			{{df-user-groups type='granted' selected=grantedGroupIds}}
-		</div>
+		{{df-user-groups type='granted' selected=grantedGroupIds}}
 	</div>
 	<div class='field'>
-		<div class='input'>
-			{{paid-membership-price-tiers items=priceTiers}}
-		</div>
+		{{paid-membership-price-tiers items=priceTiers}}
 	</div>
 	<div class='field'>
 		<div class='label'>{{i18n 'paid_membership.plan.description'}}:</div>
-		<div class='input'>
-			{{textarea value=description autoresize=true rows=2 max-rows=5}}
-		</div>
+		{{textarea value=description autoresize=true rows=2 max-rows=5}}
 	</div>
 </div>
