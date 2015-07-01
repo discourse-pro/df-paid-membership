@@ -4,7 +4,7 @@
 	http://summitevergreen.com/why-tiered-pricing-is-the-only-way-to-price-your-product/
 --}}
 {{#if items}}
-	<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.price_tiers'}}:</div>
+	<div class='label'>{{i18n 'paid_membership.price_tier.heading_all'}}:</div>
 	<div class='items'>
 		{{#each item in items}}
 			<div class='item'>
@@ -14,11 +14,12 @@
 						actionParam=item
 						icon='times'
 						class='btn-small no-text df-simple'
-						title='admin.site_settings.paid_membership.plan.delete'
+						title='paid_membership.plan.delete'
 					}}
 					<div class='input'>
 						{{input value=item.price autoresize=true class='amount'}}{{currency}}
-						for {{input value=item.period autoresize=true}}
+						{{i18n 'paid_membership.price_tier.for'}}
+						{{input value=item.period autoresize=true}}
 						{{x-select
 							value=item.periodUnits
 							content=periodUnitsOptions
@@ -32,7 +33,7 @@
 		{{/each}}
 	</div>
 {{/if}}
-<h5>Add a Price Tier:</h5>
+<h5>{{i18n 'paid_membership.price_tier.heading_new'}}:</h5>
 <div class='item item-new'>
 	<div class='field'>
 		{{d-button
@@ -40,7 +41,7 @@
 			icon='plus'
 			class='btn-primary btn-small no-text df-simple'
 			disabled=inputInvalid
-			title='admin.site_settings.paid_membership.plan.add'
+			title='paid_membership.plan.add'
 		}}
 		<div class='input'>
 			{{input value=price autoresize=true class='amount'}}{{currency}}

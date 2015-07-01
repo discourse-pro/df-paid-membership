@@ -4,12 +4,22 @@ en:
       site_settings:
         categories:
           paid_membership: 'Paid Membership'
-        paid_membership:
-          plan:
-            add: 'Add a Membership Plan'
-            delete: 'Delete the Membership Plan'
-            description: 'Plan description'
-            description_placeholder: 'describe the Plan...'
-            groups_allowed: 'Users of which groups can order the plan?'
-            groups_granted: 'Which groups membership / trust levels the buyers will be granted?'
-            price_tiers: 'Price Tiers'
+    paid_membership:
+      plan:
+        add: 'Add a Membership Plan'
+        delete: 'Delete the Membership Plan'
+        description: 'Plan description'
+        description_placeholder: 'describe the Plan...'
+        groups_allowed: 'Users of which groups can order the plan?'
+        groups_granted: 'Which groups membership / trust levels the buyers will be granted?'
+        heading_new: 'Add a New Pricing Plan'
+        title: 'Title'
+        title_placeholder: '<Title>'
+      price_tier:
+        heading_all: 'Price Tiers'
+        heading_new: 'Add a Price Tier'
+        for: 'for'
+        period_units:
+          days: 'day(s)'
+          months: 'month(s)'
+          years: 'year(s)'

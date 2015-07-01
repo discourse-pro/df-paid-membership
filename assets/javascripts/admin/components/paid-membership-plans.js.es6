@@ -26,9 +26,9 @@ export default Ember.Component.extend({
 		 * Для поддержки тех версий, когда свойства priceTiers ещё не было.
 		 */
 		items.forEach(function(item) {
-			if (!item.priceTiers) {
+			/*if (!item.priceTiers) {
 				item.priceTiers = [];
-			}
+			} */
 		});
 		this.set('items', items);
 		this.newItem();
@@ -57,9 +57,8 @@ export default Ember.Component.extend({
 		this.set('allowedGroupIds', []);
 		this.set('grantedGroupIds', []);
 		this.set('priceTiers', []);
-		this.set('description', I18n.t(
-			'admin.site_settings.paid_membership.plan.description_placeholder'
-		));
+		this.set('title', I18n.t('paid_membership.plan.title_placeholder'));
+		this.set('description', I18n.t('paid_membership.plan.description_placeholder'));
 	}
 	,generateNewId: function() {
 		var items = this.get('items');
@@ -78,6 +77,7 @@ export default Ember.Component.extend({
 				var id = this.get('newId') || this.generateNewId();
 				items.addObject({
 					id: id
+					, title: this.get('title')
 					, description: this.get('description')
 					, allowedGroupIds: this.get('allowedGroupIds')
 					, grantedGroupIds: this.get('grantedGroupIds')

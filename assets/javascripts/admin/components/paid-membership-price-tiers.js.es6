@@ -7,9 +7,9 @@ export default Ember.Component.extend({
 	classNameBindings: [':paid-membership-price-tiers']
 	,onInit: function() {
 		this.set('periodUnitsOptions', [
-			{value: 'd', label: 'day(s)'}
-			,{value: 'm', label: 'month(s)'}
-			,{value: 'y', label: 'year(s)'}
+			{value: 'd', label: I18n.t('paid_membership.price_tier.period_units.days')}
+			,{value: 'm', label: I18n.t('paid_membership.price_tier.period_units.months')}
+			,{value: 'y', label: I18n.t('paid_membership.price_tier.period_units.years')}
 		]);
 		this.set('currency', Discourse.SiteSettings['«PayPal»_Payment_Currency']);
 		this.newItem();

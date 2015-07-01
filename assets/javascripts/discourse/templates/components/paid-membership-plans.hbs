@@ -8,21 +8,27 @@
 						actionParam=item
 						icon='times'
 						class='btn-small no-text df-simple'
-						title='admin.site_settings.paid_membership.plan.delete'
+						title='paid_membership.plan.delete'
 					}}
-					<div class='label'></div>
 					<div class='input'>
+						<span class='label'>BBCode: </span>
 						[{{input type='text' value=item.id autoresize=true}}]
 					</div>
 				</div>
 				<div class='field'>
-					<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.groups_allowed'}}</div>
+					<div class='input'>
+						<span class='label'>{{i18n 'paid_membership.plan.title'}}:</span>
+						{{input value=item.title autoresize=true}}
+					</div>
+				</div>
+				<div class='field'>
+					<div class='label'>{{i18n 'paid_membership.plan.groups_allowed'}}</div>
 					<div class='input'>
 						{{df-user-groups type='allowed' item=item selected=item.allowedGroupIds}}
 					</div>
 				</div>
 				<div class='field'>
-					<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.groups_granted'}}</div>
+					<div class='label'>{{i18n 'paid_membership.plan.groups_granted'}}</div>
 					<div class='input'>
 						{{df-user-groups type='granted' item=item selected=item.grantedGroupIds}}
 					</div>
@@ -33,7 +39,7 @@
 					</div>
 				</div>
 				<div class='field'>
-					<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.description'}}:</div>
+					<div class='label'>{{i18n 'paid_membership.plan.description'}}:</div>
 					<div class='input'>
 						{{textarea value=item.description autoresize=true rows=2 max-rows=5}}
 					</div>
@@ -41,7 +47,7 @@
 			</div>
 		{{/each}}
 	</div>
-	<h4>Add a New Pricing Plan:</h4>
+	<h4>{{i18n 'paid_membership.plan.heading_new'}}:</h4>
 {{/if}}
 <div class='item item-new'>
 	<div class='field'>
@@ -50,10 +56,17 @@
 			icon='plus'
 			class='btn-primary btn-small no-text'
 			disabled=inputInvalid
-			title='admin.site_settings.paid_membership.plan.add'
+			title='paid_membership.plan.add'
 		}}
-		<div class='label'></div>
-		<div class='input'>[{{input value=newId autoresize=true}}]</div>
+		<div class='input'>
+			<span class='label'>BBCode: </span>[{{input value=newId autoresize=true}}]
+		</div>
+	</div>
+	<div class='field'>
+		<div class='input'>
+			<span class='label'>{{i18n 'paid_membership.plan.title'}}: </span>
+			{{input value=title autoresize=true}}
+		</div>
 	</div>
 	{{!--
 		2015-06-29
@@ -67,13 +80,13 @@
 		(ведь тогда форму для нового элемента надо очистить, привести в начальное состояние).
 	--}}
 	<div class='field'>
-		<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.groups_allowed'}}</div>
+		<div class='label'>{{i18n 'paid_membership.plan.groups_allowed'}}</div>
 		<div class='input'>
 			{{df-user-groups type='allowed' selected=allowedGroupIds}}
 		</div>
 	</div>
 	<div class='field'>
-		<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.groups_granted'}}</div>
+		<div class='label'>{{i18n 'paid_membership.plan.groups_granted'}}</div>
 		<div class='input'>
 			{{df-user-groups type='granted' selected=grantedGroupIds}}
 		</div>
@@ -84,7 +97,7 @@
 		</div>
 	</div>
 	<div class='field'>
-		<div class='label'>{{i18n 'admin.site_settings.paid_membership.plan.description'}}:</div>
+		<div class='label'>{{i18n 'paid_membership.plan.description'}}:</div>
 		<div class='input'>
 			{{textarea value=description autoresize=true rows=2 max-rows=5}}
 		</div>
