@@ -17,7 +17,6 @@ en:
           whitelist: 'whitelist'
           blacklist: 'blacklist'
         restriction_type_heading: 'Restriction Type'
-        title: 'Title'
         title_placeholder: '<Title>'
       price_tier:
         heading_all: 'Price Tiers'

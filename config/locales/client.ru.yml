@@ -17,7 +17,6 @@ ru:
           whitelist: 'белый'
           blacklist: 'чёрный'
         restriction_type_heading: 'Тип списка'
-        title: 'Название'
         title_placeholder: '<Название плана>'
       price_tier:
         heading_all: 'Варианты подписки'

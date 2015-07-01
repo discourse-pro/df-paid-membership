@@ -70,12 +70,12 @@ export default Ember.Component.extend({
 	,generateNewId: function() {
 		var items = this.get('items');
 		var existingIds = $.map(items, function(item) {
-			var matches = item.id.match(/^membership-plan-(\d+)/);
+			var matches = item.id.match(/^bbcode-plan-(\d+)/);
 			return !matches || (2 > matches.length) ? 0 : parseInt(matches[1]);
 		});
 		/** @link http://stackoverflow.com/a/6102340/254475 */
 		var max = !existingIds.length ? 0 : Math.max.apply(Math, existingIds);
-		return 'membership-plan-' + (max + 1);
+		return 'bbcode-plan-' + (max + 1);
 	}
 	,actions: {
 		addItem() {
