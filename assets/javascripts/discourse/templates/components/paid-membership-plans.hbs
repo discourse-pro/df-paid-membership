@@ -1,96 +1,101 @@
-{{#if items}}
-	<div class='items plans'>
-		{{#each item in items}}
-			<div class='item plan'>
-				<div class='field'>
-					{{d-button
-						action='removeItem'
-						actionParam=item
-						icon='times'
-						class='btn-small no-text df-simple'
-						title='paid_membership.plan.delete'
-					}}
-					<div>
-						<h4>{{input value=item.title autoresize=true}}</h4>
-						[{{input type='text' value=item.id autoresize=true}}]
+<div class='inner'>
+	{{#if items}}
+		<ul class='items plans'>
+			{{#each item in items}}
+				<li class='item plan'>
+					<div class='field'>
+						{{d-button
+							action='removeItem'
+							actionParam=item
+							icon='times'
+							class='btn-small no-text df-simple'
+							title='paid_membership.plan.delete'
+						}}
+						<div>
+							<h4 class='plan-title'>{{input value=item.title autoresize=true}}</h4>
+							<span
+								class='plan-bbcode'
+							>{{input type='text' value=item.id autoresize=true}}</span>
+						</div>
 					</div>
-				</div>
-				<div class='field'>
-					<span class='label'>Restriction Type:</span>
-					{{x-select
-						value=item.restrictionType
-						content=restrictionTypeOptions
-						optionValuePath='content.value'
-						optionLabelPath='content.label'
-						class='restrictionType'
-					}}
-				</div>
-				<div class='field'>
-					<div class='label'>{{i18n 'paid_membership.plan.groups_allowed'}}</div>
-					{{df-user-groups type='allowed' item=item selected=item.allowedGroupIds}}
-				</div>
-				<div class='field'>
-					<div class='label'>{{i18n 'paid_membership.plan.groups_granted'}}</div>
-					{{df-user-groups type='granted' item=item selected=item.grantedGroupIds}}
-				</div>
-				<div class='field'>
-					{{paid-membership-price-tiers plan=item items=item.priceTiers}}
-				</div>
-				<div class='field'>
-					{{df-editor value=item.description}}
-				</div>
+					<div class='field'>
+						<span class='label'>Restriction Type:</span>
+						{{x-select
+							value=item.restrictionType
+							content=restrictionTypeOptions
+							optionValuePath='content.value'
+							optionLabelPath='content.label'
+							class='restrictionType'
+						}}
+					</div>
+					<div class='field'>
+						<div class='label'>{{i18n 'paid_membership.plan.groups_allowed'}}</div>
+						{{df-user-groups type='allowed' item=item selected=item.allowedGroupIds}}
+					</div>
+					<div class='field'>
+						<div class='label'>{{i18n 'paid_membership.plan.groups_granted'}}</div>
+						{{df-user-groups type='granted' item=item selected=item.grantedGroupIds}}
+					</div>
+					<div class='field'>
+						{{paid-membership-price-tiers plan=item items=item.priceTiers}}
+					</div>
+					<div class='field'>
+						{{df-editor value=item.description}}
+					</div>
+				</li>
+			{{/each}}
+		</ul>
+		<h4 class='add-new-plan'>{{i18n 'paid_membership.plan.heading_new'}}:</h4>
+	{{/if}}
+	<div class='item plan item-new'>
+		<div class='field'>
+			{{d-button
+				action='addItem'
+				icon='plus'
+				class='btn-primary btn-small no-text'
+				disabled=inputInvalid
+				title='paid_membership.plan.add'
+			}}
+			<div>
+				<h4 class='plan-title'>{{input value=title autoresize=true}}</h4>
+				<span class='plan-bbcode'>{{input value=newId autoresize=true}}</span>
 			</div>
-		{{/each}}
-	</div>
-	<h4>{{i18n 'paid_membership.plan.heading_new'}}:</h4>
-{{/if}}
-<div class='item plan item-new'>
-	<div class='field'>
-		{{d-button
-			action='addItem'
-			icon='plus'
-			class='btn-primary btn-small no-text'
-			disabled=inputInvalid
-			title='paid_membership.plan.add'
-		}}
-		<div>
-			<h4>{{input value=title autoresize=true}}</h4>
-			[{{input value=newId autoresize=true}}]
+		</div>
+		<div class='field'>
+			<span class='label'>{{i18n 'paid_membership.plan.restriction_type_heading'}}:</span>
+			{{x-select
+				value=restrictionType
+				content=restrictionTypeOptions
+				optionValuePath='content.value'
+				optionLabelPath='content.label'
+				class='restrictionType'
+			}}
+		</div>
+		{{!--
+			2015-06-29
+			Обратите внимание, что,
+			хотя список групп нового пустого элемента предполагается пустым,
+			мы всё равно устанавливаем соответствие selected=allowedGroupIds,
+			чтобы установить связь между свойством allowedGroupIds компонента paid-membership-plans
+			и свойством selected компонента df-user-groups.
+			Такая связь позволяет нам очищать список групп
+			после добавления нового элемента в список элементов
+			(ведь тогда форму для нового элемента надо очистить, привести в начальное состояние).
+		--}}
+		<div class='field'>
+			<div class='label'>{{i18n 'paid_membership.plan.groups_allowed'}}</div>
+			{{df-user-groups type='allowed' selected=allowedGroupIds}}
+		</div>
+		<div class='field'>
+			<div class='label'>{{i18n 'paid_membership.plan.groups_granted'}}</div>
+			{{df-user-groups type='granted' selected=grantedGroupIds}}
+		</div>
+		<div class='field'>
+			{{paid-membership-price-tiers items=priceTiers}}
+		</div>
+		<div class='field'>
+			{{df-editor value=description}}
 		</div>
 	</div>
-	<div class='field'>
-		<span class='label'>{{i18n 'paid_membership.plan.restriction_type_heading'}}:</span>
-		{{x-select
-			value=restrictionType
-			content=restrictionTypeOptions
-			optionValuePath='content.value'
-			optionLabelPath='content.label'
-			class='restrictionType'
-		}}
-	</div>
-	{{!--
-		2015-06-29
-		Обратите внимание, что,
-		хотя список групп нового пустого элемента предполагается пустым,
-		мы всё равно устанавливаем соответствие selected=allowedGroupIds,
-		чтобы установить связь между свойством allowedGroupIds компонента paid-membership-plans
-		и свойством selected компонента df-user-groups.
-		Такая связь позволяет нам очищать список групп
-		после добавления нового элемента в список элементов
-		(ведь тогда форму для нового элемента надо очистить, привести в начальное состояние).
-	--}}
-	<div class='field'>
-		<div class='label'>{{i18n 'paid_membership.plan.groups_allowed'}}</div>
-		{{df-user-groups type='allowed' selected=allowedGroupIds}}
-	</div>
-	<div class='field'>
-		<div class='label'>{{i18n 'paid_membership.plan.groups_granted'}}</div>
-		{{df-user-groups type='granted' selected=grantedGroupIds}}
-	</div>
-	<div class='field'>
-		{{paid-membership-price-tiers items=priceTiers}}
-	</div>
-	<div class='field'>
-		{{df-editor value=description}}
-	</div>
 </div>
+

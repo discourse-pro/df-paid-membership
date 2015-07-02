@@ -1,14 +1,42 @@
+// 2015-07-02
+// Строка настроек со всеми планами.
+// Наша первейшая задача: высвободиь дополнительное место для настроек
+// (ведь их у нас так много!).
+.row.setting.paid-membership_plans {
+	// На всякий случай.
+	width: 100%;
+	overflow: hidden;
+	// На будущее. Пока в ядре они и так нулевые
+	margin: {left: 0; right: 0;}
+	padding: {left: 0; right: 0;}
+	> .setting-label {}
+	> .setting-value {
+		// В ядре: 73%.
+		// Устанавливая 100%, мы «пропускаем» вперёд и вверх кнопки.
+		width: 100%;
+	}
+	// «button» — это кнопка «Reset».
+	> button {}
+	// div..setting-controls — это две кнопки: сохранить и отменить.
+	// Они появляются на месте кнопки «Reset» после редактирования какой-либо опции.
+	>.setting-controls {
+		float: none;
+		display: inline-block;
+	}
+}
 .paid-membership-plans {
 	padding-right: 4px;
-	h4 {
-		font-size: 14px;
+	> .inner {
+		margin-left: 10%;
 	}
-	.item h4  {
-		display: inline;
-		input {
-			font-weight: bold;
-			color: rgb(103, 96, 86);
+	ul.plans {
+		margin: {
+			left: 0;
 		}
+	}
+	h4 {
+		&.add-new-plan {font-size: 14px;}
+		&.plan-title {display: inline;}
 	}
 	// 2015-06-30
 	// Этот размер использует ядро для экранных названий настроечных опций
@@ -29,9 +57,25 @@
 				margin-bottom: 0;
 				button {float: right;}
 			}
-			&:not(:first-of-type) {margin-top: 4px;}
-			input, select, option {
-				font-size: 14px;
+			&:not(:first-of-type) {margin-top: 8px;}
+			input, select, option {font-size: 14px;}
+			.plan-title input {
+				font-size: 18px;
+				// Ядро устанавливает 18px
+				height: auto;
+				line-height: normal;
+				font-weight: bold;
+				color: rgb(103, 96, 86);
+			}
+			.plan-bbcode {
+				&:after {
+					content: ']';
+					vertical-align: text-top;}
+				&:before {
+					content: '[';
+					vertical-align: text-top;
+				}
+				input {vertical-align: text-top;}
 			}
 			textarea {
 				width: 100%;
@@ -50,13 +94,19 @@
 				&.restrictionType {width: 6em;}
 			}
 		}
+		&.plan {margin-top: 16px;}
 	}
-	.paid-membership-price-tiers {margin: 8px 0;}
+	.paid-membership-price-tiers {
+		margin: 8px 0;
+		max-width: 20em;
+	}
 	.items {
 		&.plans {margin-bottom: 24px;}
 		&.tiers {margin-bottom: 8px;}
 		.item {
-			&.plan:not(:last-of-type) {margin-bottom: 16px;}
+			&.plan {
+				&:not(:last-of-type) {margin-bottom: 16px;}
+			}
 		}
 	}
 	button.df-simple {
