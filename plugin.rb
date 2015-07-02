@@ -5,23 +5,22 @@
 # url: https://discourse.pro/t/35
 register_asset 'stylesheets/main.scss'
 after_initialize do
-	module ::PaidMembership
+	module ::DfPaidMembership
 		class Engine < ::Rails::Engine
-			engine_name 'paid_membership'
-			isolate_namespace PaidMembership
+			engine_name 'df_paid_membership'
+			isolate_namespace DfPaidMembership
 		end
 	end
 	require_dependency 'application_controller'
-	class PaidMembership::IndexController < ::ApplicationController
-		requires_plugin 'df-paid-membership'
+	class DfPaidMembership::PlansController < ::ApplicationController
 		def index
-			render json: {plans: ['test']}
+			render json: { success: 'OK' }
 		end
 	end
-	PaidMembership::Engine.routes.draw do
-		get '/' => 'index#index'
+	DfPaidMembership::Engine.routes.draw do
+		get '/' => 'plans#index'
 	end
 	Discourse::Application.routes.append do
-		mount ::PaidMembership::Engine, at: '/membership'
+		mount ::DfPaidMembership::Engine, at: '/plans'
 	end
 end

@@ -1,3 +1,3 @@
 export default function() {
-	this.resource('membership', function() {});
+	this.resource('plans', function() {});
 }
