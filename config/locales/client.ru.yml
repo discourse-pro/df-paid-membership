@@ -25,3 +25,7 @@ ru:
           days: 'дней'
           months: 'месяцев'
           years: 'лет'
+  js:
+    df:
+      paid_membership:
+        link_title: 'Членство'

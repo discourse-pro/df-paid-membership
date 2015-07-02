@@ -25,3 +25,7 @@ en:
           days: 'day(s)'
           months: 'month(s)'
           years: 'year(s)'
+  js:
+    df:
+      paid_membership:
+        link_title: 'Membership'
