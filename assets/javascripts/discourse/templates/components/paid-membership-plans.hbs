@@ -37,7 +37,7 @@
 					{{paid-membership-price-tiers plan=item items=item.priceTiers}}
 				</div>
 				<div class='field'>
-					{{textarea value=item.description autoresize=true rows=2 max-rows=5}}
+					{{df-editor value=item.description}}
 				</div>
 			</div>
 		{{/each}}
@@ -91,6 +91,6 @@
 		{{paid-membership-price-tiers items=priceTiers}}
 	</div>
 	<div class='field'>
-		{{textarea value=description autoresize=true rows=2 max-rows=5}}
+		{{df-editor value=description}}
 	</div>
 </div>
