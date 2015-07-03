@@ -1,7 +1,17 @@
 <h1>Membership Plans</h1>
 <ul class='plans'>
 	{{#each plan in model}}
-		<li>{{plan.title}}</li>
+		<li>
+			 <div {{bind-attr style=fillStyle}}>{{plan.title}}</div>
+			{{!--
+				Можно использовать более короткий синтаксис:
+				<div style='{{fillStyle}}'>{{plan.title}}</div>
+				http://www.hutchinson.io/bind-attr-is-dead/
+				http://emberjs.com/blog/2015/03/27/ember-1-11-0-released.html#toc_bound-attribute-syntax
+				Но тогда мы получим в консоли предупреждение:
+				«Binding style attributes may introduce cross-site scripting vulnerabilities»
+			--}}
+		</li>
 	{{/each}}
 </ul>
 

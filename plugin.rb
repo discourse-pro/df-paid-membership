@@ -14,6 +14,7 @@ after_initialize do
 	end
 	require_dependency 'application_controller'
 	class PaidMembership::PlansController < ::ApplicationController
+		#skip_before_filter :check_xhr
 		def index
 			begin
 				plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
