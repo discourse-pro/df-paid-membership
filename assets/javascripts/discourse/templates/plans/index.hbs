@@ -1,2 +1,7 @@
-<h2>Membership</h2>
-Превед, медвед!
+<h1>Membership Plans</h1>
+<ul class='plans'>
+	{{#each plan in model}}
+		<li>{{plan.title}}</li>
+	{{/each}}
+</ul>
+

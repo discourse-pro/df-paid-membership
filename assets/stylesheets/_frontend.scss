@@ -1,0 +1,12 @@
+.df-paid-membership-frontend {
+	ul.plans {
+		margin: 0;
+		list-style: none;
+		width: 100%;
+		overflow: hidden;
+		li {
+			display: block;
+			float: left;
+		}
+	}
+}
