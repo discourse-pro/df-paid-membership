@@ -18,6 +18,10 @@
 							>{{input type='text' value=item.id autoresize=true}}</span>
 						</div>
 					</div>
+					<div class='field color'>
+						<div class='label'>{{i18n 'paid_membership.plan.color'}}:</div>
+						{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+					</div>
 					<div class='field'>
 						<span class='label'>Restriction Type:</span>
 						{{x-select
@@ -70,6 +74,10 @@
 				optionLabelPath='content.label'
 				class='restrictionType'
 			}}
+		</div>
+		<div class='field color'>
+			<div class='label'>{{i18n 'paid_membership.plan.color'}}:</div>
+			{{color-input hexValue=color brightnessValue=120 valid=true}}
 		</div>
 		{{!--
 			2015-06-29

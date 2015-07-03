@@ -58,6 +58,19 @@
 				button {float: right;}
 			}
 			&:not(:first-of-type) {margin-top: 8px;}
+			&.color {
+				.label {
+					float: left;
+					line-height: 26px;
+					margin-right: 4px;
+				}
+				.hex-input {
+					width: 4em;
+					border: 1px;
+					padding: 4px;
+					text-align: center;
+				}
+			}
 			input, select, option {font-size: 14px;}
 			.plan-title input {
 				font-size: 18px;

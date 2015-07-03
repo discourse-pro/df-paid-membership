@@ -7,6 +7,7 @@ en:
     paid_membership:
       plan:
         add: 'Add a Membership Plan'
+        color: 'Color'
         delete: 'Delete the Membership Plan'
         description_placeholder: 'describe the Plan...'
         groups_allowed: 'Users of which groups can (if whitelist) of can not (if blacklist) order the plan?'

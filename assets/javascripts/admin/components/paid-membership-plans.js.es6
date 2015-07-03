@@ -9,6 +9,7 @@ export default Ember.Component.extend({
 	 * ,layoutName: 'javascripts/admin/templates/components/paid-membership-plans'
 	 * Now I save the explicit method for history only. May be it will be useful sometimes.
 	 */
+	,palette: ['29abe2', 'f9a41a', '1bb058', 'd13138', '283890']
 	,onInit: function() {
 		/** @type {String} */
 		const valueS = this.get('valueS');
@@ -26,9 +27,9 @@ export default Ember.Component.extend({
 		 * Для поддержки тех версий, когда свойства priceTiers ещё не было.
 		 */
 		items.forEach(function(item) {
-			/*if (!item.priceTiers) {
-				item.priceTiers = [];
-			} */
+			if (!item.color) {
+				item.color = 'f9a41a';
+			}
 		});
 		this.set('items', items);
 		this.set('restrictionTypeOptions', [
@@ -46,6 +47,7 @@ export default Ember.Component.extend({
 		}
 	}.observes(
 		'items.@each'
+		, 'items.@each.color'
 		, 'items.@each.description'
 		, 'items.@each.id'
 		, 'items.@each.restrictionType'
@@ -61,6 +63,7 @@ export default Ember.Component.extend({
 	,newItem: function() {
 		this.set('newId', this.generateNewId());
 		this.set('allowedGroupIds', []);
+		this.set('color', this.palette[Math.floor(this.palette.length * Math.random())]);
 		this.set('description', I18n.t('paid_membership.plan.description_placeholder'));
 		this.set('grantedGroupIds', []);
 		this.set('priceTiers', []);
@@ -84,6 +87,7 @@ export default Ember.Component.extend({
 				var id = this.get('newId') || this.generateNewId();
 				items.addObject({
 					allowedGroupIds: this.get('allowedGroupIds')
+					, color: this.get('color')
 					, description: this.get('description')
 					, grantedGroupIds: this.get('grantedGroupIds')
 					, id: id
