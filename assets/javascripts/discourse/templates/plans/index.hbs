@@ -1,8 +1,8 @@
 <h1>Membership Plans</h1>
 <ul class='plans'>
-	{{#each plan in model}}
+	{{#each plan in model itemController='plan'}}
 		<li>
-			 <div {{bind-attr style=fillStyle}}>{{plan.title}}</div>
+			 <div {{bind-attr style=plan.fillStyle}}>{{plan.title}}</div>
 			{{!--
 				Можно использовать более короткий синтаксис:
 				<div style='{{fillStyle}}'>{{plan.title}}</div>
