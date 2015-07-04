@@ -1,14 +1,26 @@
 .df-paid-membership-frontend {
 	padding-top: 5%;
 	h1 {text-align: center;}
-	ul.plans {
+	table.plans {
 		margin: 5% 0 0 0;
-		list-style: none;
 		width: 100%;
-		overflow: hidden;
+		// Чтобы колонки тарифных планов имели одинаковую ширину:
+		// http://stackoverflow.com/a/571420/254475
+		table-layout: fixed;
 		text-align: center;
-		li {
-			display: inline-block;
+		border-collapse: separate;
+		// Проценты не поддерживаются
+		// http://stackoverflow.com/a/4973360/254475
+		// http://www.w3.org/TR/CSS2/tables.html#propdef-border-spacing
+    	border-spacing: 1em 0;
+		td.plan {
+			h2 {
+				margin: 0;
+				color: white;
+				font-weight: bold;
+				text-transform: uppercase;
+				padding: 8px 20px 9px 20px;
+			}
 		}
 	}
 }
