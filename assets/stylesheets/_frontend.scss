@@ -14,6 +14,8 @@
 		// http://www.w3.org/TR/CSS2/tables.html#propdef-border-spacing
     	border-spacing: 1em 0;
 		td.plan {
+			vertical-align: top;
+			border: 1px solid;
 			h2 {
 				margin: 0;
 				color: white;

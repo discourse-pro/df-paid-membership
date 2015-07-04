@@ -1,5 +1,5 @@
 export default Ember.Component.extend({
-	classNameBindings: [':paid-membership-plans']
+	classNames: ['paid-membership-plans']
 	/**
 	 * 2015-06-29
 	 * Discourse expects the components's template at

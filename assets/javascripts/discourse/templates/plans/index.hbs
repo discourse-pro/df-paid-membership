@@ -1,18 +1,8 @@
 <h1>Membership Plans</h1>
 <table class='plans'>
 	<tr>
-		{{#each plan in model itemController='plan'}}
-			<td class='plan' {{bind-attr style=plan.fillStyle}}>
-				 <h2>{{plan.title}}</h2>
-				{{!--
-					Можно использовать более короткий синтаксис:
-					<div style='{{fillStyle}}'>{{plan.title}}</div>
-					http://www.hutchinson.io/bind-attr-is-dead/
-					http://emberjs.com/blog/2015/03/27/ember-1-11-0-released.html#toc_bound-attribute-syntax
-					Но тогда мы получим в консоли предупреждение:
-					«Binding style attributes may introduce cross-site scripting vulnerabilities»
-				--}}
-			</td>
+		{{#each plan in model}}
+			{{frontend-membership-plan plan=plan tagName='td' class='plan'}}
 		{{/each}}
 	</tr>
 </table>

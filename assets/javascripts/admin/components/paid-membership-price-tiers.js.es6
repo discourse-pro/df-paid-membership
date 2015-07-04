@@ -4,7 +4,7 @@
  * http://summitevergreen.com/why-tiered-pricing-is-the-only-way-to-price-your-product/
  */
 export default Ember.Component.extend({
-	classNameBindings: [':paid-membership-price-tiers']
+	classNames: ['paid-membership-price-tiers']
 	,onInit: function() {
 		this.set('periodUnitsOptions', [
 			{value: 'd', label: I18n.t('paid_membership.price_tier.period_units.days')}
