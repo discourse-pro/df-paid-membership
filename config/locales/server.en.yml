@@ -1,4 +1,5 @@
 en:
   site_settings:
     «Paid_Membership»_Enabled: "Enable «<a href='https://discourse.pro/t/35'>Paid Membership</a>» plugin."
+    «Paid_Membership»_Text_Above: 'A text above the plans.'
     «Paid_Membership»_Plans: ""
