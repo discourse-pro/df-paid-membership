@@ -84,7 +84,8 @@
 			.plan-bbcode {
 				&:after {
 					content: ']';
-					vertical-align: text-top;}
+					vertical-align: text-top;
+				}
 				&:before {
 					content: '[';
 					vertical-align: text-top;
