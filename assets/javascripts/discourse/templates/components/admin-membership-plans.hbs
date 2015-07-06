@@ -12,8 +12,7 @@
 					}}
 					<div>
 						<h4 class='plan-title'>{{input value=item.title autoresize=true}}</h4>
-						<span
-							class='plan-bbcode'
+						<span class='plan-bbcode'
 						>{{input type='text' value=item.id autoresize=true}}</span>
 					</div>
 				</div>
@@ -46,37 +45,69 @@
 					<tr>
 						<td class='label'>Primary:</td>
 						<td class='value'>
-							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+							{{color-input
+								hexValue=item.color.background
+								brightnessValue=120
+								valid=true
+							}}
 						</td>
 						<td class='label'>Shadow X:</td>
 						<td class='value'>
-							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+							{{color-input
+								hexValue=item.color.boxShadowX
+								brightnessValue=120
+								valid=true
+							}}
 						</td>
 						<td class='label'>Shadow Y:</td>
 						<td class='value'>
-							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+							{{color-input
+								hexValue=item.color.boxShadowY
+								brightnessValue=120
+								valid=true
+							}}
 						</td>
 						<td class='label'>Shadow Text:</td>
 						<td class='value'>
-							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+							{{color-input
+								hexValue=item.color.textShadow
+								brightnessValue=120
+								valid=true
+							}}
 						</td>
 					</tr>
 					<tr>
 						<td class='label'>Hover Bg:</td>
 						<td class='value'>
-							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+							{{color-input
+								hexValue=item.color.hoverBackground
+								brightnessValue=120
+								valid=true
+							}}
 						</td>
 						<td class='label'>Hover Shadow X:</td>
 						<td class='value'>
-							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+							{{color-input
+								hexValue=item.color.hoverBoxShadowX
+								brightnessValue=120
+								valid=true
+							}}
 						</td>
 						<td class='label'>Hover Shadow Y:</td>
 						<td class='value'>
-							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+							{{color-input
+								hexValue=item.color.hoverBoxShadowY
+								brightnessValue=120
+								valid=true
+							}}
 						</td>
 						<td class='label'>Hover Shadow Text:</td>
 						<td class='value'>
-							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+							{{color-input
+								hexValue=item.color.hoverTextShadow
+								brightnessValue=120
+								valid=true
+							}}
 						</td>
 					</tr>
 				</table>
@@ -138,5 +169,76 @@
 	<div class='field'>
 		{{df-editor value=description}}
 	</div>
+	<table class='field palette'>
+		<caption>Palette</caption>
+		<tr>
+			<td class='label'>Primary:</td>
+			<td class='value'>
+				{{color-input
+					hexValue=color.background
+					brightnessValue=120
+					valid=true
+				}}
+			</td>
+			<td class='label'>Shadow X:</td>
+			<td class='value'>
+				{{color-input
+					hexValue=color.boxShadowX
+					brightnessValue=120
+					valid=true
+				}}
+			</td>
+			<td class='label'>Shadow Y:</td>
+			<td class='value'>
+				{{color-input
+					hexValue=color.boxShadowY
+					brightnessValue=120
+					valid=true
+				}}
+			</td>
+			<td class='label'>Shadow Text:</td>
+			<td class='value'>
+				{{color-input
+					hexValue=color.textShadow
+					brightnessValue=120
+					valid=true
+				}}
+			</td>
+		</tr>
+		<tr>
+			<td class='label'>Hover Bg:</td>
+			<td class='value'>
+				{{color-input
+					hexValue=color.hoverBackground
+					brightnessValue=120
+					valid=true
+				}}
+			</td>
+			<td class='label'>Hover Shadow X:</td>
+			<td class='value'>
+				{{color-input
+					hexValue=color.hoverBoxShadowX
+					brightnessValue=120
+					valid=true
+				}}
+			</td>
+			<td class='label'>Hover Shadow Y:</td>
+			<td class='value'>
+				{{color-input
+					hexValue=color.hoverBoxShadowY
+					brightnessValue=120
+					valid=true
+				}}
+			</td>
+			<td class='label'>Hover Shadow Text:</td>
+			<td class='value'>
+				{{color-input
+					hexValue=color.hoverTextShadow
+					brightnessValue=120
+					valid=true
+				}}
+			</td>
+		</tr>
+	</table>
 </div>
 

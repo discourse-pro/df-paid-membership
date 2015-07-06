@@ -1,3 +1,15 @@
+const createColor = function(color) {
+	return {
+		background: color
+		,boxShadowX: arguments[1] || color
+		,boxShadowY: arguments[2] || color
+		,textShadow: arguments[3] || color
+		,hoverBackground: arguments[4] || color
+		,hoverBoxShadowX: arguments[5] || arguments[1] || color
+		,hoverBoxShadowY: arguments[6] || arguments[2] || color
+		,hoverTextShadow: arguments[7] || arguments[3] || color
+	};
+};
 export default Ember.Component.extend({
 	classNames: ['membership-plans']
 	/**
@@ -9,7 +21,13 @@ export default Ember.Component.extend({
 	 * ,layoutName: 'javascripts/admin/templates/components/admin-membership-plans'
 	 * Now I save the explicit method for history only. May be it will be useful sometimes.
 	 */
-	,palette: ['29abe2', 'f9a41a', '1bb058', 'd13138', '283890']
+	,palette: [
+		createColor('00aeef', '3dcaff', '0076a3', '009bd6')
+		, createColor('f9a41a', 'e9b35c', 'ae7212', 'ae7212', 'c98414', null, '9c6610')
+		, createColor('1bb058', '5fc78a', '127b3d', '127b3d', '158c46', '55b37c', '106e36', '106e36')
+		, createColor('d13138')
+		, createColor('283890')
+	]
 	,onInit: function() {
 		/** @type {String} */
 		const valueS = this.get('valueS');
@@ -22,13 +40,15 @@ export default Ember.Component.extend({
 		catch(ignore) {
 			items = [];
 		}
-		/**
-		 * 2015-06-30
-		 * Для поддержки тех версий, когда свойства priceTiers ещё не было.
-		 */
+		// 2015-06-30
+		// Для поддержки предыдущих версий, которые имели другую структуру данных.
 		items.forEach(function(item) {
 			if (!item.color) {
-				item.color = 'f9a41a';
+				item.color = createColor('f9a41a');
+			}
+			/** @link http://stackoverflow.com/a/8511350/254475 */
+			else if ('object' !== typeof item.color) {
+				item.color = createColor(item.color)
 			}
 		});
 		this.set('items', items);
@@ -60,6 +80,13 @@ export default Ember.Component.extend({
 		 * Поэтому мы вызываем _changed() вручную из groupChanged().
 		 */
 	)
+	,_didInsertElement: function() {
+		// 2015-07-07
+		// Стандартное для Ember.js наблюдение работает лишь на 2 уровня вложенности,
+		// поэтому за изменениями палитры мы наблюдаем вручную.
+		const _this = this;
+		this.$('.hex-input').change(function() {_this._changed()});
+	}.on('didInsertElement')
 	,newItem: function() {
 		this.set('newId', this.generateNewId());
 		this.set('allowedGroupIds', []);
@@ -88,6 +115,16 @@ export default Ember.Component.extend({
 				items.addObject({
 					allowedGroupIds: this.get('allowedGroupIds')
 					, color: this.get('color')
+					/*createColor(
+						this.get('color.background')
+						,this.get('color.boxShadowX')
+						,this.get('color.boxShadowY')
+						,this.get('color.textShadow')
+						,this.get('color.hoverBackground')
+						,this.get('color.hoverBoxShadowX')
+						,this.get('color.hoverBoxShadowY')
+						,this.get('color.hoverTextShadow')
+					) */
 					, description: this.get('description')
 					, grantedGroupIds: this.get('grantedGroupIds')
 					, id: id

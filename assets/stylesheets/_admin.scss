@@ -48,16 +48,13 @@
 						border-width: 0;
 						padding: 2px 0;
 						&.label {
-							//background-color: pink;
 							text-align: right;
 							line-height: 26px;
-							//font-size: 90%;
 							padding-right: 4px;
 						}
 						&.value {
 							width: 5em;
 							>.ember-view {
-								//background: green;
 								> .hex-input {
 									width: 4em;
 									border: 1px;
