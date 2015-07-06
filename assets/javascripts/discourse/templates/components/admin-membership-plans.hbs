@@ -40,7 +40,7 @@
 					{{df-user-groups type='granted' item=item selected=item.grantedGroupIds}}
 				</div>
 				<div class='field'>
-					{{paid-membership-price-tiers plan=item items=item.priceTiers}}
+					{{admin-membership-price-tiers plan=item items=item.priceTiers}}
 				</div>
 				<div class='field'>
 					{{df-editor value=item.description}}
@@ -83,7 +83,7 @@
 		Обратите внимание, что,
 		хотя список групп нового пустого элемента предполагается пустым,
 		мы всё равно устанавливаем соответствие selected=allowedGroupIds,
-		чтобы установить связь между свойством allowedGroupIds компонента paid-membership-plans
+		чтобы установить связь между свойством allowedGroupIds компонента admin-membership-plans
 		и свойством selected компонента df-user-groups.
 		Такая связь позволяет нам очищать список групп
 		после добавления нового элемента в список элементов
@@ -98,7 +98,7 @@
 		{{df-user-groups type='granted' selected=grantedGroupIds}}
 	</div>
 	<div class='field'>
-		{{paid-membership-price-tiers items=priceTiers}}
+		{{admin-membership-price-tiers items=priceTiers}}
 	</div>
 	<div class='field'>
 		{{df-editor value=description}}

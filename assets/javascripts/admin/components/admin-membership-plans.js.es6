@@ -1,12 +1,12 @@
 export default Ember.Component.extend({
-	classNames: ['paid-membership-plans']
+	classNames: ['membership-plans']
 	/**
 	 * 2015-06-29
 	 * Discourse expects the components's template at
-	 * plugins/df-paid-membership/assets/javascripts/discourse/templates/components/paid-membership-plans.hbs
+	 * plugins/df-paid-membership/assets/javascripts/discourse/templates/components/admin-membership-plans.hbs
 	 * Until I know it I used to specify template location explicitly:
 	 * @link http://stackoverflow.com/a/24271614/254475
-	 * ,layoutName: 'javascripts/admin/templates/components/paid-membership-plans'
+	 * ,layoutName: 'javascripts/admin/templates/components/admin-membership-plans'
 	 * Now I save the explicit method for history only. May be it will be useful sometimes.
 	 */
 	,palette: ['29abe2', 'f9a41a', '1bb058', 'd13138', '283890']

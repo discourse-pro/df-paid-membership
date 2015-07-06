@@ -59,32 +59,105 @@
 					text-align: left;
 				}
 				a.sign-up {
+					display: inline-block;
+					position: relative;
 					text-align: center;
 					text-decoration: none;
 					border: none;
 					border-radius: 6px;
 					font-size: 20px;
 					margin: 20px 20px;
-					padding: 10px 10px;
+					padding: 10px 2em;
 					bottom: 0;
-					display: block;
-					position: relative;
 					color: #fff;
 					font-weight: bold;
 					transition: background-color .25s;
 					font-family: 'Open Sans', sans-serif;
-					background-color: #f9a41a;
-					box-shadow: inset 0 1px #e9b35c, 0px 5px #ae7212, 0 3px 5px rgba(0,0,0,.3);
-					text-shadow: -1px 1px #ae7212;
+					// 2015-07-06
+					// Этот селектор обязательно должно быть расположен после селектора &:hover,
+					// чтобы при нажатии кнопки применялось правило box-shadow: none;
 					&:active {
-						box-shadow: none;
+						box-shadow: none !important;
 						position: relative;
 						top: 5px;
 					}
+				}
+				&:nth-child(1) a.sign-up {
+					$colorBackground: #00aeef;
+					$colorBoxShadowX: #3dcaff;
+					$colorBoxShadowY: #0076a3;
+					$colorTextShadow: #009bd6;
+					$colorHoverBackground: $colorBackground;
+					$colorHoverBoxShadowX: $colorBoxShadowX;
+					$colorHoverBoxShadowY: $colorBoxShadowY;
+					$colorHoverTextShadow: $colorTextShadow;
+					background-color: $colorBackground;
+					box-shadow:
+						inset 0 1px $colorBoxShadowX
+						, 0px 5px $colorBoxShadowY
+						, 0 3px 5px rgba(0,0,0,.3)
+					;
+					text-shadow: -1px 1px $colorTextShadow;
 					&:hover {
-						background-color: #c98414;
-						box-shadow: inset 0 1px #e9b35c, 0px 5px #9c6610, 0 3px 5px rgba(0,0,0,.3);
-						text-shadow: -1px 1px #ae7212;
+						background-color: $colorHoverBackground;
+						box-shadow:
+							inset 0 1px $colorHoverBoxShadowX
+							, 0px 5px $colorHoverBoxShadowY
+							, 0 3px 5px rgba(0,0,0,.3)
+						;
+						text-shadow: -1px 1px $colorHoverTextShadow;
+					}
+				}
+				&:nth-child(2) a.sign-up {
+					$colorBackground: #f9a41a;
+					$colorBoxShadowX: #e9b35c;
+					$colorBoxShadowY: #ae7212;
+					$colorTextShadow: $colorBoxShadowY;
+					$colorHoverBackground: #c98414;
+					$colorHoverBoxShadowX: $colorBoxShadowX;
+					$colorHoverBoxShadowY: #9c6610;
+					$colorHoverTextShadow: $colorTextShadow;
+					background-color: $colorBackground;
+					box-shadow:
+						inset 0 1px $colorBoxShadowX
+						, 0px 5px $colorBoxShadowY
+						, 0 3px 5px rgba(0,0,0,.3)
+					;
+					text-shadow: -1px 1px $colorTextShadow;
+					&:hover {
+						background-color: $colorHoverBackground;
+						box-shadow:
+							inset 0 1px $colorHoverBoxShadowX
+							, 0px 5px $colorHoverBoxShadowY
+							, 0 3px 5px rgba(0,0,0,.3)
+						;
+						text-shadow: -1px 1px $colorHoverTextShadow;
+					}
+				}
+				&:nth-child(3) a.sign-up {
+					$colorBackground: #1bb058;
+					$colorBoxShadowX: #5fc78a;
+					$colorBoxShadowY: #127b3d;
+					$colorTextShadow: $colorBoxShadowY;
+					$colorHoverBackground: #158c46;
+					$colorHoverBoxShadowX: #55b37c;
+					$colorHoverBoxShadowY: #106e36;
+					$colorHoverTextShadow: #106e36;
+					background-color: $colorBackground;
+					box-shadow:
+						inset 0 1px $colorBoxShadowX
+						, 0px 5px $colorBoxShadowY
+						, 0 3px 5px rgba(0,0,0,.3)
+					;
+					text-shadow: -1px 1px $colorTextShadow;
+					&:hover {
+						background-color: $colorHoverBackground;
+						box-shadow:
+							inset 0 1px $colorHoverBoxShadowX
+							, 0px 5px $colorHoverBoxShadowY
+							, 0 3px 5px rgba(0,0,0,.3)
+						;
+						text-shadow: -1px 1px $colorHoverTextShadow;
 					}
 				}
 			}

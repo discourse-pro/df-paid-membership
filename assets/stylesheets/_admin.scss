@@ -8,7 +8,7 @@
 // 2015-07-02
 // Строка настроек со всеми планами.
 .row.setting.paid-membership_plans {@include df-row-setting-wide;}
-.paid-membership-plans {
+.membership-plans {
 	padding-right: 4px;
 	ul.plans {margin-left: 0;}
 	h4 {
@@ -87,7 +87,7 @@
 		}
 		&.plan {margin-top: 16px;}
 	}
-	.paid-membership-price-tiers {
+	.membership-price-tiers {
 		margin: 8px 0;
 		max-width: 20em;
 	}
