@@ -37,9 +37,15 @@
 			// http://www.w3.org/TR/CSS2/tables.html#propdef-border-spacing
 			border-collapse: separate;
 			border-spacing: $spaceBetweenColumns 0;
+			tr:last-child {
+				td.plan {
+					border-bottom-width: 1px;
+				}
+			}
 			td.plan {
 				vertical-align: top;
 				border: 1px solid;
+				border-bottom-width: 0;
 				border-top-width: 0;
 				h2 {
 					margin: 0;
@@ -70,6 +76,16 @@
 					background-color: #f9a41a;
 					box-shadow: inset 0 1px #e9b35c, 0px 5px #ae7212, 0 3px 5px rgba(0,0,0,.3);
 					text-shadow: -1px 1px #ae7212;
+					&:active {
+						box-shadow: none;
+						position: relative;
+						top: 5px;
+					}
+					&:hover {
+						background-color: #c98414;
+						box-shadow: inset 0 1px #e9b35c, 0px 5px #9c6610, 0 3px 5px rgba(0,0,0,.3);
+						text-shadow: -1px 1px #ae7212;
+					}
 				}
 			}
 		}
