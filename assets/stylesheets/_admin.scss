@@ -35,17 +35,38 @@
 				button {float: right;}
 			}
 			&:not(:first-of-type) {margin-top: 8px;}
-			&.color {
-				.label {
-					float: left;
-					line-height: 26px;
-					margin-right: 4px;
+			&.palette {
+				margin: {
+					top: 0.75em;
+					bottom: 1.25em;
 				}
-				.hex-input {
-					width: 4em;
-					border: 1px;
-					padding: 4px;
-					text-align: center;
+				//table-layout: fixed;
+				> caption {text-align: left;}
+				> tr {
+					&:hover {background-color: transparent;}
+					> td {
+						border-width: 0;
+						padding: 2px 0;
+						&.label {
+							//background-color: pink;
+							text-align: right;
+							line-height: 26px;
+							//font-size: 90%;
+							padding-right: 4px;
+						}
+						&.value {
+							width: 5em;
+							>.ember-view {
+								//background: green;
+								> .hex-input {
+									width: 4em;
+									border: 1px;
+									padding: 4px;
+									text-align: center;
+								}
+							}
+						}
+					}
 				}
 			}
 			input, select, option {font-size: 14px;}

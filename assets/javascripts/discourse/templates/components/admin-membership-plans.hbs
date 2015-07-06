@@ -17,10 +17,6 @@
 						>{{input type='text' value=item.id autoresize=true}}</span>
 					</div>
 				</div>
-				<div class='field color'>
-					<div class='label'>{{i18n 'paid_membership.plan.color'}}:</div>
-					{{color-input hexValue=item.color brightnessValue=120 valid=true}}
-				</div>
 				<div class='field'>
 					<span class='label'>Restriction Type:</span>
 					{{x-select
@@ -45,6 +41,45 @@
 				<div class='field'>
 					{{df-editor value=item.description}}
 				</div>
+				<table class='field palette'>
+					<caption>Palette</caption>
+					<tr>
+						<td class='label'>Primary:</td>
+						<td class='value'>
+							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+						</td>
+						<td class='label'>Shadow X:</td>
+						<td class='value'>
+							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+						</td>
+						<td class='label'>Shadow Y:</td>
+						<td class='value'>
+							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+						</td>
+						<td class='label'>Shadow Text:</td>
+						<td class='value'>
+							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+						</td>
+					</tr>
+					<tr>
+						<td class='label'>Hover Bg:</td>
+						<td class='value'>
+							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+						</td>
+						<td class='label'>Hover Shadow X:</td>
+						<td class='value'>
+							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+						</td>
+						<td class='label'>Hover Shadow Y:</td>
+						<td class='value'>
+							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+						</td>
+						<td class='label'>Hover Shadow Text:</td>
+						<td class='value'>
+							{{color-input hexValue=item.color brightnessValue=120 valid=true}}
+						</td>
+					</tr>
+				</table>
 			</li>
 		{{/each}}
 	</ul>
