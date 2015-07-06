@@ -1,40 +1,16 @@
+// 2015-07-06
+// Обратите внимание, что такой синтаксис не поддерживает звёздочку на конце:
+// надо явно указывать имя файла.
+@import '../../../plugins/df-core/assets/stylesheets/admin-lib/settings';
+// 2015-07-06
+// Редактор текста над тарифными планами.
+.row.setting.«Paid_Membership»_Text_Above {@include df-row-setting-wide;}
 // 2015-07-02
 // Строка настроек со всеми планами.
-// Наша первейшая задача: высвободить дополнительное место для настроек
-// (ведь их у нас так много!).
-// Сделано.
-.row.setting.paid-membership_plans {
-	// На всякий случай.
-	width: 100%;
-	overflow: hidden;
-	// На будущее. Пока в ядре они и так нулевые
-	margin: {left: 0; right: 0;}
-	padding: {left: 0; right: 0;}
-	> .setting-label {}
-	> .setting-value {
-		// В ядре: 73%.
-		// Устанавливая 100%, мы «пропускаем» вперёд и вверх кнопки.
-		width: 100%;
-	}
-	// «button» — это кнопка «Reset».
-	> button {}
-	// div..setting-controls — это две кнопки: сохранить и отменить.
-	// Они появляются на месте кнопки «Reset» после редактирования какой-либо опции.
-	>.setting-controls {
-		float: none;
-		display: inline-block;
-	}
-}
+.row.setting.paid-membership_plans {@include df-row-setting-wide;}
 .paid-membership-plans {
 	padding-right: 4px;
-	> .inner {
-		margin-left: 10%;
-	}
-	ul.plans {
-		margin: {
-			left: 0;
-		}
-	}
+	ul.plans {margin-left: 0;}
 	h4 {
 		&.add-new-plan {font-size: 14px;}
 		&.plan-title {display: inline;}

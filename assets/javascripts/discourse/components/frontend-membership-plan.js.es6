@@ -5,6 +5,4 @@ export default Ember.Component.extend({
 		this.$().css({'border-color': color});
 		this.$('.header').css({'background-color': color});
 	}.on('didInsertElement')
-	, _init: function() {
-	}.on('init')
 });
