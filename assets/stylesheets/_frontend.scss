@@ -1,27 +1,51 @@
 .df-paid-membership-frontend {
 	padding-top: 5%;
-	h1 {text-align: center;}
-	table.plans {
-		margin: 5% 0 0 0;
-		width: 100%;
-		// Чтобы колонки тарифных планов имели одинаковую ширину:
-		// http://stackoverflow.com/a/571420/254475
-		table-layout: fixed;
+	background: yellow;
+	h1 {
 		text-align: center;
-		border-collapse: separate;
-		// Проценты не поддерживаются
-		// http://stackoverflow.com/a/4973360/254475
-		// http://www.w3.org/TR/CSS2/tables.html#propdef-border-spacing
-    	border-spacing: 1em 0;
-		td.plan {
-			vertical-align: top;
-			border: 1px solid;
-			h2 {
-				margin: 0;
-				color: white;
-				font-weight: bold;
-				text-transform: uppercase;
-				padding: 8px 20px 9px 20px;
+		margin-bottom: 5%;
+	}
+	/*	2015-07-06
+		Нам нужно, чтобы, все колонки тарифных планов:
+		1) были расположены равномерно по всей ширине контейнера
+		2) имели одинаковую ширину
+		2) чтобы между ними были отступы
+		Решение с отступами взял отсюда: http://stackoverflow.com/a/25191956/254475
+
+		Сначала пробовал решение с наибольшим количеством голосов:
+		http://stackoverflow.com/a/13378788/254475
+		Суть этого решения в создании прозрачной рамки с одной из сторон ячеек
+		(кроме одной из крайних).
+		Однако недостаток этого решения в том, что колонки получаются разной ширины:
+		колонка без прозрачной рамки получается шире на ширину этой рамки у других колонок,
+        и я не понял, как это побороть.
+
+        А вот используемое сейчас решение с отрицательным отступом у меня заработало.
+	*/
+	> .table-outer {
+		margin: 0 -1em;
+		> table.plans {
+			width: 100%;
+			// Чтобы колонки тарифных планов имели одинаковую ширину:
+			// http://stackoverflow.com/a/571420/254475
+			table-layout: fixed;
+			text-align: center;
+			// Проценты не поддерживаются
+			// http://stackoverflow.com/a/4973360/254475
+			// http://www.w3.org/TR/CSS2/tables.html#propdef-border-spacing
+			border-collapse: separate;
+			border-spacing: 1em 0;
+			td.plan {
+				vertical-align: top;
+				border: 1px solid;
+				border-top-width: 0;
+				h2 {
+					margin: 0;
+					color: white;
+					font-weight: bold;
+					text-transform: uppercase;
+					padding: 8px 20px 9px 20px;
+				}
 			}
 		}
 	}

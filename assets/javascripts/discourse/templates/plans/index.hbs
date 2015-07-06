@@ -1,9 +1,17 @@
 <h1>Membership Plans</h1>
-<table class='plans'>
-	<tr>
-		{{#each plan in model}}
-			{{frontend-membership-plan plan=plan tagName='td' class='plan'}}
-		{{/each}}
-	</tr>
-</table>
+<div class='text-above'>{{{textAbove}}}</div>
+{{! 2015-07-06
+ 	Этот контейнер используется исключительно для реализации решения отсюда:
+    http://stackoverflow.com/a/25191956/254475
+}}
+<div class='table-outer'>
+	<table class='plans'>
+		<tr>
+			{{#each plan in model}}
+				{{frontend-membership-plan plan=plan tagName='td' class='plan'}}
+			{{/each}}
+		</tr>
+	</table>
+</div>
+
 
