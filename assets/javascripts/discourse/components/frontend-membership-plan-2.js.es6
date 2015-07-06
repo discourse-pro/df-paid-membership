@@ -3,7 +3,5 @@ export default Ember.Component.extend({
 		// Вызывается после вызова всех init для всех компонентов.
 		const color = '#' + this.get('plan').get('color');
 		this.$().css({'border-color': color});
-		this.$('.header').css({'background-color': color});
-		//console.log(this.get('layoutName'));
 	}.on('didInsertElement')
 });
