@@ -1,5 +1,6 @@
 export default Ember.Component.extend({
-	_didInsertElement: function() {
+	classNames: ['options']
+	,_didInsertElement: function() {
 		const color = '#' + this.get('plan').get('color').background;
 		this.$().css({'border-color': color});
 	}.on('didInsertElement')
@@ -22,5 +23,6 @@ export default Ember.Component.extend({
 			});
 		}
 		this.set('currency', Discourse.SiteSettings['«PayPal»_Payment_Currency']);
+		this.set('optionName', 'plan_' + plan.id + '_price_tier');
 	}.on('init')
 });
