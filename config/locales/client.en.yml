@@ -23,9 +23,18 @@ en:
         heading_new: 'Add a Price Tier'
         for: 'for'
         period_units:
-          days: 'day(s)'
-          months: 'month(s)'
-          years: 'year(s)'
+          d:
+            1: 'day'
+            many: 'days'
+            undefined: 'day(s)'
+          m:
+            1: 'month'
+            many: 'months'
+            undefined: 'month(s)'
+          y:
+            1: 'year'
+            many: 'years'
+            undefined: 'year(s)'
   js:
     df:
       paid_membership:

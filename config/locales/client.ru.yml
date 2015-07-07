@@ -23,9 +23,21 @@ ru:
         heading_new: 'Добавить вариант подписки'
         for: 'за'
         period_units:
-          days: 'дней'
-          months: 'месяцев'
-          years: 'лет'
+          d:
+            1: 'день'
+            2: 'дня'
+            5: 'дней'
+            undefined: 'дней'
+          m:
+            1: 'месяц'
+            2: 'месяца'
+            5: 'месяцев'
+            undefined: 'месяцев'
+          y:
+            1: 'год'
+            2: 'года'
+            5: 'лет'
+            undefined: 'лет'
   js:
     df:
       paid_membership:

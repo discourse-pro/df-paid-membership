@@ -32,11 +32,14 @@ export default Ember.Component.extend({
 		, 'items.@each.periodUnits'
 	)
 	,_init: function() {
-		this.set('periodUnitsOptions', [
-			{value: 'd', label: I18n.t('paid_membership.price_tier.period_units.days')}
-			,{value: 'm', label: I18n.t('paid_membership.price_tier.period_units.months')}
-			,{value: 'y', label: I18n.t('paid_membership.price_tier.period_units.years')}
-		]);
+		var periodUnitsOptions = [];
+		['d', 'm', 'y'].forEach(function(unit) {
+			periodUnitsOptions.push({
+				value: unit
+				, label: I18n.t('paid_membership.price_tier.period_units.' + unit + '.undefined')
+			})
+		});
+		this.set('periodUnitsOptions', periodUnitsOptions);
 		this.set('currency', Discourse.SiteSettings['«PayPal»_Payment_Currency']);
 		/** @type {Object[]} */
 		var items = this.get('items');
