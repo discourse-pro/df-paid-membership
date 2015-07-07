@@ -3,18 +3,19 @@
  * Очень хорошая статья о назначении price tiers:
  * http://summitevergreen.com/why-tiered-pricing-is-the-only-way-to-price-your-product/
  */
+/**
+ * Возвращает случайный короткий (7-значный) идентификатор
+ * (некое число в 16-ричной системе счисления, представленное в виде строки).
+ * @link http://stackoverflow.com/a/105074/254475
+ * @returns {string}
+ */
+const newId = function() {
+  return Math.floor((1 + Math.random()) * 0x10000000)
+    .toString(16)
+    .substring(1);
+};
 export default Ember.Component.extend({
 	classNames: ['membership-price-tiers']
-	,onInit: function() {
-		this.set('periodUnitsOptions', [
-			{value: 'd', label: I18n.t('paid_membership.price_tier.period_units.days')}
-			,{value: 'm', label: I18n.t('paid_membership.price_tier.period_units.months')}
-			,{value: 'y', label: I18n.t('paid_membership.price_tier.period_units.years')}
-		]);
-		this.set('currency', Discourse.SiteSettings['«PayPal»_Payment_Currency']);
-		this.newItem();
-		this.set('initialized', true);
-	}.on('init')
 	,_changed: function() {
 		if (this.get('initialized')) {
 			Ember.run.once(this, function() {
@@ -25,11 +26,32 @@ export default Ember.Component.extend({
 		}
 	}.observes(
 		'items.@each'
+		, 'items.@each.id'
 		, 'items.@each.price'
 		, 'items.@each.period'
 		, 'items.@each.periodUnits'
 	)
+	,_init: function() {
+		this.set('periodUnitsOptions', [
+			{value: 'd', label: I18n.t('paid_membership.price_tier.period_units.days')}
+			,{value: 'm', label: I18n.t('paid_membership.price_tier.period_units.months')}
+			,{value: 'y', label: I18n.t('paid_membership.price_tier.period_units.years')}
+		]);
+		this.set('currency', Discourse.SiteSettings['«PayPal»_Payment_Currency']);
+		/** @type {Object[]} */
+		var items = this.get('items');
+		// 2015-07-07
+		// Для поддержки предыдущих версий, которые имели другую структуру данных.
+		items.forEach(function(item) {
+			if (!item.id) {
+				item.id = newId();
+			}
+		});
+		this.newItem();
+		this.set('initialized', true);
+	}.on('init')
 	,newItem: function() {
+		this.set('id', newId());
 		this.set('price', 9);
 		this.set('period', 1);
 		this.set('periodUnits', 'm');
@@ -39,7 +61,8 @@ export default Ember.Component.extend({
 			if (!this.get('inputInvalid')) {
 				var items = this.get('items');
 				items.addObject({
-					price: this.get('price')
+					id: newId()
+					, price: this.get('price')
 					, period: this.get('period')
 					, periodUnits: this.get('periodUnits')
 				});

@@ -29,4 +29,7 @@ export default Ember.Component.extend({
 			,function() {$button.css(cssDefault);}
 		);
 	}.on('didInsertElement')
+	,_init: function() {
+		this.set('currency', Discourse.SiteSettings['«PayPal»_Payment_Currency']);
+	}.on('init')
 });

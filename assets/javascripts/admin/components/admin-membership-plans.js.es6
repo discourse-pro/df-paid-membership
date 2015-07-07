@@ -28,7 +28,35 @@ export default Ember.Component.extend({
 		, createColor('d13138')
 		, createColor('283890')
 	]
-	,onInit: function() {
+	,_changed: function() {
+		if (this.get('initialized')) {
+			Ember.run.once(this, function() {
+				this.set('valueS', JSON.stringify(this.get('items')));
+			});
+		}
+	}.observes(
+		'items.@each'
+		, 'items.@each.color'
+		, 'items.@each.description'
+		, 'items.@each.id'
+		, 'items.@each.restrictionType'
+		, 'items.@each.title'
+		/**
+		 * 2015-06-29
+		 * Наблюдение за items.@each.allowedGroupIds и items.@each.allowedGroupIds не работает,
+		 * потому что наблюдение, похоже, работает не более чем на два уровня вложенности:
+		 * @link https://github.com/emberjs/ember.js/issues/541#issue-3401973
+		 * Поэтому мы вызываем _changed() вручную из groupChanged().
+		 */
+	)
+	,_didInsertElement: function() {
+		// 2015-07-07
+		// Стандартное для Ember.js наблюдение работает лишь на 2 уровня вложенности,
+		// поэтому за изменениями палитры мы наблюдаем вручную.
+		const _this = this;
+		this.$('.hex-input').change(function() {_this._changed()});
+	}.on('didInsertElement')
+	,_init: function() {
 		/** @type {String} */
 		const valueS = this.get('valueS');
 		/** @type {Object[]} */
@@ -59,34 +87,6 @@ export default Ember.Component.extend({
 		this.newItem();
 		this.set('initialized', true);
 	}.on('init')
-	,_changed: function() {
-		if (this.get('initialized')) {
-			Ember.run.once(this, function() {
-				this.set('valueS', JSON.stringify(this.get('items')));
-			});
-		}
-	}.observes(
-		'items.@each'
-		, 'items.@each.color'
-		, 'items.@each.description'
-		, 'items.@each.id'
-		, 'items.@each.restrictionType'
-		, 'items.@each.title'
-		/**
-		 * 2015-06-29
-		 * Наблюдение за items.@each.allowedGroupIds и items.@each.allowedGroupIds не работает,
-		 * потому что наблюдение, похоже, работает не более чем на два уровня вложенности:
-		 * @link https://github.com/emberjs/ember.js/issues/541#issue-3401973
-		 * Поэтому мы вызываем _changed() вручную из groupChanged().
-		 */
-	)
-	,_didInsertElement: function() {
-		// 2015-07-07
-		// Стандартное для Ember.js наблюдение работает лишь на 2 уровня вложенности,
-		// поэтому за изменениями палитры мы наблюдаем вручную.
-		const _this = this;
-		this.$('.hex-input').change(function() {_this._changed()});
-	}.on('didInsertElement')
 	,newItem: function() {
 		this.set('newId', this.generateNewId());
 		this.set('allowedGroupIds', []);

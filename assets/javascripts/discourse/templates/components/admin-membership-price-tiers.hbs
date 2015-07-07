@@ -17,7 +17,7 @@
 						title='paid_membership.plan.delete'
 					}}
 					<div>
-						{{input value=item.price autoresize=true class='amount'}}{{currency}}
+						{{input value=item.price autoresize=true class='amount'}}{{unbound currency}}
 						{{i18n 'paid_membership.price_tier.for'}}
 						{{input value=item.period autoresize=true}}
 						{{x-select

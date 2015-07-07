@@ -1,1 +1,19 @@
+<div class='controls'>
+	{{#each tier in plan.priceTiers}}
+		<label class='radio'>
+			{{radio-button
+				value=tier.id
+				name='price_tier'
+				selection=controller.notificationLevelId
+			}}
+			<span>
+				<span class='price'>{{unbound tier.price}}</span>
+				<span class='currency'>{{unbound currency}}</span>
+				{{i18n 'paid_membership.price_tier.for'}}
+				<span class='period'>{{unbound tier.period}}</span>
+				<span class='periodUnits'>{{unbound tier.periodUnits}}</span>
+			</span>
+		</label>
+	{{/each}}
+</div>
 <a class='sign-up'>Sign Up!</a>
