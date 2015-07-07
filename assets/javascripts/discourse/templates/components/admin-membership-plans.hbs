@@ -10,11 +10,7 @@
 						class='btn-small no-text df-simple'
 						title='paid_membership.plan.delete'
 					}}
-					<div>
-						<h4 class='plan-title'>{{input value=item.title autoresize=true}}</h4>
-						<span class='plan-bbcode'
-						>{{input type='text' value=item.id autoresize=true}}</span>
-					</div>
+					<h4 class='plan-title'>{{input value=item.title autoresize=true}}</h4>
 				</div>
 				<div class='field'>
 					<span class='label'>Restriction Type:</span>
@@ -41,7 +37,7 @@
 					{{df-editor value=item.description}}
 				</div>
 				<table class='field palette'>
-					<caption>Palette</caption>
+					<caption>{{i18n 'paid_membership.plan.palette'}}</caption>
 					<tr>
 						<td class='label'>Primary:</td>
 						<td class='value'>
@@ -125,10 +121,7 @@
 			disabled=inputInvalid
 			title='paid_membership.plan.add'
 		}}
-		<div>
-			<h4 class='plan-title'>{{input value=title autoresize=true}}</h4>
-			<span class='plan-bbcode'>{{input value=newId autoresize=true}}</span>
-		</div>
+		<h4 class='plan-title'>{{input value=title autoresize=true}}</h4>
 	</div>
 	<div class='field'>
 		<span class='label'>{{i18n 'paid_membership.plan.restriction_type_heading'}}:</span>
@@ -139,10 +132,6 @@
 			optionLabelPath='content.label'
 			class='restrictionType'
 		}}
-	</div>
-	<div class='field color'>
-		<div class='label'>{{i18n 'paid_membership.plan.color'}}:</div>
-		{{color-input hexValue=color brightnessValue=120 valid=true}}
 	</div>
 	{{!--
 		2015-06-29
@@ -170,7 +159,7 @@
 		{{df-editor value=description}}
 	</div>
 	<table class='field palette'>
-		<caption>Palette</caption>
+		<caption>{{i18n 'paid_membership.plan.palette'}}</caption>
 		<tr>
 			<td class='label'>Primary:</td>
 			<td class='value'>

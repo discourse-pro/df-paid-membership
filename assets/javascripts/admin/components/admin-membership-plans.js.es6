@@ -10,6 +10,17 @@ const createColor = function(color) {
 		,hoverTextShadow: arguments[7] || arguments[3] || color
 	};
 };
+/**
+ * Возвращает случайный короткий (7-значный) идентификатор
+ * (некое число в 16-ричной системе счисления, представленное в виде строки).
+ * @link http://stackoverflow.com/a/105074/254475
+ * @returns {string}
+ */
+const newId = function() {
+  return Math.floor((1 + Math.random()) * 0x10000000)
+    .toString(16)
+    .substring(1);
+};
 export default Ember.Component.extend({
 	classNames: ['membership-plans']
 	/**
@@ -70,13 +81,16 @@ export default Ember.Component.extend({
 		}
 		// 2015-06-30
 		// Для поддержки предыдущих версий, которые имели другую структуру данных.
-		items.forEach(function(item) {
-			if (!item.color) {
-				item.color = createColor('f9a41a');
+		items.forEach(function(plan) {
+			if (!plan.id || (-1 < plan.id.indexOf('-'))) {
+				plan.id = newId();
+			}
+			if (!plan.color) {
+				plan.color = createColor('f9a41a');
 			}
 			/** @link http://stackoverflow.com/a/8511350/254475 */
-			else if ('object' !== typeof item.color) {
-				item.color = createColor(item.color)
+			else if ('object' !== typeof plan.color) {
+				plan.color = createColor(plan.color)
 			}
 		});
 		this.set('items', items);
@@ -88,7 +102,7 @@ export default Ember.Component.extend({
 		this.set('initialized', true);
 	}.on('init')
 	,newItem: function() {
-		this.set('newId', this.generateNewId());
+		this.set('newId', newId());
 		this.set('allowedGroupIds', []);
 		this.set('color', this.palette[Math.floor(this.palette.length * Math.random())]);
 		this.set('description', I18n.t('paid_membership.plan.description_placeholder'));
@@ -97,37 +111,16 @@ export default Ember.Component.extend({
 		this.set('restrictionType', 'whitelist');
 		this.set('title', I18n.t('paid_membership.plan.title_placeholder'));
 	}
-	,generateNewId: function() {
-		var items = this.get('items');
-		var existingIds = $.map(items, function(item) {
-			var matches = item.id.match(/^bbcode-plan-(\d+)/);
-			return !matches || (2 > matches.length) ? 0 : parseInt(matches[1]);
-		});
-		/** @link http://stackoverflow.com/a/6102340/254475 */
-		var max = !existingIds.length ? 0 : Math.max.apply(Math, existingIds);
-		return 'bbcode-plan-' + (max + 1);
-	}
 	,actions: {
 		addItem() {
 			if (!this.get('inputInvalid')) {
 				var items = this.get('items');
-				var id = this.get('newId') || this.generateNewId();
 				items.addObject({
 					allowedGroupIds: this.get('allowedGroupIds')
 					, color: this.get('color')
-					/*createColor(
-						this.get('color.background')
-						,this.get('color.boxShadowX')
-						,this.get('color.boxShadowY')
-						,this.get('color.textShadow')
-						,this.get('color.hoverBackground')
-						,this.get('color.hoverBoxShadowX')
-						,this.get('color.hoverBoxShadowY')
-						,this.get('color.hoverTextShadow')
-					) */
 					, description: this.get('description')
 					, grantedGroupIds: this.get('grantedGroupIds')
-					, id: id
+					, id: this.get('newId')
 					, priceTiers: this.get('priceTiers')
 					, restrictionType: this.get('restrictionType')
 					, title: this.get('title')
