@@ -65,10 +65,16 @@
 					label {
 						// В ядре: margin-bottom: 5px;
 						margin: 0;
-						cursor: pointer;
-						> input {}
+						&:not(.disabled) {cursor: pointer;}
+						&.disabled {
+							cursor: not-allowed;
+							> input {cursor: not-allowed;}
+						}
 						> div {float: left;}
 					}
+				}
+				.need-login {
+					padding: 1em 0;
 				}
 				a.sign-up {
 					display: inline-block;
@@ -88,10 +94,14 @@
 					// 2015-07-06
 					// Этот селектор обязательно должно быть расположен после селектора &:hover,
 					// чтобы при нажатии кнопки применялось правило box-shadow: none;
-					&:active {
+					&:active:not(.disabled) {
 						box-shadow: none !important;
 						position: relative;
 						top: 5px;
+					}
+					&.disabled {
+						cursor: not-allowed;
+						opacity: 0.15;
 					}
 				}
 			}

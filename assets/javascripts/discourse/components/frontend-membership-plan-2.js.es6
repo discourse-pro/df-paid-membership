@@ -32,6 +32,7 @@ export default Ember.Component.extend({
 			this.set('selection', tiers[tiers.length - 1].id);
 		}
 		this.set('currency', Discourse.SiteSettings['«PayPal»_Payment_Currency']);
+		this.set('notLoggedIn', !Discourse.User.current());
 		this.set('optionName', 'plan_' + plan.id + '_price_tier');
 	}.on('init')
 });

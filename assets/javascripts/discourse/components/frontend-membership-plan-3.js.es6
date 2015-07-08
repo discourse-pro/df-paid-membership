@@ -30,7 +30,7 @@ export default Ember.Component.extend({
 		);
 	}.on('didInsertElement')
 	,_init: function() {
-		this.set('user', Discourse.User.current());
+		this.set('notLoggedIn', !Discourse.User.current());
 	}.on('init')
 	,actions: {
 		buy() {

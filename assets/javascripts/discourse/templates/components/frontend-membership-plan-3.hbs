@@ -1,4 +1,6 @@
-{{#unless user}}
-	<div>Please <a {{action 'login'}}>log in</a> or <a {{action 'register'}}>create account</a> first.</div>
-{{/unless}}
-<a class='sign-up' {{action 'buy'}}>Sign Up!</a>
+{{#if notLoggedIn}}
+	<div class='need-login'>
+		Please <a {{action 'login'}}>log in</a> or <a {{action 'register'}}>create account</a> first.
+	</div>
+{{/if}}
+<a class='sign-up {{if notLoggedIn 'disabled'}}' {{action 'buy'}}>Sign Up!</a>

@@ -1,6 +1,6 @@
 <div class='options-outer'>
 	{{#each tier in plan.priceTiers}}
-		<label class='radio'>
+		<label class='radio {{if notLoggedIn 'disabled'}}'>
 			{{radio-button value=tier.id name=optionName selection=selection}}
 			<div>
 				<span class='price'>{{unbound tier.price}}</span>
