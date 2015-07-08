@@ -27,6 +27,9 @@ export default Ember.Component.extend({
 			tiers.forEach(function(tier) {
 				tier.periodUnitsLabel = getPeriodUnitsLabel(tier);
 			});
+			// 2015-07-08
+			// По-умолчанию выбираем последнюю (подразумевается, что самую дорогую) опцию.
+			this.set('selection', tiers[tiers.length - 1].id);
 		}
 		this.set('currency', Discourse.SiteSettings['«PayPal»_Payment_Currency']);
 		this.set('optionName', 'plan_' + plan.id + '_price_tier');

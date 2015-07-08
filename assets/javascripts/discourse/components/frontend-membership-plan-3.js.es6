@@ -29,4 +29,21 @@ export default Ember.Component.extend({
 			,function() {$button.css(cssDefault);}
 		);
 	}.on('didInsertElement')
+	,actions: {
+		onClick() {
+			console.log('click!');
+			if (!Discourse.User.current()) {
+				console.log('not logged in');
+				/**
+				 * @see app/assets/javascripts/discourse.js
+				 * @link http://stackoverflow.com/a/15401016/254475
+				 */
+				const loginController = Discourse.__container__.lookup('controller:login');
+				loginController.send('createAccount');
+			}
+			else {
+				console.log('logged in');
+			}
+		}
+	}
 });

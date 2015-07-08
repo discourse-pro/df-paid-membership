@@ -1,11 +1,7 @@
 <div class='options-outer'>
 	{{#each tier in plan.priceTiers}}
 		<label class='radio'>
-			{{radio-button
-				value=tier.id
-				name=optionName
-				selection=controller.notificationLevelId
-			}}
+			{{radio-button value=tier.id name=optionName selection=selection}}
 			<div>
 				<span class='price'>{{unbound tier.price}}</span>
 				<span class='currency'>{{unbound currency}}</span>
