@@ -1,1 +1,4 @@
-<a class='sign-up' {{action 'onClick'}}>Sign Up!</a>
+{{#unless user}}
+	<div>Please <a {{action 'login'}}>log in</a> or <a {{action 'register'}}>create account</a> first.</div>
+{{/unless}}
+<a class='sign-up' {{action 'buy'}}>Sign Up!</a>

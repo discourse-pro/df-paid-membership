@@ -1,0 +1,1 @@
+export default {name: 'df-paid-membership', initialize() {}};
