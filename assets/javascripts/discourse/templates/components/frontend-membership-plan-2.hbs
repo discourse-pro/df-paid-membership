@@ -1,16 +1,18 @@
-{{#each tier in plan.priceTiers}}
-	<label class='radio'>
-		{{radio-button
-			value=tier.id
-			name=optionName
-			selection=controller.notificationLevelId
-		}}
-		<span>
-			<span class='price'>{{unbound tier.price}}</span>
-			<span class='currency'>{{unbound currency}}</span>
-			{{i18n 'paid_membership.price_tier.for'}}
-			<span class='period'>{{unbound tier.period}}</span>
-			<span class='periodUnits'>{{unbound tier.periodUnitsLabel}}</span>
-		</span>
-	</label>
-{{/each}}
+<div class='options-outer'>
+	{{#each tier in plan.priceTiers}}
+		<label class='radio'>
+			{{radio-button
+				value=tier.id
+				name=optionName
+				selection=controller.notificationLevelId
+			}}
+			<div>
+				<span class='price'>{{unbound tier.price}}</span>
+				<span class='currency'>{{unbound currency}}</span>
+				{{i18n 'paid_membership.price_tier.for'}}
+				<span class='period'>{{unbound tier.period}}</span>
+				<span class='periodUnits'>{{unbound tier.periodUnitsLabel}}</span>
+			</div>
+		</label>
+	{{/each}}
+</div>

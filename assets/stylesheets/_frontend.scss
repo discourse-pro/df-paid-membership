@@ -55,8 +55,20 @@
 					padding: 8px 20px 9px 20px;
 				}
 				.description {
-					padding: 0.35em 0.75em;;
+					padding: 0.35em 0.75em 1em;
 					text-align: left;
+				}
+				&.options {
+					padding: 0.35em 0.75em;
+					vertical-align: middle;
+					> .options-outer {margin: 0 auto;}
+					label {
+						// В ядре: margin-bottom: 5px;
+						margin: 0;
+						cursor: pointer;
+						> input {}
+						> div {float: left;}
+					}
 				}
 				a.sign-up {
 					display: inline-block;
@@ -66,7 +78,7 @@
 					border: none;
 					border-radius: 6px;
 					font-size: 20px;
-					margin: 20px 20px;
+					margin: 5px 20px 20px;
 					padding: 10px 2em;
 					bottom: 0;
 					color: #fff;
