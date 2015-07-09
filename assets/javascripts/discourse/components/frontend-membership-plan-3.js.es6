@@ -34,12 +34,15 @@ export default Ember.Component.extend({
 	}.on('init')
 	,actions: {
 		buy() {
-			console.log('click!');
-			if (!Discourse.User.current()) {
-				console.log('not logged in');
-			}
-			else {
-				console.log('logged in');
+			if (Discourse.User.current()) {
+				var selected = $('input[type=radio]:checked', this.$().closest('table')).val();
+				Discourse.ajax('/plans/buy', {data: {
+					user: Discourse.User.current().id
+					,plan: this.get('plan').id
+					,tier: selected
+				}}).then(function(result) {
+					console.log(result);
+				});
 			}
 		}
 		,login() {
