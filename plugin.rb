@@ -48,7 +48,42 @@ after_initialize do
 			puts params['user']
 			puts price
 			puts currency
-			render json: { test: ['тест'] }
+			user = User.find_by(id: params['user'])
+			Paypal.sandbox!
+			paypal_options = {
+				no_shipping: true, # if you want to disable shipping information
+				allow_note: false, # if you want to disable notes
+				pay_on_paypal: true # if you don't plan on showing your own confirmation step
+			}
+			request = Paypal::Express::Request.new(
+				:username   => SiteSetting.send('«PayPal»_Sandbox_API_Username'),
+				:password   => SiteSetting.send('«PayPal»_Sandbox_API_Password'),
+				:signature  => SiteSetting.send('«PayPal»_Sandbox_Signature')
+			)
+			description =
+				"Membership Plan ""#{plan['title']}""." +
+				" User: #{user.username}." +
+				" Period: #{tier['period']} #{tier['periodUnits']}."
+			puts description
+			payment_request = Paypal::Payment::Request.new(
+				:currency_code => currency,
+				:description => description,
+				:quantity => 1,
+				:amount => price,
+				:notify_url => 'https://discourse.pro/plans/notify',
+				:custom_fields => {
+					#CARTBORDERCOLOR: "C00000",
+					#LOGOIMG: "https://example.com/logo.png"
+				}
+			)
+			response = request.setup(
+				payment_request,
+				'https://discourse.pro/plans',
+				'https://discourse.pro/plans',
+				paypal_options
+			)
+			puts response.redirect_uri
+			render json: { redirect_uri: response.redirect_uri }
 		end
 	end
 	PaidMembership::Engine.routes.draw do
