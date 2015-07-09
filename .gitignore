@@ -1,1 +1,3 @@
 gems/
+!gems/2.2.2/specifications/airbrake-4.3.0.gemspec
+!gems/2.2.2/gems/airbrake-4.3.0
