@@ -48,7 +48,8 @@ after_initialize do
 			puts params['user']
 			puts price
 			puts currency
-			user = User.find_by(id: params['user'])
+			userId = params['user']
+			user = User.find_by(id: userId)
 			Paypal.sandbox!
 			paypal_options = {
 				no_shipping: true, # if you want to disable shipping information
@@ -65,12 +66,14 @@ after_initialize do
 				" User: #{user.username}." +
 				" Period: #{tier['period']} #{tier['periodUnits']}."
 			puts description
+			paymentId = "#{userId}::#{planId}::#{tierId}::#{Time.now.strftime("%Y-%m-%d-%H-%M")}"
 			payment_request = Paypal::Payment::Request.new(
 				:currency_code => currency,
 				:description => description,
 				:quantity => 1,
 				:amount => price,
-				:notify_url => 'https://discourse.pro/plans/notify',
+				:notify_url => 'https://discourse.pro/plans/ipn',
+				:invoice_number => paymentId,
 				:custom_fields => {
 					#CARTBORDERCOLOR: "C00000",
 					#LOGOIMG: "https://example.com/logo.png"
@@ -85,10 +88,13 @@ after_initialize do
 			puts response.redirect_uri
 			render json: { redirect_uri: response.redirect_uri }
 		end
+		def ipn
+		end
 	end
 	PaidMembership::Engine.routes.draw do
 		get '/' => 'index#index'
 		get '/buy' => 'index#buy'
+		get '/ipn' => 'index#ipn'
 	end
 	Discourse::Application.routes.append do
 		mount ::PaidMembership::Engine, at: '/plans'
