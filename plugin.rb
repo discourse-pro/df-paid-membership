@@ -15,7 +15,7 @@ after_initialize do
 		end
 	end
 	require_dependency 'application_controller'
-	class PaidMembership::PlansController < ::ApplicationController
+	class PaidMembership::IndexController < ::ApplicationController
 		#skip_before_filter :check_xhr
 		def index
 			begin
@@ -87,8 +87,8 @@ after_initialize do
 		end
 	end
 	PaidMembership::Engine.routes.draw do
-		get '/' => 'plans#index'
-		get '/buy' => 'plans#buy'
+		get '/' => 'index#index'
+		get '/buy' => 'index#buy'
 	end
 	Discourse::Application.routes.append do
 		mount ::PaidMembership::Engine, at: '/plans'
