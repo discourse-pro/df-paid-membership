@@ -16,12 +16,15 @@ after_initialize do
 	end
 	require_dependency 'application_controller'
 	class PaidMembership::IndexController < ::ApplicationController
-		skip_before_filter :authorize_mini_profiler, only: [:ipn]
-		skip_before_filter :check_xhr, only: [:ipn]
-		skip_before_filter :preload_json, only: [:ipn]
-		skip_before_filter :redirect_to_login_if_required, only: [:ipn]
-		skip_before_filter :set_current_user_for_logs, only: [:ipn]
-		skip_before_filter :verify_authenticity_token, only: [:ipn]
+		skip_before_filter :authorize_mini_profiler,
+			:check_xhr,
+			:inject_preview_style,
+			:preload_json,
+			:redirect_to_login_if_required,
+			:set_current_user_for_logs,
+			:set_locale,
+			:set_mobile_view,
+			:verify_authenticity_token, only: [:ipn]
 		protect_from_forgery :except => [:ipn]
 		def index
 			begin
@@ -116,6 +119,7 @@ after_initialize do
 			render json: { redirect_uri: response.redirect_uri }
 		end
 		def ipn
+			no_cookies
 =begin
 			Airbrake.notify(
 				:error_message => 'Оповещение о платеже из PayPal',
