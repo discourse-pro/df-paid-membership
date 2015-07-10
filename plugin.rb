@@ -140,7 +140,7 @@ after_initialize do
 			)
 			payment_request = Paypal::Payment::Request.new({
 				:action => 'Sale',
-				:currency_code => SiteSetting.send '«PayPal»_Payment_Currency',
+				:currency_code => SiteSetting.send('«PayPal»_Payment_Currency'),
 				:amount => details.amount
 			})
 			response = paypal_express_request.checkout!(
