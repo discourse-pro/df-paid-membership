@@ -134,7 +134,7 @@ after_initialize do
 				:parameters => params
 			)
 			payment_request = Paypal::Payment::Request.new({
-				:action => 'Sale'
+				#:action => 'Sale'
 			})
 			response = paypal_express_request.checkout!(
 				params['token'],
