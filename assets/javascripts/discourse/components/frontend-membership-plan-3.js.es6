@@ -41,7 +41,7 @@ export default Ember.Component.extend({
 					,plan: this.get('plan').id
 					,tier: selected
 				}}).then(function(result) {
-					console.log(result);
+					window.location.replace(result.redirect_uri);
 				});
 			}
 		}

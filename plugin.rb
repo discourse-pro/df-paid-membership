@@ -20,8 +20,6 @@ after_initialize do
 		#skip_before_filter :check_xhr
 		def index
 			begin
-				#notify_airbrake '!!!!!!!!!!!!!!!TEST!!!!!!!!!!!!!!!!!!!!!!!!'
-				Airbrake.notify :error_message => 'ХУЕЦ :-)'
 				plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
 			rescue JSON::ParserError => e
 				plans = []
@@ -29,6 +27,11 @@ after_initialize do
 			render json: { plans: plans }
 		end
 		def buy
+			Airbrake.notify(
+				:error_message => 'Покупка тарифного плана',
+				:error_class => 'plans#buy',
+				:parameters => params
+			)
 			plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
 			plan = nil
 			planId = params['plan']
@@ -67,7 +70,6 @@ after_initialize do
 				"Membership Plan ""#{plan['title']}""." +
 				" User: #{user.username}." +
 				" Period: #{tier['period']} #{tier['periodUnits']}."
-			puts description
 			paymentId = "#{user.id}::#{planId}::#{tierId}::#{Time.now.strftime("%Y-%m-%d-%H-%M")}"
 			payment_request = Paypal::Payment::Request.new(
 				:currency_code => currency,
@@ -81,6 +83,11 @@ after_initialize do
 					#LOGOIMG: "https://example.com/logo.png"
 				}
 			)
+			Airbrake.notify(
+				:error_message => 'Регистрация платежа в PayPal',
+				:error_class => 'plans#buy',
+				:parameters => payment_request
+			)
 			response = request.setup(
 				payment_request,
 				# после успешной оплаты
@@ -91,19 +98,20 @@ after_initialize do
 				"#{Discourse.base_url}/plans",
 				paypal_options
 			)
-			puts response.redirect_uri
+			Airbrake.notify(
+				:error_message => 'Ответ PayPal на регистрацию',
+				:error_class => 'plans#buy',
+				:parameters => response.redirect_uri
+			)
 			render json: { redirect_uri: response.redirect_uri }
 		end
 		def ipn
+			Airbrake.notify(
+				:error_message => 'Оповещение о платеже из PayPal',
+				:error_class => 'plans#ipn',
+				:parameters => params
+			)
 			Paypal::IPN.verify!(request.raw_post)
-		end
-		def test
-			puts '!!!!!!!!!!!!!!!!!test_mail!!!!!!!!!!!!!!!!!!!!!!!!'
-			#require_dependency 'application_controller'
-			require 'mailers/test_mailer'
-			message = TestMailer.send_test('dfediuk@gmail.com')
-			Email::Sender.new('тест', :test_message).send
-			puts '!!!!!!!!!!!!!!!Mail sent!!!!!!!!!!!!!!!!'
 		end
 	end
 	PaidMembership::Engine.routes.draw do
