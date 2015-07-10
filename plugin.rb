@@ -27,11 +27,13 @@ after_initialize do
 			render json: { plans: plans }
 		end
 		def buy
+=begin
 			Airbrake.notify(
 				:error_message => 'Покупка тарифного плана',
 				:error_class => 'plans#buy',
 				:parameters => params
 			)
+=end
 			plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
 			plan = nil
 			planId = params['plan']
@@ -51,9 +53,6 @@ after_initialize do
 			}
 			price = tier['price']
 			currency = SiteSetting.send '«PayPal»_Payment_Currency'
-			puts params['user']
-			puts price
-			puts currency
 			user = User.find_by(id: params['user'])
 			Paypal.sandbox!
 			paypal_options = {
@@ -67,11 +66,11 @@ after_initialize do
 				:signature  => SiteSetting.send('«PayPal»_Sandbox_Signature')
 			)
 			description =
-				"Membership Plan ""#{plan['title']}""." +
-				" User: #{user.username}." +
+				"Membership Plan: #{plan['title']}.\n" +
+				" User: #{user.username}.\n" +
 				" Period: #{tier['period']} #{tier['periodUnits']}."
 			paymentId = "#{user.id}::#{planId}::#{tierId}::#{Time.now.strftime("%Y-%m-%d-%H-%M")}"
-			payment_request = Paypal::Payment::Request.new(
+			requestParams = {
 				:currency_code => currency,
 				:description => description,
 				:quantity => 1,
@@ -82,12 +81,13 @@ after_initialize do
 					#CARTBORDERCOLOR: "C00000",
 					#LOGOIMG: "https://example.com/logo.png"
 				}
-			)
+			}
 			Airbrake.notify(
 				:error_message => 'Регистрация платежа в PayPal',
 				:error_class => 'plans#buy',
-				:parameters => payment_request
+				:parameters => requestParams
 			)
+			payment_request = Paypal::Payment::Request.new requestParams
 			response = request.setup(
 				payment_request,
 				# после успешной оплаты
@@ -101,7 +101,7 @@ after_initialize do
 			Airbrake.notify(
 				:error_message => 'Ответ PayPal на регистрацию',
 				:error_class => 'plans#buy',
-				:parameters => response.redirect_uri
+				:parameters => {redirect_uri: response.redirect_uri}
 			)
 			render json: { redirect_uri: response.redirect_uri }
 		end
