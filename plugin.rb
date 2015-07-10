@@ -3,8 +3,9 @@
 # version: 1.0.0
 # authors: Dmitry Fedyuk
 # url: https://discourse.pro/t/35
-gem 'attr_required', '1.0.0'
-gem 'paypal-express', '0.8.1', {require_name: 'paypal'}
+#gem 'attr_required', '1.0.0'
+#gem 'paypal-express', '0.8.1', {require_name: 'paypal'}
+require 'paypal'
 require 'airbrake'
 require 'json'
 register_asset 'stylesheets/main.scss'
@@ -66,8 +67,8 @@ after_initialize do
 				:signature  => SiteSetting.send('«PayPal»_Sandbox_Signature')
 			)
 			description =
-				"Membership Plan: #{plan['title']}.\n" +
-				" User: #{user.username}.\n" +
+				"Membership Plan: #{plan['title']}." +
+				" User: #{user.username}." +
 				" Period: #{tier['period']} #{tier['periodUnits']}."
 			paymentId = "#{user.id}::#{planId}::#{tierId}::#{Time.now.strftime("%Y-%m-%d-%H-%M")}"
 			requestParams = {
@@ -109,8 +110,9 @@ after_initialize do
 			Airbrake.notify(
 				:error_message => 'Оповещение о платеже из PayPal',
 				:error_class => 'plans#ipn',
-				:parameters => params
+				#:parameters => params
 			)
+			render :nothing => true
 			Paypal::IPN.verify!(request.raw_post)
 		end
 	end
