@@ -24,16 +24,7 @@ after_initialize do
 			:set_current_user_for_logs,
 			:set_locale,
 			:set_mobile_view,
-			:verify_authenticity_token, only: [:ipn]
-		skip_before_filter :authorize_mini_profiler,
-			:check_xhr,
-			:inject_preview_style,
-			:preload_json,
-			:redirect_to_login_if_required,
-			:set_current_user_for_logs,
-			:set_locale,
-			:set_mobile_view,
-			:verify_authenticity_token, only: [:success]
+			:verify_authenticity_token, only: [:ipn, :success]
 		protect_from_forgery :except => [:ipn, :success]
 		before_filter :paypal_set_sandbox_mode_if_needed, only: [:buy, :ipn, :success]
 		def index
@@ -45,11 +36,7 @@ after_initialize do
 			render json: { plans: plans }
 		end
 		def buy
-			Airbrake.notify(
-				:error_message => 'Покупка тарифного плана',
-				:error_class => 'plans#buy',
-				:parameters => params
-			)
+			Airbrake.notify(:error_message => 'Purchase started', :parameters => params)
 			plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
 			plan = nil
 			planId = params['plan']
@@ -61,7 +48,6 @@ after_initialize do
 			}
 			tier = nil
 			tierId = params['tier']
-			puts plan['priceTiers']
 			plan['priceTiers'].each { |t|
 				if tierId == t['id']
 					tier = t
@@ -88,11 +74,7 @@ after_initialize do
 				:quantity => 1,
 				:amount => price,
 				:notify_url => "#{Discourse.base_url}/plans/ipn",
-				:invoice_number => paymentId,
-				:custom_fields => {
-					#CARTBORDERCOLOR: "C00000",
-					#LOGOIMG: "https://example.com/logo.png"
-				}
+				:invoice_number => paymentId
 			}
 			Airbrake.notify(
 				:error_message => 'Регистрация платежа в PayPal',
@@ -177,20 +159,8 @@ after_initialize do
 			)
 		end
 		def paypal_set_sandbox_mode_if_needed
-			if sandbox?
-				puts '!!!!!Sandbox!!!!!'
-				Airbrake.notify(
-					:error_message => 'SANDBOX MODE',
-					:parameters => {mode: SiteSetting.send('«PayPal»_Mode')}
-				)
-				Paypal.sandbox!
-			else
-				puts '!!!!PRODUCTION!!!!'
-				Airbrake.notify(
-					:error_message => 'PRODUCTION MODE',
-					:parameters => {mode: SiteSetting.send('«PayPal»_Mode')}
-				)
-			end
+			Paypal.sandbox= sandbox?
+			Airbrake.notify(:error_message => sandbox? ? 'SANDBOX MODE' : 'PRODUCTION MODE')
 		end
 		def sandbox?
 			'sandbox' == SiteSetting.send('«PayPal»_Mode')

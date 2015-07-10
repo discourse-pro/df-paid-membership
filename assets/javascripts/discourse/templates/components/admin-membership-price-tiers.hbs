@@ -17,7 +17,13 @@
 						title='paid_membership.plan.delete'
 					}}
 					<div>
-						{{input value=item.price autoresize=true class='amount'}}{{unbound currency}}
+{{! 2015-07-11
+	Валюту не стоит делать «unbound»,
+	потому что естественным сценарием для администратора является настройка валюты,
+	а потом переход (без перезагрузки страницы! это же Ember.Js)
+	на соседнюю вкладку для настройки тарифных планов.
+}}
+						{{input value=item.price autoresize=true class='amount'}}{{currency}}
 						{{i18n 'paid_membership.price_tier.for'}}
 						{{input value=item.period autoresize=true}}
 						{{x-select
@@ -44,7 +50,13 @@
 			title='paid_membership.plan.add'
 		}}
 		<div>
-			{{input value=price autoresize=true class='amount'}}{{unbound currency}}
+			{{! 2015-07-11
+				Валюту не стоит делать «unbound»,
+				потому что естественным сценарием для администратора является настройка валюты,
+				а потом переход (без перезагрузки страницы! это же Ember.Js)
+				на соседнюю вкладку для настройки тарифных планов.
+			}}
+			{{input value=price autoresize=true class='amount'}}{{currency}}
 			{{i18n 'paid_membership.price_tier.for'}}
 			{{input value=period autoresize=true}}
 			{{x-select
