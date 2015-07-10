@@ -35,7 +35,11 @@ export default Ember.Component.extend({
 	,actions: {
 		buy() {
 			if (Discourse.User.current()) {
-				var selected = $('input[type=radio]:checked', this.$().closest('table')).val();
+				const $currentRow = this.$().closest('tr');
+				const columnIndex = $currentRow.children('td').index(this.$());
+				const $prevRow = $currentRow.prev();
+				const $cellAbove = $prevRow.children('td').eq(columnIndex);
+				var selected = $('input[type=radio]:checked', $cellAbove).val();
 				Discourse.ajax('/plans/buy', {data: {
 					user: Discourse.User.current().id
 					,plan: this.get('plan').id

@@ -16,11 +16,12 @@ after_initialize do
 	end
 	require_dependency 'application_controller'
 	class PaidMembership::IndexController < ::ApplicationController
+		skip_before_filter :authorize_mini_profiler, only: [:ipn]
 		skip_before_filter :check_xhr, only: [:ipn]
 		skip_before_filter :preload_json, only: [:ipn]
-		skip_before_filter :verify_authenticity_token, only: [:ipn]
-		skip_before_filter :authorize_mini_profiler, only: [:ipn]
 		skip_before_filter :redirect_to_login_if_required, only: [:ipn]
+		skip_before_filter :set_current_user_for_logs, only: [:ipn]
+		skip_before_filter :verify_authenticity_token, only: [:ipn]
 		protect_from_forgery :except => [:ipn]
 		def index
 			begin
@@ -31,13 +32,11 @@ after_initialize do
 			render json: { plans: plans }
 		end
 		def buy
-=begin
 			Airbrake.notify(
 				:error_message => 'Покупка тарифного плана',
 				:error_class => 'plans#buy',
 				:parameters => params
 			)
-=end
 			plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
 			plan = nil
 			planId = params['plan']
@@ -47,18 +46,25 @@ after_initialize do
 					break
 				end
 			}
+			puts plan
 			tier = nil
 			tierId = params['tier']
+			puts plan['priceTiers']
 			plan['priceTiers'].each { |t|
 				if tierId == t['id']
 					tier = t
 					break
 				end
 			}
+			puts tierId
+			puts tier
 			price = tier['price']
 			currency = SiteSetting.send '«PayPal»_Payment_Currency'
 			user = User.find_by(id: params['user'])
-			Paypal.sandbox!
+			mode = SiteSetting.send '«PayPal»_Mode'
+			if 'sandbox' == mode
+				Paypal.sandbox!
+			end
 			paypal_options = {
 				no_shipping: true, # if you want to disable shipping information
 				allow_note: false, # if you want to disable notes
