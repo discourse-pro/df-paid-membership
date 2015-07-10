@@ -3,8 +3,6 @@
 # version: 1.0.0
 # authors: Dmitry Fedyuk
 # url: https://discourse.pro/t/35
-#gem 'attr_required', '1.0.0'
-#gem 'paypal-express', '0.8.1', {require_name: 'paypal'}
 require 'paypal'
 require 'airbrake'
 require 'json'
@@ -18,7 +16,8 @@ after_initialize do
 	end
 	require_dependency 'application_controller'
 	class PaidMembership::IndexController < ::ApplicationController
-		#skip_before_filter :check_xhr
+		skip_before_filter :check_xhr, only: [:ipn]
+		protect_from_forgery :except => [:ipn]
 		def index
 			begin
 				plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
@@ -110,7 +109,7 @@ after_initialize do
 			Airbrake.notify(
 				:error_message => 'Оповещение о платеже из PayPal',
 				:error_class => 'plans#ipn',
-				#:parameters => params
+				:parameters => params
 			)
 			render :nothing => true
 			Paypal::IPN.verify!(request.raw_post)
