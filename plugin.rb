@@ -5,8 +5,9 @@
 # url: https://discourse.pro/t/35
 gem 'attr_required', '1.0.0'
 gem 'paypal-express', '0.8.1', {require_name: 'paypal'}
-=begin
-gem 'airbrake', '4.3.0'
+# Из коробки airbrake не устанавливается.
+# Поэтому чуточку подправил его и устанавливаю локальную версию.
+df_gem 'airbrake', '4.3.0'
 Airbrake.configure do |config|
   config.api_key = 'c07658a7417f795847b2280bc2fd7a79'
   config.host    = 'log.dmitry-fedyuk.com'
@@ -14,7 +15,6 @@ Airbrake.configure do |config|
   config.secure  = config.port == 443
   config.development_environments = []
 end
-=end
 require 'json'
 register_asset 'stylesheets/main.scss'
 after_initialize do
@@ -30,7 +30,7 @@ after_initialize do
 		def index
 			begin
 				#notify_airbrake '!!!!!!!!!!!!!!!TEST!!!!!!!!!!!!!!!!!!!!!!!!'
-				#Airbrake.notify :error_message => 'ХУЕЦ :-)'
+				Airbrake.notify :error_message => 'ХУЕЦ :-)'
 				plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
 			rescue JSON::ParserError => e
 				plans = []
