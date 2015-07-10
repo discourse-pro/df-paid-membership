@@ -65,8 +65,10 @@ after_initialize do
 			currency = SiteSetting.send '«PayPal»_Payment_Currency'
 			user = User.find_by(id: params['user'])
 			mode = SiteSetting.send '«PayPal»_Mode'
+			prefix = ''
 			if 'sandbox' == mode
 				Paypal.sandbox!
+				prefix = 'Sandbox_'
 			end
 			paypal_options = {
 				no_shipping: true, # if you want to disable shipping information
@@ -74,9 +76,9 @@ after_initialize do
 				pay_on_paypal: true # if you don't plan on showing your own confirmation step
 			}
 			request = Paypal::Express::Request.new(
-				:username   => SiteSetting.send('«PayPal»_Sandbox_API_Username'),
-				:password   => SiteSetting.send('«PayPal»_Sandbox_API_Password'),
-				:signature  => SiteSetting.send('«PayPal»_Sandbox_Signature')
+				:username   => SiteSetting.send("«PayPal»_#{prefix}API_Username"),
+				:password   => SiteSetting.send("«PayPal»_#{prefix}API_Password"),
+				:signature  => SiteSetting.send("«PayPal»_#{prefix}Signature")
 			)
 			description =
 				"Membership Plan: #{plan['title']}." +
