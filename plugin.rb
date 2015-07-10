@@ -133,10 +133,11 @@ after_initialize do
 				:error_class => 'plans#success',
 				:parameters => params
 			)
-			details = paypal_express_request.details(params['token'])
+			detailsRequest = paypal_express_request
+			details = detailsRequest.details(params['token'])
 			Airbrake.notify(
 				:error_message => 'details response',
-				:parameters => details.inspect
+				:parameters => {details: details.inspect}
 			)
 			payment_request = Paypal::Payment::Request.new({
 				:action => 'Sale',
@@ -151,17 +152,17 @@ after_initialize do
 			Airbrake.notify(
 				:error_message => '[success] payment_request',
 				:error_class => 'plans#success',
-				:parameters => payment_request.inspect
+				:parameters => {payment_request: payment_request.inspect}
 			)
 			Airbrake.notify(
 				:error_message => '[success] response',
 				:error_class => 'plans#success',
-				:parameters => response.inspect
+				:parameters => {response: response.inspect}
 			)
 			Airbrake.notify(
 				:error_message => '[success] response.payment_info',
 				:error_class => 'plans#success',
-				:parameters => response.payment_info
+				:parameters => {payment_info: response.payment_info}
 			)
 			#redirect_to "#{Discourse.base_url}"
 			redirect_to "#{Discourse.base_url}/users/#{current_user.username}"
