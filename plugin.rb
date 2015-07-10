@@ -25,7 +25,16 @@ after_initialize do
 			:set_locale,
 			:set_mobile_view,
 			:verify_authenticity_token, only: [:ipn]
-		protect_from_forgery :except => [:ipn]
+		skip_before_filter :authorize_mini_profiler,
+			:check_xhr,
+			:inject_preview_style,
+			:preload_json,
+			:redirect_to_login_if_required,
+			:set_current_user_for_logs,
+			:set_locale,
+			:set_mobile_view,
+			:verify_authenticity_token, only: [:success]
+		protect_from_forgery :except => [:ipn, :success]
 		def index
 			begin
 				plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
@@ -64,22 +73,12 @@ after_initialize do
 			price = tier['price']
 			currency = SiteSetting.send '«PayPal»_Payment_Currency'
 			user = User.find_by(id: params['user'])
-			mode = SiteSetting.send '«PayPal»_Mode'
-			prefix = ''
-			if 'sandbox' == mode
-				Paypal.sandbox!
-				prefix = 'Sandbox_'
-			end
 			paypal_options = {
 				no_shipping: true, # if you want to disable shipping information
 				allow_note: false, # if you want to disable notes
 				pay_on_paypal: true # if you don't plan on showing your own confirmation step
 			}
-			request = Paypal::Express::Request.new(
-				:username   => SiteSetting.send("«PayPal»_#{prefix}API_Username"),
-				:password   => SiteSetting.send("«PayPal»_#{prefix}API_Password"),
-				:signature  => SiteSetting.send("«PayPal»_#{prefix}Signature")
-			)
+			request = client
 			description =
 				"Membership Plan: #{plan['title']}." +
 				" User: #{user.username}." +
@@ -131,10 +130,16 @@ after_initialize do
 			render :nothing => true
 		end
 		def success
-			response = request.checkout!(
-			  token,
-			  payer_id,
-			  payment_request
+			Airbrake.notify(
+				:error_message => 'success',
+				:error_class => 'plans#success',
+				:parameters => params
+			)
+			payment_request = Paypal::Payment::Request.new
+			response = client.checkout!(
+				params['token'],
+				params['PayerID'],
+				payment_request
 			)
 			Airbrake.notify(
 				:error_message => 'Ответ PayPal на наше подтверждение платежа',
@@ -143,6 +148,20 @@ after_initialize do
 			)
 			#redirect_to "#{Discourse.base_url}"
 			redirect_to "#{Discourse.base_url}/users/#{current_user.username}"
+		end
+		private
+		def client
+			mode = SiteSetting.send '«PayPal»_Mode'
+			prefix = ''
+			if 'sandbox' == mode
+				Paypal.sandbox!
+				prefix = 'Sandbox_'
+			end
+			Paypal::Express::Request.new(
+				:username   => SiteSetting.send("«PayPal»_#{prefix}API_Username"),
+				:password   => SiteSetting.send("«PayPal»_#{prefix}API_Password"),
+				:signature  => SiteSetting.send("«PayPal»_#{prefix}Signature")
+			)
 		end
 	end
 	PaidMembership::Engine.routes.draw do
