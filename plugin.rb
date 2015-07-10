@@ -133,8 +133,15 @@ after_initialize do
 				:error_class => 'plans#success',
 				:parameters => params
 			)
+			details paypal_express_request.details(params['token'])
+			Airbrake.notify(
+				:error_message => 'details response',
+				:parameters => details.inspect
+			)
 			payment_request = Paypal::Payment::Request.new({
-				#:action => 'Sale'
+				:action => 'Sale',
+				:currency_code => SiteSetting.send '«PayPal»_Payment_Currency',
+				:amount => details.amount
 			})
 			response = paypal_express_request.checkout!(
 				params['token'],
