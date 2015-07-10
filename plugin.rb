@@ -17,6 +17,10 @@ after_initialize do
 	require_dependency 'application_controller'
 	class PaidMembership::IndexController < ::ApplicationController
 		skip_before_filter :check_xhr, only: [:ipn]
+		skip_before_filter :preload_json, only: [:ipn]
+		skip_before_filter :verify_authenticity_token, only: [:ipn]
+		skip_before_filter :authorize_mini_profiler, only: [:ipn]
+		skip_before_filter :redirect_to_login_if_required, only: [:ipn]
 		protect_from_forgery :except => [:ipn]
 		def index
 			begin
@@ -106,13 +110,15 @@ after_initialize do
 			render json: { redirect_uri: response.redirect_uri }
 		end
 		def ipn
+=begin
 			Airbrake.notify(
 				:error_message => 'Оповещение о платеже из PayPal',
 				:error_class => 'plans#ipn',
 				:parameters => params
 			)
+=end
 			render :nothing => true
-			Paypal::IPN.verify!(request.raw_post)
+			#Paypal::IPN.verify!(request.raw_post)
 		end
 	end
 	PaidMembership::Engine.routes.draw do
