@@ -107,7 +107,7 @@ after_initialize do
 				payment_request,
 				# после успешной оплаты
 				# покупатель будет перенаправлен на свою личную страницу
-				"#{Discourse.base_url}/users/#{user.username}",
+				"#{Discourse.base_url}/plans/success",
 				# в случае неупеха оплаты
 				# покупатель будет перенаправлен обратно на страницу с тарифными планами
 				"#{Discourse.base_url}/plans",
@@ -122,22 +122,34 @@ after_initialize do
 		end
 		def ipn
 			no_cookies
-=begin
 			Airbrake.notify(
 				:error_message => 'Оповещение о платеже из PayPal',
 				:error_class => 'plans#ipn',
 				:parameters => params
 			)
-=end
+			Paypal::IPN.verify!(request.raw_post)
 			render :nothing => true
-			#Paypal::IPN.verify!(request.raw_post)
+		end
+		def success
+			response = request.checkout!(
+			  token,
+			  payer_id,
+			  payment_request
+			)
+			Airbrake.notify(
+				:error_message => 'Ответ PayPal на наше подтверждение платежа',
+				:error_class => 'plans#success',
+				:parameters => response.payment_info
+			)
+			redirect_to "#{Discourse.base_url}"
+			#redirect_to "#{Discourse.base_url}/users/#{user.username}"
 		end
 	end
 	PaidMembership::Engine.routes.draw do
 		get '/' => 'index#index'
 		get '/buy' => 'index#buy'
 		get '/ipn' => 'index#ipn'
-		get '/test' => 'index#test'
+		get '/success' => 'index#success'
 	end
 	Discourse::Application.routes.append do
 		mount ::PaidMembership::Engine, at: '/plans'
