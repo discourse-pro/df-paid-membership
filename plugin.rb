@@ -5,25 +5,7 @@
 # url: https://discourse.pro/t/35
 gem 'attr_required', '1.0.0'
 gem 'paypal-express', '0.8.1', {require_name: 'paypal'}
-# Из коробки airbrake не устанавливается.
-# Поэтому чуточку подправил его и устанавливаю локальную версию.
-#df_gem 'airbrake', '4.3.0'
-spec_file = "#{Rails.root}/plugins/df-paid-membership/gems/2.2.2/specifications/airbrake-4.3.0.gemspec"
-spec = Gem::Specification.load spec_file
-if File.exists? spec_file
-	puts "EXISTS!!!"
-else
-	puts "NOT EXISTS!!!"
-end
-spec.activate
 require 'airbrake'
-Airbrake.configure do |config|
-  config.api_key = 'c07658a7417f795847b2280bc2fd7a79'
-  config.host    = 'log.dmitry-fedyuk.com'
-  config.port    = 80
-  config.secure  = config.port == 443
-  config.development_environments = []
-end
 require 'json'
 register_asset 'stylesheets/main.scss'
 after_initialize do
