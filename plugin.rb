@@ -35,6 +35,7 @@ after_initialize do
 			:set_mobile_view,
 			:verify_authenticity_token, only: [:success]
 		protect_from_forgery :except => [:ipn, :success]
+		before_filter :paypal_set_sandbox_mode_if_needed, only: [:buy, :ipn, :success]
 		def index
 			begin
 				plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
@@ -58,7 +59,6 @@ after_initialize do
 					break
 				end
 			}
-			puts plan
 			tier = nil
 			tierId = params['tier']
 			puts plan['priceTiers']
@@ -68,8 +68,6 @@ after_initialize do
 					break
 				end
 			}
-			puts tierId
-			puts tier
 			price = tier['price']
 			currency = SiteSetting.send '«PayPal»_Payment_Currency'
 			user = User.find_by(id: params['user'])
@@ -78,13 +76,13 @@ after_initialize do
 				allow_note: false, # if you want to disable notes
 				pay_on_paypal: true # if you don't plan on showing your own confirmation step
 			}
-			request = client
 			description =
 				"Membership Plan: #{plan['title']}." +
 				" User: #{user.username}." +
 				" Period: #{tier['period']} #{tier['periodUnits']}."
 			paymentId = "#{user.id}::#{planId}::#{tierId}::#{Time.now.strftime("%Y-%m-%d-%H-%M")}"
-			requestParams = {
+			paymentRequestParams = {
+				:action => 'Sale',
 				:currency_code => currency,
 				:description => description,
 				:quantity => 1,
@@ -99,10 +97,10 @@ after_initialize do
 			Airbrake.notify(
 				:error_message => 'Регистрация платежа в PayPal',
 				:error_class => 'plans#buy',
-				:parameters => requestParams
+				:parameters => paymentRequestParams
 			)
-			payment_request = Paypal::Payment::Request.new requestParams
-			response = request.setup(
+			payment_request = Paypal::Payment::Request.new paymentRequestParams
+			response = paypal_express_request.setup(
 				payment_request,
 				# после успешной оплаты
 				# покупатель будет перенаправлен на свою личную страницу
@@ -131,18 +129,30 @@ after_initialize do
 		end
 		def success
 			Airbrake.notify(
-				:error_message => 'success',
+				:error_message => '[success] 1',
 				:error_class => 'plans#success',
 				:parameters => params
 			)
-			payment_request = Paypal::Payment::Request.new
-			response = client.checkout!(
+			payment_request = Paypal::Payment::Request.new({
+				:action => 'Sale'
+			})
+			response = paypal_express_request.checkout!(
 				params['token'],
 				params['PayerID'],
 				payment_request
 			)
 			Airbrake.notify(
-				:error_message => 'Ответ PayPal на наше подтверждение платежа',
+				:error_message => '[success] payment_request',
+				:error_class => 'plans#success',
+				:parameters => payment_request.inspect
+			)
+			Airbrake.notify(
+				:error_message => '[success] response',
+				:error_class => 'plans#success',
+				:parameters => response.inspect
+			)
+			Airbrake.notify(
+				:error_message => '[success] response.payment_info',
 				:error_class => 'plans#success',
 				:parameters => response.payment_info
 			)
@@ -150,18 +160,21 @@ after_initialize do
 			redirect_to "#{Discourse.base_url}/users/#{current_user.username}"
 		end
 		private
-		def client
-			mode = SiteSetting.send '«PayPal»_Mode'
-			prefix = ''
-			if 'sandbox' == mode
-				Paypal.sandbox!
-				prefix = 'Sandbox_'
-			end
+		def paypal_express_request
+			prefix = sandbox? ? 'Sandbox_' : ''
 			Paypal::Express::Request.new(
-				:username   => SiteSetting.send("«PayPal»_#{prefix}API_Username"),
-				:password   => SiteSetting.send("«PayPal»_#{prefix}API_Password"),
-				:signature  => SiteSetting.send("«PayPal»_#{prefix}Signature")
+				:username => SiteSetting.send("«PayPal»_#{prefix}API_Username"),
+				:password => SiteSetting.send("«PayPal»_#{prefix}API_Password"),
+				:signature => SiteSetting.send("«PayPal»_#{prefix}Signature")
 			)
+		end
+		def paypal_set_sandbox_mode_if_needed
+			if sandbox?
+				Paypal.sandbox!
+			end
+		end
+		def sandbox?
+			'sandbox' == SiteSetting.send('«PayPal»_Mode')
 		end
 	end
 	PaidMembership::Engine.routes.draw do
