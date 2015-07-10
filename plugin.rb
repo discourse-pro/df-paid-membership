@@ -178,7 +178,18 @@ after_initialize do
 		end
 		def paypal_set_sandbox_mode_if_needed
 			if sandbox?
+				puts '!!!!!Sandbox!!!!!'
+				Airbrake.notify(
+					:error_message => 'SANDBOX MODE',
+					:parameters => {mode: SiteSetting.send('«PayPal»_Mode')}
+				)
 				Paypal.sandbox!
+			else
+				puts '!!!!PRODUCTION!!!!'
+				Airbrake.notify(
+					:error_message => 'PRODUCTION MODE',
+					:parameters => {mode: SiteSetting.send('«PayPal»_Mode')}
+				)
 			end
 		end
 		def sandbox?
