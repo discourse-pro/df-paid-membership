@@ -133,7 +133,7 @@ after_initialize do
 				:error_class => 'plans#success',
 				:parameters => params
 			)
-			details paypal_express_request.details(params['token'])
+			details = paypal_express_request.details(params['token'])
 			Airbrake.notify(
 				:error_message => 'details response',
 				:parameters => details.inspect
