@@ -7,6 +7,7 @@ require 'paypal'
 require 'airbrake'
 require 'json'
 register_asset 'stylesheets/main.scss'
+Discourse::Application.config.autoload_paths += Dir["#{Rails.root}/plugins/df-paid-membership/app/models"]
 after_initialize do
 	module ::PaidMembership
 		class Engine < ::Rails::Engine
@@ -29,6 +30,9 @@ after_initialize do
 		before_filter :paypal_set_sandbox_mode_if_needed, only: [:buy, :ipn, :success]
 		def index
 			begin
+				invoice = ::Df::PaidMembership::Invoice.new
+				puts '!!!!INVOICE!!!!!'
+				puts invoice.inspect
 				plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
 			rescue JSON::ParserError => e
 				plans = []
