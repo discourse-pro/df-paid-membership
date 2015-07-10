@@ -141,8 +141,8 @@ after_initialize do
 				:error_class => 'plans#success',
 				:parameters => response.payment_info
 			)
-			redirect_to "#{Discourse.base_url}"
-			#redirect_to "#{Discourse.base_url}/users/#{user.username}"
+			#redirect_to "#{Discourse.base_url}"
+			redirect_to "#{Discourse.base_url}/users/#{current_user.username}"
 		end
 	end
 	PaidMembership::Engine.routes.draw do
