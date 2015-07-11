@@ -54,7 +54,7 @@ export default Ember.Component.extend({
 		, 'items.@each.title'
 		/**
 		 * 2015-06-29
-		 * Наблюдение за items.@each.allowedGroupIds и items.@each.allowedGroupIds не работает,
+		 * Наблюдение за items.@each.grantedGroupIds не работает,
 		 * потому что наблюдение, похоже, работает не более чем на два уровня вложенности:
 		 * @link https://github.com/emberjs/ember.js/issues/541#issue-3401973
 		 * Поэтому мы вызываем _changed() вручную из groupChanged().
@@ -103,7 +103,6 @@ export default Ember.Component.extend({
 	}.on('init')
 	,newItem: function() {
 		this.set('newId', newId());
-		this.set('allowedGroupIds', []);
 		this.set('color', this.palette[Math.floor(this.palette.length * Math.random())]);
 		this.set('description', I18n.t('paid_membership.plan.description_placeholder'));
 		this.set('grantedGroupIds', []);
@@ -116,8 +115,7 @@ export default Ember.Component.extend({
 			if (!this.get('inputInvalid')) {
 				var items = this.get('items');
 				items.addObject({
-					allowedGroupIds: this.get('allowedGroupIds')
-					, color: this.get('color')
+					color: this.get('color')
 					, description: this.get('description')
 					, grantedGroupIds: this.get('grantedGroupIds')
 					, id: this.get('newId')
@@ -140,7 +138,8 @@ export default Ember.Component.extend({
 			};
 			var item = context.item;
 			/**
-			 * У нас 2 типа: «allowed» и «granted».
+			 * У нас пока 1 тип: «granted»
+			 * (раньше был ещё «allowed», но убрал за ненадобностью).
 			 * @type {string}
 			 */
 			var groupPropertyName = context.type + 'GroupIds';
@@ -166,5 +165,5 @@ export default Ember.Component.extend({
 		}
 		,removeItem(item) {this.get('items').removeObject(item);}
 	}
-	,inputInvalid: false//Ember.computed.empty('allowedGroupIds')
+	,inputInvalid: false
 });

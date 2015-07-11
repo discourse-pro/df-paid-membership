@@ -23,10 +23,6 @@
 					}}
 				</div>
 				<div class='field'>
-					<div class='label'>{{i18n 'paid_membership.plan.groups_allowed'}}</div>
-					{{df-user-groups type='allowed' item=item selected=item.allowedGroupIds}}
-				</div>
-				<div class='field'>
 					<div class='label'>{{i18n 'paid_membership.plan.groups_granted'}}</div>
 					{{df-user-groups type='granted' item=item selected=item.grantedGroupIds}}
 				</div>
@@ -137,17 +133,13 @@
 		2015-06-29
 		Обратите внимание, что,
 		хотя список групп нового пустого элемента предполагается пустым,
-		мы всё равно устанавливаем соответствие selected=allowedGroupIds,
-		чтобы установить связь между свойством allowedGroupIds компонента admin-membership-plans
+		мы всё равно устанавливаем соответствие selected=grantedGroupIds,
+		чтобы установить связь между свойством grantedGroupIds компонента admin-membership-plans
 		и свойством selected компонента df-user-groups.
 		Такая связь позволяет нам очищать список групп
 		после добавления нового элемента в список элементов
 		(ведь тогда форму для нового элемента надо очистить, привести в начальное состояние).
 	--}}
-	<div class='field'>
-		<div class='label'>{{i18n 'paid_membership.plan.groups_allowed'}}</div>
-		{{df-user-groups type='allowed' selected=allowedGroupIds}}
-	</div>
 	<div class='field'>
 		<div class='label'>{{i18n 'paid_membership.plan.groups_granted'}}</div>
 		{{df-user-groups type='granted' selected=grantedGroupIds}}
