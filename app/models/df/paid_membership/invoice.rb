@@ -4,6 +4,20 @@ module ::Df::PaidMembership
 		self.table_name = 'df_paid_membership_invoices'
 		belongs_to :user
 		validates :user_id, presence: true
+		def tier_label
+			case invoice.tier_period_units
+				when 'y'
+					unitsLabel = 'year'
+				when 'm'
+					unitsLabel = 'month'
+				when 'd'
+					unitsLabel = 'day'
+			end
+			if 1 < tier_period
+				unitsLabel += 's'
+			end
+			%Q[#{tier_period} #{unitsLabel}]
+		end
 		# == Schema Information
 		#
 		# Table name: paid_membership_invoices

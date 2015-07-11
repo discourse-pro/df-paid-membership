@@ -61,7 +61,7 @@ module ::Df::PaidMembership
 				pay_on_paypal: true # if you don't plan on showing your own confirmation step
 			}
 			description =
-				"Membership Plan ""#{plan['title']}"", @#{user.username}, #{tier['period']} #{tier['periodUnits']}"
+				%Q[Membership Plan "#{plan['title']}", @#{user.username}, #{invoice.tier_label}]
 			paymentRequestParams = {
 				:action => 'Sale',
 				:currency_code => currency,
