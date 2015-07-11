@@ -1,6 +1,7 @@
 module Df
 	module PaidMembership
 		class Invoice < ActiveRecord::Base
+			# psql --port=15432 -c "TRUNCATE df_paid_membership_invoices"
 			self.table_name = 'df_paid_membership_invoices'
 			belongs_to :user
 			validates :user_id, presence: true
@@ -25,11 +26,3 @@ module Df
 		end
 	end
 end
-=begin
-User.class_eval do
-	has_many :paid_membership_invoices,
-		dependent: :destroy,
-		:class_name => 'Df::PaidMembership::Invoice',
-		:foreign_key => 'df_paid_membership_invoice_id'
-end
-=end

@@ -1,3 +1,4 @@
+# rails generate migration CreateDfPaidMembershipInvoices
 class CreateDfPaidMembershipInvoices < ActiveRecord::Migration
 	def change
 		create_table :df_paid_membership_invoices do |t|

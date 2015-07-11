@@ -9,14 +9,16 @@ require 'json'
 register_asset 'stylesheets/main.scss'
 Discourse::Application.config.autoload_paths += Dir["#{Rails.root}/plugins/df-paid-membership/app/models"]
 after_initialize do
-	module ::PaidMembership
-		class Engine < ::Rails::Engine
-			engine_name 'df_paid_membership'
-			isolate_namespace PaidMembership
+	module ::Df
+		module PaidMembership
+			class Engine < ::Rails::Engine
+				engine_name 'df_paid_membership'
+				isolate_namespace ::Df::PaidMembership
+			end
 		end
 	end
 	require_dependency 'application_controller'
-	class PaidMembership::IndexController < ::ApplicationController
+	class ::Df::PaidMembership::IndexController < ::ApplicationController
 		skip_before_filter :authorize_mini_profiler,
 			:check_xhr,
 			:inject_preview_style,
@@ -30,9 +32,15 @@ after_initialize do
 		before_filter :paypal_set_sandbox_mode_if_needed, only: [:buy, :ipn, :success]
 		def index
 			begin
-				invoice = ::Df::PaidMembership::Invoice.new
-				puts '!!!!INVOICE!!!!!'
-				puts invoice.inspect
+				# http://guides.rubyonrails.org/active_record_basics.html
+=begin
+				if current_user
+					invoices = ::Df::PaidMembership::Invoice.where(user_id: current_user.id)
+					invoices.each do |invoice|
+						puts invoice.created_at
+					end
+				end
+=end
 				plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
 			rescue JSON::ParserError => e
 				plans = []
@@ -61,6 +69,17 @@ after_initialize do
 			price = tier['price']
 			currency = SiteSetting.send '«PayPal»_Payment_Currency'
 			user = User.find_by(id: params['user'])
+			invoice = ::Df::PaidMembership::Invoice.new
+			invoice.user = user
+			invoice.plan_id = planId
+			invoice.tier_id = tierId
+			invoice.tier_period = tier['period']
+			invoice.tier_period_units = tier['periodUnits']
+			invoice.price = price
+			invoice.currency = currency
+			invoice.granted_group_ids = plan['grantedGroupIds'].join(',')
+			invoice.payment_method = 'PayPal'
+			invoice.save
 			paypal_options = {
 				no_shipping: true, # if you want to disable shipping information
 				allow_note: false, # if you want to disable notes
@@ -70,7 +89,6 @@ after_initialize do
 				"Membership Plan: #{plan['title']}." +
 				" User: #{user.username}." +
 				" Period: #{tier['period']} #{tier['periodUnits']}."
-			paymentId = "#{user.id}::#{planId}::#{tierId}::#{Time.now.strftime("%Y-%m-%d-%H-%M")}"
 			paymentRequestParams = {
 				:action => 'Sale',
 				:currency_code => currency,
@@ -78,7 +96,7 @@ after_initialize do
 				:quantity => 1,
 				:amount => price,
 				:notify_url => "#{Discourse.base_url}/plans/ipn",
-				:invoice_number => paymentId
+				:invoice_number => invoice.id
 			}
 			Airbrake.notify(
 				:error_message => 'Регистрация платежа в PayPal',
@@ -86,6 +104,8 @@ after_initialize do
 				:parameters => paymentRequestParams
 			)
 			payment_request = Paypal::Payment::Request.new paymentRequestParams
+# https://developer.paypal.com/docs/classic/express-checkout/gs_expresscheckout/
+# https://developer.paypal.com/docs/classic/api/merchant/SetExpressCheckout_API_Operation_NVP/
 			response = paypal_express_request.setup(
 				payment_request,
 				# после успешной оплаты
@@ -119,6 +139,8 @@ after_initialize do
 				:error_class => 'plans#success',
 				:parameters => params
 			)
+# https://developer.paypal.com/docs/classic/api/merchant/GetExpressCheckoutDetails_API_Operation_NVP/
+# https://github.com/nov/paypal-express/wiki/Instant-Payment
 			detailsRequest = paypal_express_request
 			details = detailsRequest.details(params['token'])
 			Airbrake.notify(
@@ -130,6 +152,8 @@ after_initialize do
 				:currency_code => SiteSetting.send('«PayPal»_Payment_Currency'),
 				:amount => details.amount
 			})
+# https://developer.paypal.com/docs/classic/api/merchant/DoExpressCheckoutPayment_API_Operation_NVP/
+# https://gist.github.com/xcommerce-gists/3502241
 			response = paypal_express_request.checkout!(
 				params['token'],
 				params['PayerID'],
@@ -170,13 +194,13 @@ after_initialize do
 			'sandbox' == SiteSetting.send('«PayPal»_Mode')
 		end
 	end
-	PaidMembership::Engine.routes.draw do
+	::Df::PaidMembership::Engine.routes.draw do
 		get '/' => 'index#index'
 		get '/buy' => 'index#buy'
 		get '/ipn' => 'index#ipn'
 		get '/success' => 'index#success'
 	end
 	Discourse::Application.routes.append do
-		mount ::PaidMembership::Engine, at: '/plans'
+		mount ::Df::PaidMembership::Engine, at: '/plans'
 	end
 end
