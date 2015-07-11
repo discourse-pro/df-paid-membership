@@ -129,9 +129,10 @@ class ::Df::PaidMembership::IndexController < ::ApplicationController
 			:error_message => 'details response',
 			:parameters => {details: details.inspect}
 		)
+		invoice = Invoice.find_by(id: details.invoice_number)
 		payment_request = Paypal::Payment::Request.new({
 			:action => 'Sale',
-			:currency_code => SiteSetting.send('«PayPal»_Payment_Currency'),
+			:currency_code => invoice.currency,
 			:amount => details.amount
 		})
 # https://developer.paypal.com/docs/classic/api/merchant/DoExpressCheckoutPayment_API_Operation_NVP/
@@ -141,6 +142,32 @@ class ::Df::PaidMembership::IndexController < ::ApplicationController
 			params['PayerID'],
 			payment_request
 		)
+		# http://stackoverflow.com/a/18811305/254475
+		currentTime = DateTime.current
+		invoice.paid_at = DateTime.current
+		case invoice.tier_period_units
+			when 'y'
+				advanceUnits = :years
+			when 'm'
+				advanceUnits = :months
+			when 'd'
+				advanceUnits = :days
+		end
+		invoice.membership_till = DateTime.current.advance(advanceUnits, invoice.tier_period)
+		invoice.save
+		groupIds = invoice.granted_group_ids.split(',')
+		groupIds.each do |groupId|
+			groupId = groupId.to_i
+			# http://stackoverflow.com/a/25274645/254475
+			groupUser = GroupUser.find_by(user_id: current_user.id, group_id: groupId)
+			if groupUser.nil?
+				group = Group.find_by(id: groupId.to_i)
+				groupUser = GroupUser.new
+				groupUser.user = current_user
+				groupUser.group = group
+				groupUser.save
+			end
+		end
 		Airbrake.notify(
 			:error_message => '[success] payment_request',
 			:error_class => 'plans#success',

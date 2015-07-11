@@ -18,7 +18,7 @@ module ::Df::PaidMembership
 		#  currency :string(3) not null
 		#  created_at :datetime not null
 		#  updated_at :datetime not null
-		#  payed_at :datetime
+		#  paid_at :datetime
 		#  membership_till :datetime
 		#  granted_group_ids :string(255)
 		#  payment_method :string(255)

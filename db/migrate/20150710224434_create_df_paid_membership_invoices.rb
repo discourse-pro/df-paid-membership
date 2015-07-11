@@ -10,7 +10,7 @@ class CreateDfPaidMembershipInvoices < ActiveRecord::Migration
 			t.float :price, null: false
 			t.string :currency, limit: 3, null: false
 			t.timestamps
-			t.datetime :payed_at
+			t.datetime :paid_at
 			t.datetime :membership_till
 			t.string :granted_group_ids, limit: 255
 			t.string :payment_method, limit: 255
