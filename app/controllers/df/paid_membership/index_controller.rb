@@ -154,7 +154,7 @@ module ::Df::PaidMembership
 				when 'd'
 					advanceUnits = :days
 			end
-			invoice.membership_till = DateTime.current.advance(advanceUnits, invoice.tier_period)
+			invoice.membership_till = DateTime.current.advance(advanceUnits => +invoice.tier_period)
 			invoice.save
 			groupIds = invoice.granted_group_ids.split(',')
 			groupIds.each do |groupId|
