@@ -137,12 +137,16 @@ module ::Df::PaidMembership
 				# http://stackoverflow.com/a/25274645/254475
 				groupUser = GroupUser.find_by(user_id: current_user.id, group_id: groupId)
 				if groupUser.nil?
-					group = Group.find_by(id: groupId.to_i)
-					groupUser = GroupUser.new
-					groupUser.user = current_user
-					groupUser.group = group
-					groupUser.save
-					log "GRANTED MEMBERSHIP in «#{group.name}»"
+					group = Group.find_by(id: groupId)
+					# 2015-07-11
+					# Группа могла быть удалена
+					if group
+						groupUser = GroupUser.new
+						groupUser.user = current_user
+						groupUser.group = group
+						groupUser.save
+						log "GRANTED MEMBERSHIP in «#{group.name}»"
+					end
 				end
 			end
 			redirect_to "#{Discourse.base_url}/users/#{current_user.username}"
