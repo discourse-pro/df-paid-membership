@@ -50,7 +50,6 @@ export default Ember.Component.extend({
 		, 'items.@each.color'
 		, 'items.@each.description'
 		, 'items.@each.id'
-		, 'items.@each.restrictionType'
 		, 'items.@each.title'
 		/**
 		 * 2015-06-29
@@ -94,10 +93,6 @@ export default Ember.Component.extend({
 			}
 		});
 		this.set('items', items);
-		this.set('restrictionTypeOptions', [
-			{value: 'whitelist', label: I18n.t('paid_membership.plan.restriction_type.whitelist')}
-			,{value: 'blacklist', label: I18n.t('paid_membership.plan.restriction_type.blacklist')}
-		]);
 		this.newItem();
 		this.set('initialized', true);
 	}.on('init')
@@ -107,7 +102,6 @@ export default Ember.Component.extend({
 		this.set('description', I18n.t('paid_membership.plan.description_placeholder'));
 		this.set('grantedGroupIds', []);
 		this.set('priceTiers', []);
-		this.set('restrictionType', 'whitelist');
 		this.set('title', I18n.t('paid_membership.plan.title_placeholder'));
 	}
 	,actions: {
@@ -120,7 +114,6 @@ export default Ember.Component.extend({
 					, grantedGroupIds: this.get('grantedGroupIds')
 					, id: this.get('newId')
 					, priceTiers: this.get('priceTiers')
-					, restrictionType: this.get('restrictionType')
 					, title: this.get('title')
 				});
 				this.newItem();

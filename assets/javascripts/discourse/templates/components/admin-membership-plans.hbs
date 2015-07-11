@@ -13,16 +13,6 @@
 					<h4 class='plan-title'>{{input value=item.title autoresize=true}}</h4>
 				</div>
 				<div class='field'>
-					<span class='label'>Restriction Type:</span>
-					{{x-select
-						value=item.restrictionType
-						content=restrictionTypeOptions
-						optionValuePath='content.value'
-						optionLabelPath='content.label'
-						class='restrictionType'
-					}}
-				</div>
-				<div class='field'>
 					<div class='label'>{{i18n 'paid_membership.plan.groups_granted'}}</div>
 					{{df-user-groups type='granted' item=item selected=item.grantedGroupIds}}
 				</div>
@@ -118,16 +108,6 @@
 			title='paid_membership.plan.add'
 		}}
 		<h4 class='plan-title'>{{input value=title autoresize=true}}</h4>
-	</div>
-	<div class='field'>
-		<span class='label'>{{i18n 'paid_membership.plan.restriction_type_heading'}}:</span>
-		{{x-select
-			value=restrictionType
-			content=restrictionTypeOptions
-			optionValuePath='content.value'
-			optionLabelPath='content.label'
-			class='restrictionType'
-		}}
 	</div>
 	{{!--
 		2015-06-29

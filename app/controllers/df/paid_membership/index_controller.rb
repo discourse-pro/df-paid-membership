@@ -14,16 +14,6 @@ module ::Df::PaidMembership
 		before_filter :paypal_set_sandbox_mode_if_needed, only: [:buy, :ipn, :success]
 		def index
 			begin
-				# http://guides.rubyonrails.org/active_record_basics.html
-
-				if current_user
-					invoices = Invoice.where(user_id: current_user.id)
-					puts "!!!!!!!!!INVOICES!!!!!!!!!!!"
-					invoices.each do |invoice|
-						puts invoice.created_at
-					end
-				end
-
 				plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
 			rescue JSON::ParserError => e
 				plans = []
@@ -31,7 +21,7 @@ module ::Df::PaidMembership
 			render json: { plans: plans }
 		end
 		def buy
-			Airbrake.notify(:error_message => 'Purchase started', :parameters => params)
+			log 'BEGIN PURCHASE', params
 			plans = JSON.parse(SiteSetting.send '«Paid_Membership»_Plans')
 			plan = nil
 			planId = params['plan']
@@ -52,6 +42,7 @@ module ::Df::PaidMembership
 			price = tier['price']
 			currency = SiteSetting.send '«PayPal»_Payment_Currency'
 			user = User.find_by(id: params['user'])
+			# http://guides.rubyonrails.org/active_record_basics.html
 			invoice = Invoice.new
 			invoice.user = user
 			invoice.plan_id = planId
@@ -63,15 +54,14 @@ module ::Df::PaidMembership
 			invoice.granted_group_ids = plan['grantedGroupIds'].join(',')
 			invoice.payment_method = 'PayPal'
 			invoice.save
+			log 'INVOICE created', invoice.attributes
 			paypal_options = {
 				no_shipping: true, # if you want to disable shipping information
 				allow_note: false, # if you want to disable notes
 				pay_on_paypal: true # if you don't plan on showing your own confirmation step
 			}
 			description =
-				"Membership Plan: #{plan['title']}." +
-				" User: #{user.username}." +
-				" Period: #{tier['period']} #{tier['periodUnits']}."
+				"Membership Plan ""#{plan['title']}"", @#{user.username}, #{tier['period']} #{tier['periodUnits']}"
 			paymentRequestParams = {
 				:action => 'Sale',
 				:currency_code => currency,
@@ -81,11 +71,7 @@ module ::Df::PaidMembership
 				:notify_url => "#{Discourse.base_url}/plans/ipn",
 				:invoice_number => invoice.id
 			}
-			Airbrake.notify(
-				:error_message => 'Регистрация платежа в PayPal',
-				:error_class => 'plans#buy',
-				:parameters => paymentRequestParams
-			)
+			log 'SetExpressCheckout REQUEST', paymentRequestParams
 			payment_request = Paypal::Payment::Request.new paymentRequestParams
 	# https://developer.paypal.com/docs/classic/express-checkout/gs_expresscheckout/
 	# https://developer.paypal.com/docs/classic/api/merchant/SetExpressCheckout_API_Operation_NVP/
@@ -99,50 +85,38 @@ module ::Df::PaidMembership
 				"#{Discourse.base_url}/plans",
 				paypal_options
 			)
-			Airbrake.notify(
-				:error_message => 'Ответ PayPal на регистрацию',
-				:error_class => 'plans#buy',
-				:parameters => {redirect_uri: response.redirect_uri}
-			)
+			log 'SetExpressCheckout RESPONSE', {redirect_uri: response.redirect_uri}
 			render json: { redirect_uri: response.redirect_uri }
 		end
 		def ipn
 			no_cookies
-			Airbrake.notify(
-				:error_message => 'Оповещение о платеже из PayPal',
-				:error_class => 'plans#ipn',
-				:parameters => params
-			)
+			log 'IPN', params
 			Paypal::IPN.verify!(request.raw_post)
 			render :nothing => true
 		end
 		def success
-			Airbrake.notify(
-				:error_message => '[success] 1',
-				:error_class => 'plans#success',
-				:parameters => params
-			)
+			log 'CUSTOMER RETURNED', params
 	# https://developer.paypal.com/docs/classic/api/merchant/GetExpressCheckoutDetails_API_Operation_NVP/
 	# https://github.com/nov/paypal-express/wiki/Instant-Payment
 			detailsRequest = paypal_express_request
+			log 'GetExpressCheckoutDetails REQUEST'
 			details = detailsRequest.details(params['token'])
-			Airbrake.notify(
-				:error_message => 'details response',
-				:parameters => {details: details.inspect}
-			)
+			log 'GetExpressCheckoutDetails RESPONSE', details.instance_values
 			invoice = Invoice.find_by(id: details.invoice_number)
-			payment_request = Paypal::Payment::Request.new({
+			doExpressCheckoutPayment_params = {
 				:action => 'Sale',
 				:currency_code => invoice.currency,
 				:amount => details.amount
-			})
+			}
+			log 'DoExpressCheckoutPayment REQUEST', doExpressCheckoutPayment_params
 	# https://developer.paypal.com/docs/classic/api/merchant/DoExpressCheckoutPayment_API_Operation_NVP/
 	# https://gist.github.com/xcommerce-gists/3502241
 			response = paypal_express_request.checkout!(
 				params['token'],
 				params['PayerID'],
-				payment_request
+				Paypal::Payment::Request.new(doExpressCheckoutPayment_params)
 			)
+			log 'DoExpressCheckoutPayment RESPONSE', response.instance_values
 			# http://stackoverflow.com/a/18811305/254475
 			currentTime = DateTime.current
 			invoice.paid_at = DateTime.current
@@ -156,6 +130,7 @@ module ::Df::PaidMembership
 			end
 			invoice.membership_till = DateTime.current.advance(advanceUnits => +invoice.tier_period)
 			invoice.save
+			log 'INVOICE UPDATED', invoice.attributes
 			groupIds = invoice.granted_group_ids.split(',')
 			groupIds.each do |groupId|
 				groupId = groupId.to_i
@@ -167,27 +142,22 @@ module ::Df::PaidMembership
 					groupUser.user = current_user
 					groupUser.group = group
 					groupUser.save
+					log "GRANTED MEMBERSHIP in «#{group.name}»"
 				end
 			end
-			Airbrake.notify(
-				:error_message => '[success] payment_request',
-				:error_class => 'plans#success',
-				:parameters => {payment_request: payment_request.inspect}
-			)
-			Airbrake.notify(
-				:error_message => '[success] response',
-				:error_class => 'plans#success',
-				:parameters => {response: response.inspect}
-			)
-			Airbrake.notify(
-				:error_message => '[success] response.payment_info',
-				:error_class => 'plans#success',
-				:parameters => {payment_info: response.payment_info}
-			)
-			#redirect_to "#{Discourse.base_url}"
 			redirect_to "#{Discourse.base_url}/users/#{current_user.username}"
 		end
 		private
+		def log(message, params={})
+			prefix = ''
+			if current_user
+				prefix += "[#{current_user.username}] "
+			end
+			if @invoice and @invoice.id
+				prefix += "[##{invoice.id}] "
+			end
+			Airbrake.notify(:error_message => prefix + message, :parameters => params)
+		end
 		def paypal_express_request
 			prefix = sandbox? ? 'Sandbox_' : ''
 			Paypal::Express::Request.new(
@@ -198,7 +168,7 @@ module ::Df::PaidMembership
 		end
 		def paypal_set_sandbox_mode_if_needed
 			Paypal.sandbox= sandbox?
-			Airbrake.notify(:error_message => sandbox? ? 'SANDBOX MODE' : 'PRODUCTION MODE')
+			log sandbox? ? 'SANDBOX MODE' : 'PRODUCTION MODE'
 		end
 		def sandbox?
 			'sandbox' == SiteSetting.send('«PayPal»_Mode')
