@@ -5,7 +5,7 @@ module ::Df::PaidMembership
 		belongs_to :user
 		validates :user_id, presence: true
 		def tier_label
-			case invoice.tier_period_units
+			case tier_period_units
 				when 'y'
 					unitsLabel = 'year'
 				when 'm'
