@@ -40,13 +40,18 @@ export default Ember.Component.extend({
 				const $prevRow = $currentRow.prev();
 				const $cellAbove = $prevRow.children('td').eq(columnIndex);
 				var selected = $('input[type=radio]:checked', $cellAbove).val();
-				Discourse.ajax('/plans/buy', {data: {
-					user: Discourse.User.current().id
-					,plan: this.get('plan').id
-					,tier: selected
-				}}).then(function(result) {
-					window.location.replace(result.redirect_uri);
-				});
+				// 2015-07-26
+				// По невнимательности администратора
+				// у плана могут отсутствовать цены.
+				if (selected) {
+					Discourse.ajax('/plans/buy', {data: {
+						user: Discourse.User.current().id
+						,plan: this.get('plan').id
+						,tier: selected
+					}}).then(function(result) {
+						window.location.replace(result.redirect_uri);
+					});
+				}
 			}
 		}
 		,login() {

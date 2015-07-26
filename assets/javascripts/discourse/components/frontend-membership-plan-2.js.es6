@@ -13,7 +13,10 @@ export default Ember.Component.extend({
 	,_init: function() {
 		const plan = this.get('plan');
 		const tiers = plan.priceTiers;
-		if (tiers) {
+		// 2015-07-26
+		// В JavaScript приведение пустого массива к логическому типу возвращает true,
+		// в отличие от PHP.
+		if (tiers && tiers.length) {
 			const getPeriodUnitsLabel = function(tier) {
 				const period = parseInt(tier.period);
 				return I18n.t('paid_membership.price_tier.period_units.' + tier.periodUnits + '.' + (
