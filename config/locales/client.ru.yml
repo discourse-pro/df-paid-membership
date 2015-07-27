@@ -5,6 +5,15 @@ ru:
         categories:
           paid_membership: 'Платное членство'
     paid_membership:
+      frontend:
+        login_or_register: 
+          after: ''
+          before: 'перед покупкой ' 
+          log_in: 'войдите'
+          or: ' или '
+          register: 'зарегистрируйтесь'       
+        sign_up: 'купить'
+        title: 'Членство на форуме'
       plan:
         add: 'добавить тарифный план'
         delete: 'удалить тарифный план'

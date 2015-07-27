@@ -1,6 +1,11 @@
 {{#if notLoggedIn}}
 	<div class='need-login'>
-		Please <a {{action 'login'}}>log in</a> or <a {{action 'register'}}>create account</a> first.
+		{{i18n 'paid_membership.frontend.login_or_register.before'}}
+		<a {{action 'login'}}>{{i18n 'paid_membership.frontend.login_or_register.log_in'}}</a>
+		{{i18n 'paid_membership.frontend.login_or_register.or'}}
+		<a {{action 'register'}}>{{i18n 'paid_membership.frontend.login_or_register.register'}}</a>
+		{{i18n 'paid_membership.frontend.login_or_register.after'}}
 	</div>
 {{/if}}
-<a class='sign-up {{if notLoggedIn 'disabled'}}' {{action 'buy'}}>Sign Up!</a>
+<a class='sign-up {{if notLoggedIn 'disabled'}}' {{action 'buy'}}
+>{{i18n 'paid_membership.frontend.sign_up'}}</a>

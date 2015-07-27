@@ -5,6 +5,15 @@ en:
         categories:
           paid_membership: 'Paid Membership'
     paid_membership:
+      frontend:
+        login_or_register: 
+          after: ' first.'
+          before: 'Please ' 
+          log_in: 'log in'
+          or: ' or '
+          register: 'create account'                             
+        sign_up: 'Sign Up!'
+        title: 'Membership Plans'
       plan:
         add: 'Add a Membership Plan'
         delete: 'Delete the Membership Plan'
