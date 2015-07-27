@@ -34,3 +34,7 @@ en:
     df:
       paid_membership:
         link_title: 'Membership'
+    filters:
+      paid_membership:
+        title: 'Membership'
+        help: 'Paid Membership'

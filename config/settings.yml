@@ -1,6 +1,6 @@
 paid_membership:
   «Paid_Membership»_Enabled:
-    default: true
+    default: false
     client: true
   «Paid_Membership»_Text_Above:
     default: "A text above the plans.<br/>You can use <b>HTML tags</b>, [u]BBCodes[/u] and *Markdown* here."

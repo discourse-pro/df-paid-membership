@@ -37,3 +37,7 @@ ru:
     df:
       paid_membership:
         link_title: 'Членство'
+    filters:
+      paid_membership:
+        title: 'Членство'
+        help: 'Членство на форуме'
