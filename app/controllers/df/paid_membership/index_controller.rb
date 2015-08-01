@@ -40,7 +40,7 @@ module ::Df::PaidMembership
 				end
 			}
 			price = tier['price']
-			currency = SiteSetting.send '«PayPal»_Payment_Currency'
+			currency = SiteSetting.send '«Discourse_PRO»_Currency'
 			user = User.find_by(id: params['user'])
 			# http://guides.rubyonrails.org/active_record_basics.html
 			invoice = Invoice.new
