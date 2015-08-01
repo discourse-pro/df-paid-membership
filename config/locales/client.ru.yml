@@ -3,7 +3,7 @@ ru:
     admin:
       site_settings:
         categories:
-          paid_membership: 'Платное членство'
+          df_paid_membership: 'Discourse.PRO Платное членство'
     paid_membership:
       frontend:
         login_or_register: 

@@ -1,4 +1,4 @@
-paid_membership:
+df_paid_membership:
   «Paid_Membership»_Enabled:
     default: false
     client: true

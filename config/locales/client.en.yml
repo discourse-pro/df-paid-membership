@@ -3,7 +3,7 @@ en:
     admin:
       site_settings:
         categories:
-          paid_membership: 'Paid Membership'
+          df_paid_membership: 'Discourse.PRO Paid Membership'
     paid_membership:
       frontend:
         login_or_register: 
