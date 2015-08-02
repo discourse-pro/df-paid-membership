@@ -40,7 +40,7 @@ export default Ember.Component.extend({
 			})
 		});
 		this.set('periodUnitsOptions', periodUnitsOptions);
-		this.set('currency', Discourse.SiteSettings['«Discourse_PRO»_Currency']);
+		this.set('currency', Discourse.SiteSettings['«Money»_Currency']);
 		/** @type {Object[]} */
 		var items = this.get('items');
 		// 2015-07-07

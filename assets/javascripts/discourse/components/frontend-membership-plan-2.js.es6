@@ -34,7 +34,6 @@ export default Ember.Component.extend({
 			// По-умолчанию выбираем последнюю (подразумевается, что самую дорогую) опцию.
 			this.set('selection', tiers[tiers.length - 1].id);
 		}
-		this.set('currency', Discourse.SiteSettings['«Discourse_PRO»_Currency']);
 		this.set('notLoggedIn', !Discourse.User.current());
 		this.set('optionName', 'plan_' + plan.id + '_price_tier');
 	}.on('init')

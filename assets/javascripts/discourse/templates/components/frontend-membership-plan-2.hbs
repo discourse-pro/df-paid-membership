@@ -3,8 +3,7 @@
 		<label class='radio {{if notLoggedIn 'disabled'}}'>
 			{{radio-button value=tier.id name=optionName selection=selection}}
 			<div>
-				<span class='price'>{{df-money tier.price}}</span>
-				<span class='currency'>{{unbound currency}}</span>
+				{{df-money tier.price}}
 				{{i18n 'paid_membership.price_tier.for'}}
 				<span class='period'>{{unbound tier.period}}</span>
 				<span class='periodUnits'>{{unbound tier.periodUnitsLabel}}</span>
