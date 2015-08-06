@@ -13,7 +13,7 @@ const createColor = function(color) {
 /**
  * Возвращает случайный короткий (7-значный) идентификатор
  * (некое число в 16-ричной системе счисления, представленное в виде строки).
- * @link http://stackoverflow.com/a/105074/254475
+ * @link http://stackoverflow.com/a/105074
  * @returns {string}
  */
 const newId = function() {
@@ -28,7 +28,7 @@ export default Ember.Component.extend({
 	 * Discourse expects the components's template at
 	 * plugins/df-paid-membership/assets/javascripts/discourse/templates/components/admin-membership-plans.hbs
 	 * Until I know it I used to specify template location explicitly:
-	 * @link http://stackoverflow.com/a/24271614/254475
+	 * @link http://stackoverflow.com/a/24271614
 	 * ,layoutName: 'javascripts/admin/templates/components/admin-membership-plans'
 	 * Now I save the explicit method for history only. May be it will be useful sometimes.
 	 */
@@ -87,7 +87,7 @@ export default Ember.Component.extend({
 			if (!plan.color) {
 				plan.color = createColor('f9a41a');
 			}
-			/** @link http://stackoverflow.com/a/8511350/254475 */
+			/** @link http://stackoverflow.com/a/8511350 */
 			else if ('object' !== typeof plan.color) {
 				plan.color = createColor(plan.color)
 			}

@@ -6,10 +6,10 @@
 		1) были расположены равномерно по всей ширине контейнера
 		2) имели одинаковую ширину
 		2) чтобы между ними были отступы
-		Решение с отступами взял отсюда: http://stackoverflow.com/a/25191956/254475
+		Решение с отступами взял отсюда: http://stackoverflow.com/a/25191956
 
 		Сначала пробовал решение с наибольшим количеством голосов:
-		http://stackoverflow.com/a/13378788/254475
+		http://stackoverflow.com/a/13378788
 		Суть этого решения в создании прозрачной рамки с одной из сторон ячеек
 		(кроме одной из крайних).
 		Однако недостаток этого решения в том, что колонки получаются разной ширины:
@@ -29,11 +29,11 @@
 		> table.plans {
 			width: 100%;
 			// Чтобы колонки тарифных планов имели одинаковую ширину:
-			// http://stackoverflow.com/a/571420/254475
+			// http://stackoverflow.com/a/571420
 			table-layout: fixed;
 			text-align: center;
 			// Проценты не поддерживаются
-			// http://stackoverflow.com/a/4973360/254475
+			// http://stackoverflow.com/a/4973360
 			// http://www.w3.org/TR/CSS2/tables.html#propdef-border-spacing
 			border-collapse: separate;
 			border-spacing: $spaceBetweenColumns 0;

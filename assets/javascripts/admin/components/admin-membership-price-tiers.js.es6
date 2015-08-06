@@ -6,7 +6,7 @@
 /**
  * Возвращает случайный короткий (7-значный) идентификатор
  * (некое число в 16-ричной системе счисления, представленное в виде строки).
- * @link http://stackoverflow.com/a/105074/254475
+ * @link http://stackoverflow.com/a/105074
  * @returns {string}
  */
 const newId = function() {

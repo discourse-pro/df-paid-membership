@@ -117,7 +117,7 @@ module ::Df::PaidMembership
 				Paypal::Payment::Request.new(doExpressCheckoutPayment_params)
 			)
 			log 'DoExpressCheckoutPayment RESPONSE', response.instance_values
-			# http://stackoverflow.com/a/18811305/254475
+			# http://stackoverflow.com/a/18811305
 			currentTime = DateTime.current
 			invoice.paid_at = DateTime.current
 			case invoice.tier_period_units
@@ -134,7 +134,7 @@ module ::Df::PaidMembership
 			groupIds = invoice.granted_group_ids.split(',')
 			groupIds.each do |groupId|
 				groupId = groupId.to_i
-				# http://stackoverflow.com/a/25274645/254475
+				# http://stackoverflow.com/a/25274645
 				groupUser = GroupUser.find_by(user_id: current_user.id, group_id: groupId)
 				if groupUser.nil?
 					group = Group.find_by(id: groupId)

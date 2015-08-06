@@ -12,7 +12,7 @@ export default Ember.Component.extend({
 				 * 2015-07-07
 				 * К сожалению, невозможно задать только цвет для box-shadow
 				 * (не задавая остальные параметры):
-				 * @link http://stackoverflow.com/a/3012987/254475
+				 * @link http://stackoverflow.com/a/3012987
 				 */
 				,'box-shadow':
 					'inset 0 1px ' + c(color[boxShadowX])
@@ -62,7 +62,7 @@ export default Ember.Component.extend({
 	}
 	/**
 	 * @see app/assets/javascripts/discourse.js
-	 * @link http://stackoverflow.com/a/15401016/254475
+	 * @link http://stackoverflow.com/a/15401016
 	 */
 	,loginController: Discourse.__container__.lookup('controller:login')
 });
