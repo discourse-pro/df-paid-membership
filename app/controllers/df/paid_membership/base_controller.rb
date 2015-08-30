@@ -1,16 +1,5 @@
 require_dependency 'application_controller'
 module ::Df::PaidMembership class BaseController < ::ApplicationController
-	skip_before_filter :authorize_mini_profiler,
-		:check_xhr,
-		:inject_preview_style,
-		:preload_json,
-		:redirect_to_login_if_required,
-		:set_current_user_for_logs,
-		:set_locale,
-		:set_mobile_view,
-		# http://stackoverflow.com/a/22715175
-		# http://stackoverflow.com/a/4551418
-		:verify_authenticity_token
 	before_filter :paypal_init
 	protected
 	def currency
@@ -67,6 +56,5 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 		# defined? @sandbox ? @sandbox : @sandbox = 'sandbox' === SiteSetting.send('«PayPal»_Mode')
 		'sandbox' === SiteSetting.send('«PayPal»_Mode')
 	end
-	private
 end end
 
