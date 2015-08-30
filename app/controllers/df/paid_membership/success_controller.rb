@@ -12,6 +12,8 @@ module ::Df::PaidMembership class SuccessController < BaseController
 		log 'CUSTOMER RETURNED', params
 		confirm_payment
 		update_invoice
+		invoice.save
+		log 'INVOICE UPDATED', invoice.attributes
 		grant_membership
 		redirect_to "#{Discourse.base_url}/users/#{current_user.username}"
 	end
@@ -25,6 +27,20 @@ module ::Df::PaidMembership class SuccessController < BaseController
 	end
 	def token
 		params['token']
+	end
+	def update_invoice
+		# http://stackoverflow.com/a/18811305
+		currentTime = DateTime.current
+		invoice.paid_at = DateTime.current
+		case invoice.tier_period_units
+			when 'y'
+				advanceUnits = :years
+			when 'm'
+				advanceUnits = :months
+			when 'd'
+				advanceUnits = :days
+		end
+		invoice.membership_till = DateTime.current.advance advanceUnits => +invoice.tier_period
 	end
 	private
 	def grant_membership
@@ -46,21 +62,5 @@ module ::Df::PaidMembership class SuccessController < BaseController
 				end
 			end
 		end
-	end
-	def update_invoice
-		# http://stackoverflow.com/a/18811305
-		currentTime = DateTime.current
-		invoice.paid_at = DateTime.current
-		case invoice.tier_period_units
-			when 'y'
-				advanceUnits = :years
-			when 'm'
-				advanceUnits = :months
-			when 'd'
-				advanceUnits = :days
-		end
-		invoice.membership_till = DateTime.current.advance advanceUnits => +invoice.tier_period
-		invoice.save
-		log 'INVOICE UPDATED', invoice.attributes
 	end
 end end

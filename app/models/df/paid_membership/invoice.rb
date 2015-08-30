@@ -8,6 +8,18 @@ module ::Df::PaidMembership
 			return @description if defined? @description
 			@description = %Q[#{plan_title}, #{tier_label}, @#{user.username}]
 		end
+		# https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/#id09BNA01I0E9__idd4198f0a-9b54-4cb2-90e9-2c7b4fdd0324
+		def paypal_billing_period
+			case tier_period_units
+				when 'y'
+					result = :Year
+				when 'm'
+					result = :Month
+				when 'd'
+					result = :Day
+			end
+			result
+		end
 		private
 		def tier_label
 			case tier_period_units
@@ -42,5 +54,7 @@ module ::Df::PaidMembership
 		#  granted_group_ids :string(255)
 		#  payment_method :string(255)
 		#  plan_title :string
+		# https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/#id09BN9G00NHT__id085U40N0XTS
+		#  recurring_profile_id :string(14)
 	end
 end
