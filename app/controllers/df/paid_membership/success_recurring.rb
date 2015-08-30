@@ -2,6 +2,18 @@ module ::Df::PaidMembership class SuccessRecurringController < SuccessController
 	protected
 	# @override
 	def confirm_payment
+		profile = Paypal::Payment::Recurring.new(
+			:name => user.name.empty? ? user.username : user.name,
+			:start_date => invoice.created_at,
+			:description => invoice.description,
+			:reference => invoice.id,
+			:billing => {
+				:period => :Month,
+				:frequency => SET_YOUR_OWN,
+				:amount => invoice.price,
+				:currency_code => invoice.currency
+			}
+		)
 		requestParams = {
 			:action => 'Sale',
 			:currency_code => invoice.currency,
