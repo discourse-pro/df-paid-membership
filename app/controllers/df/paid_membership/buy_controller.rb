@@ -42,7 +42,7 @@ module ::Df::PaidMembership class BuyController < BaseController
 			result = {
 				:action => 'Sale',
 				:currency_code => currency,
-				:description => %Q[Membership: #{plan['title']}, @#{user.username}, #{invoice.tier_label}],
+				:description => %Q[#{plan['title']}, #{invoice.tier_label}, @#{user.username}],
 				:quantity => 1,
 				:amount => price,
 				:notify_url => "#{Discourse.base_url}/plans/ipn",
@@ -58,7 +58,7 @@ module ::Df::PaidMembership class BuyController < BaseController
 	# https://developer.paypal.com/docs/classic/express-checkout/gs_expresscheckout/
 	# https://developer.paypal.com/docs/classic/api/merchant/SetExpressCheckout_API_Operation_NVP/
 			result = paypal_express_request.setup(
-				Paypal::Payment::Request.new paypal_request_params,
+				Paypal::Payment::Request.new(paypal_request_params),
 				# после успешной оплаты
 				# покупатель будет перенаправлен на свою личную страницу
 				"#{Discourse.base_url}/plans/success",

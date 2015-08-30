@@ -25,7 +25,7 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 			result += "[#{current_user.username}] "
 		end
 		if invoiceId
-			result += "[#{invoiceId}] "
+			result += "[##{invoiceId}] "
 		end
 		result
 	end

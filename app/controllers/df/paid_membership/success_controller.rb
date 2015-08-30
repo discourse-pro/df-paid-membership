@@ -1,4 +1,13 @@
 module ::Df::PaidMembership class SuccessController < BaseController
+	skip_before_filter :authorize_mini_profiler,
+		:check_xhr,
+		:inject_preview_style,
+		:preload_json,
+		:redirect_to_login_if_required,
+		:set_current_user_for_logs,
+		:set_locale,
+		:set_mobile_view,
+		:verify_authenticity_token
 	def index
 		log 'CUSTOMER RETURNED', params
 		confirm_payment
@@ -9,7 +18,7 @@ module ::Df::PaidMembership class SuccessController < BaseController
 	protected
 	# @override
 	def invoiceId
-		@details ?  @details.invoice_number : super
+		@details ? @details.invoice_number : super
 	end
 	private
 	def confirm_payment
@@ -61,7 +70,7 @@ module ::Df::PaidMembership class SuccessController < BaseController
 	end
 	def invoice
 		return @invoice if defined? @invoice
-		@invoice = Invoice.find_by id: invoiceId
+		@invoice = Invoice.find_by id: details.invoice_number
 	end
 	def update_invoice
 		# http://stackoverflow.com/a/18811305
