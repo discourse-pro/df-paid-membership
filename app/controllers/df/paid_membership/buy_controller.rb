@@ -2,34 +2,15 @@ module ::Df::PaidMembership class BuyController < BaseController
 	protect_from_forgery
 	def index
 		log 'BEGIN PURCHASE', params
-		paymentRequestParams = {
-			:action => 'Sale',
-			:currency_code => currency,
-			:description => %Q[Membership: #{plan['title']}, @#{user.username}, #{invoice.tier_label}],
-			:quantity => 1,
-			:amount => price,
-			:notify_url => "#{Discourse.base_url}/plans/ipn",
-			:invoice_number => invoice.id
-		}
-		log 'SetExpressCheckout REQUEST', paymentRequestParams
-		payment_request = Paypal::Payment::Request.new paymentRequestParams
-# https://developer.paypal.com/docs/classic/express-checkout/gs_expresscheckout/
-# https://developer.paypal.com/docs/classic/api/merchant/SetExpressCheckout_API_Operation_NVP/
-		response = paypal_express_request.setup(
-			payment_request,
-			# после успешной оплаты
-			# покупатель будет перенаправлен на свою личную страницу
-			"#{Discourse.base_url}/plans/success",
-			# в случае неупеха оплаты
-			# покупатель будет перенаправлен обратно на страницу с тарифными планами
-			"#{Discourse.base_url}/plans",
-			paypal_options
-		)
-		log 'SetExpressCheckout RESPONSE', {redirect_uri: response.redirect_uri}
-		render json: { redirect_uri: response.redirect_uri }
+		render json: {redirect_uri: paypal_response.redirect_uri}
 	end
 	protected
 	# @override
+	def invoiceId
+		# http://stackoverflow.com/a/28651525
+		@invoice ? @invoice.id : super
+	end
+	private
 	def invoice
 		return @invoice if defined? @invoice
 		@invoice = begin
@@ -48,18 +29,6 @@ module ::Df::PaidMembership class BuyController < BaseController
 			result
 		end
 	end
-	# 2015-08-30
-	# @override
-	# Не кэшируем результат, потому что invoice может сначала не существовать,
-	# а потом существовать.
-	def log_prefix
-		result = super
-		if @invoice
-			result += "[#{@invoice.id}] "
-		end
-		result
-	end
-	private
 	def paypal_options
 		{
 			no_shipping: true, # if you want to disable shipping information
@@ -79,7 +48,26 @@ module ::Df::PaidMembership class BuyController < BaseController
 				:notify_url => "#{Discourse.base_url}/plans/ipn",
 				:invoice_number => invoice.id
 			}
-			log 'SetExpressCheckout REQUEST', paypal_request_params
+			log 'SetExpressCheckout REQUEST', result
+			result
+		end
+	end
+	def paypal_response
+		return @paypal_response if defined? @paypal_response
+		@paypal_response = begin
+	# https://developer.paypal.com/docs/classic/express-checkout/gs_expresscheckout/
+	# https://developer.paypal.com/docs/classic/api/merchant/SetExpressCheckout_API_Operation_NVP/
+			result = paypal_express_request.setup(
+				Paypal::Payment::Request.new paypal_request_params,
+				# после успешной оплаты
+				# покупатель будет перенаправлен на свою личную страницу
+				"#{Discourse.base_url}/plans/success",
+				# в случае неупеха оплаты
+				# покупатель будет перенаправлен обратно на страницу с тарифными планами
+				"#{Discourse.base_url}/plans",
+				paypal_options
+			)
+			log 'SetExpressCheckout RESPONSE', {redirect_uri: result.redirect_uri}
 			result
 		end
 	end
