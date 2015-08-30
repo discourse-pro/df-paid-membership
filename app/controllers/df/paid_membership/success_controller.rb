@@ -16,38 +16,17 @@ module ::Df::PaidMembership class SuccessController < BaseController
 		redirect_to "#{Discourse.base_url}/users/#{current_user.username}"
 	end
 	protected
-	# @override
-	def invoiceId
-		@details ? @details.invoice_number : super
+	# @abstract
+	def confirm_payment
+	end
+	# @abstract
+	def invoice
+		nil
+	end
+	def token
+		params['token']
 	end
 	private
-	def confirm_payment
-		doExpressCheckoutPayment_params = {
-			:action => 'Sale',
-			:currency_code => invoice.currency,
-			:amount => details.amount
-		}
-		log 'DoExpressCheckoutPayment REQUEST', doExpressCheckoutPayment_params
-# https://developer.paypal.com/docs/classic/api/merchant/DoExpressCheckoutPayment_API_Operation_NVP/
-# https://gist.github.com/xcommerce-gists/3502241
-		response = paypal_express_request.checkout!(
-			params['token'],
-			params['PayerID'],
-			Paypal::Payment::Request.new(doExpressCheckoutPayment_params)
-		)
-		log 'DoExpressCheckoutPayment RESPONSE', response.instance_values
-	end
-	# https://developer.paypal.com/docs/classic/api/merchant/GetExpressCheckoutDetails_API_Operation_NVP/
-	# https://github.com/nov/paypal-express/wiki/Instant-Payment
-	def details
-		return @details if defined? @details
-		@details = begin
-			log 'GetExpressCheckoutDetails REQUEST'
-			result = paypal_express_request.details(params['token'])
-			log 'GetExpressCheckoutDetails RESPONSE', result.instance_values
-			result
-		end
-	end
 	def grant_membership
 		groupIds = invoice.granted_group_ids.split ','
 		groupIds.each do |groupId|
@@ -67,10 +46,6 @@ module ::Df::PaidMembership class SuccessController < BaseController
 				end
 			end
 		end
-	end
-	def invoice
-		return @invoice if defined? @invoice
-		@invoice = Invoice.find_by id: details.invoice_number
 	end
 	def update_invoice
 		# http://stackoverflow.com/a/18811305

@@ -21,8 +21,8 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 	# а потом существовать.
 	def log_prefix
 		result = ''
-		if current_user
-			result += "[#{current_user.username}] "
+		if user
+			result += "[#{user.username}] "
 		end
 		if invoiceId
 			result += "[##{invoiceId}] "
@@ -37,10 +37,6 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 			:signature => SiteSetting.send("«PayPal»_#{prefix}Signature")
 		)
 	end
-	def paypal_init
-		Paypal.sandbox= sandbox?
-		log sandbox? ? 'SANDBOX MODE' : 'PRODUCTION MODE'
-	end
 	def plans
 		return @plans if defined? @plans
 		@plans = begin
@@ -50,7 +46,15 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 		end
 	end
 	def recurring?
-		SiteSetting.send('«PayPal»_Recurring')
+		SiteSetting.send '«PayPal»_Recurring'
+	end
+	def user
+		current_user
+	end
+	private
+	def paypal_init
+		Paypal.sandbox= sandbox?
+		log sandbox? ? 'SANDBOX MODE' : 'PRODUCTION MODE'
 	end
 	def sandbox?
 		# defined? @sandbox ? @sandbox : @sandbox = 'sandbox' === SiteSetting.send('«PayPal»_Mode')

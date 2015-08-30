@@ -4,6 +4,11 @@ module ::Df::PaidMembership
 		self.table_name = 'df_paid_membership_invoices'
 		belongs_to :user
 		validates :user_id, presence: true
+		def description
+			return @description if defined? @description
+			@description = %Q[#{plan_title}, #{tier_label}, @#{user.username}]
+		end
+		private
 		def tier_label
 			case tier_period_units
 				when 'y'
@@ -20,7 +25,7 @@ module ::Df::PaidMembership
 		end
 		# == Schema Information
 		#
-		# Table name: paid_membership_invoices
+		# Table name: df_paid_membership_invoices
 		#
 		#  id :integer not null, primary key
 		#  user_id :integer not null
@@ -36,5 +41,6 @@ module ::Df::PaidMembership
 		#  membership_till :datetime
 		#  granted_group_ids :string(255)
 		#  payment_method :string(255)
+		#  plan_title :string
 	end
 end

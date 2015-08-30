@@ -17,6 +17,7 @@ module ::Df::PaidMembership class BuyController < BaseController
 			result = Invoice.new
 			result.user = user
 			result.plan_id = planId
+			result.plan_title = plan['title']
 			result.tier_id = tierId
 			result.tier_period = tier['period']
 			result.tier_period_units = tier['periodUnits']
@@ -39,15 +40,24 @@ module ::Df::PaidMembership class BuyController < BaseController
 	def paypal_request_params
 		return @paypal_request_params if defined? @paypal_request_params
 		@paypal_request_params = begin
-			result = {
-				:action => 'Sale',
-				:currency_code => currency,
-				:description => %Q[#{plan['title']}, #{invoice.tier_label}, @#{user.username}],
-				:quantity => 1,
-				:amount => price,
-				:notify_url => "#{Discourse.base_url}/plans/ipn",
-				:invoice_number => invoice.id
-			}
+			if recurring?
+				# https://github.com/nov/paypal-express/wiki/Recurring-Payment#setup-transaction
+				result = {
+					:currency_code => currency,
+					:billing_type  => :RecurringPayments,
+					:billing_agreement_description => invoice.description
+				}
+			else
+				result = {
+					:action => 'Sale',
+					:currency_code => currency,
+					:description => invoice.description,
+					:quantity => 1,
+					:amount => price,
+					:notify_url => "#{Discourse.base_url}/plans/ipn",
+					:invoice_number => invoice.id
+				}
+			end
 			log 'SetExpressCheckout REQUEST', result
 			result
 		end
@@ -113,9 +123,5 @@ module ::Df::PaidMembership class BuyController < BaseController
 	end
 	def tierId
 		params['tier']
-	end
-	def user
-		return @user if defined? @user
-		@user = User.find_by(id: params['user'])
 	end
 end end
