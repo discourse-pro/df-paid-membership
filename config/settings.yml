@@ -1,6 +1,9 @@
 df_paid_membership:
-  «Paid_Membership»_Enabled:
+  «Paid_Membership»_Enable:
     default: false
+    client: true
+  «Paid_Membership»_Recurring:
+    default: true
     client: true
   «Paid_Membership»_Text_Above:
     default: "A text above the plans.<br/>You can use <b>HTML tags</b>, [u]BBCodes[/u] and *Markdown* here."

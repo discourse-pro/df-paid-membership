@@ -1,6 +1,6 @@
 import NavItem from 'discourse/plugins/df-core/models/nav-item';
 export default {name: 'df-paid-membership', initialize() {
-	if (Discourse.SiteSettings['«Paid_Membership»_Enabled']) {
+	if (Discourse.SiteSettings['«Paid_Membership»_Enable']) {
 		Discourse.NavItem.reopenClass({
 			buildList : function(category, args) {
 				var list = this._super(category, args);

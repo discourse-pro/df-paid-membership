@@ -20,9 +20,9 @@ after_initialize do
 	end
 	::Df::PaidMembership::Engine.routes.draw do
 		get '/' => 'index#index'
-		get '/buy' => 'index#buy'
-		get '/ipn' => 'index#ipn'
-		get '/success' => 'index#success'
+		get '/buy' => 'buy#buy'
+		get '/ipn' => 'ipn#ipn'
+		get '/success' => 'success#success'
 	end
 	Discourse::Application.routes.append do
 		mount ::Df::PaidMembership::Engine, at: '/plans'
