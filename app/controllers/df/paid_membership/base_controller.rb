@@ -10,22 +10,9 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 	end
 	def log(message, params={})
 		if log?
-			# 2015-08-31
-			# http://stackoverflow.com/a/15769829
-			# http://stackoverflow.com/a/5367123
-			# http://stackoverflow.com/questions/5030553#comment19063898_13204582
-			# attributes присутствует только у ActiveRecord
-			if params.respond_to? :attributes
-				params = params.attributes
-			# http://stackoverflow.com/a/5030763
-			elsif params.respond_to? :instance_variables
-				hash = {}
-				params.instance_variables.each {|var|
-					hash[var.to_s.delete("@")] = params.instance_variable_get(var)
-				}
-				params = hash
-			end
-			Airbrake.notify(:error_message => log_prefix + message, :parameters => params)
+			# http://apidock.com/rails/Object/as_json
+			# http://api.rubyonrails.org/classes/ActiveModel/Serializers/JSON.html#method-i-as_json
+			Airbrake.notify(:error_message => log_prefix + message, :parameters => params.as_json)
 		end
 	end
 	def log?
