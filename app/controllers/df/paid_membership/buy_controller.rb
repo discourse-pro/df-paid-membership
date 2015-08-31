@@ -26,7 +26,7 @@ module ::Df::PaidMembership class BuyController < BaseController
 			result.granted_group_ids = plan['grantedGroupIds'].join(',')
 			result.payment_method = 'PayPal'
 			result.save
-			log 'INVOICE created', result.attributes
+			log 'INVOICE created', result
 			result
 		end
 	end

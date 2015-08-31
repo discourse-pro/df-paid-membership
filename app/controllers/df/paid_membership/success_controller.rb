@@ -13,7 +13,7 @@ module ::Df::PaidMembership class SuccessController < BaseController
 		confirm_payment
 		update_invoice
 		invoice.save
-		log 'INVOICE UPDATED', invoice.attributes
+		log 'INVOICE UPDATED', invoice
 		grant_membership
 		redirect_to "#{Discourse.base_url}/users/#{current_user.username}"
 	end
