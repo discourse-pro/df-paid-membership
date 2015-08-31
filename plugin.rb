@@ -3,6 +3,7 @@
 # version: 3.0.0
 # authors: Dmitry Fedyuk
 # url: https://discourse.pro/t/35
+# https://github.com/nov/paypal-express/wiki
 require 'paypal'
 require 'airbrake'
 require 'json'
