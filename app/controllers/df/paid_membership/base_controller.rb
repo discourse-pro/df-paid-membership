@@ -10,9 +10,17 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 	end
 	def log(message, params={})
 		if log?
-			# http://apidock.com/rails/Object/as_json
-			# http://api.rubyonrails.org/classes/ActiveModel/Serializers/JSON.html#method-i-as_json
-			Airbrake.notify(:error_message => log_prefix + message, :parameters => params.as_json)
+			if message.is_a?(Exception)
+				params = message
+				message = ''
+			end
+			if params.is_a?(Exception)
+				Airbrake.notify params, {:error_message => log_prefix + message}
+			else
+				# http://apidock.com/rails/Object/as_json
+				# http://api.rubyonrails.org/classes/ActiveModel/Serializers/JSON.html#method-i-as_json
+				Airbrake.notify :error_message => log_prefix + message, :parameters => params.as_json
+			end
 		end
 	end
 	def log?

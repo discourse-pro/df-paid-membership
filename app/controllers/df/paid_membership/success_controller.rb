@@ -10,12 +10,17 @@ module ::Df::PaidMembership class SuccessController < BaseController
 		:verify_authenticity_token
 	def index
 		log 'CUSTOMER RETURNED', params
-		confirm_payment
-		update_invoice
-		invoice.save
-		log 'INVOICE UPDATED', invoice
-		grant_membership
-		redirect_to "#{Discourse.base_url}/users/#{current_user.username}"
+		begin
+			confirm_payment
+			update_invoice
+			invoice.save
+			log 'INVOICE UPDATED', invoice
+			grant_membership
+			redirect_to "#{Discourse.base_url}/users/#{current_user.username}"
+		rescue => e
+			log e
+			redirect_to "#{Discourse.base_url}/plans"
+		end
 	end
 	protected
 	# @abstract

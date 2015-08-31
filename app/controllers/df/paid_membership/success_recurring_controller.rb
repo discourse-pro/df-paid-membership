@@ -1,8 +1,11 @@
+# https://developer.paypal.com/webapps/developer/docs/classic/products/#recurring
+# https://developer.paypal.com/webapps/developer/docs/classic/paypal-payments-pro/integration-guide/WPRecurringPayments/
+# https://developer.paypal.com/webapps/developer/docs/classic/express-checkout/integration-guide/ECRecurringPayments/
 module ::Df::PaidMembership class SuccessRecurringController < SuccessController
 	protected
 	# @override
 	def confirm_payment
-		subscription_response
+		raise unless 'ActiveProfile' === subscription_response.recurring.status
 	end
 	# @override
 	def invoice
