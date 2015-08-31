@@ -2,10 +2,7 @@ module ::Df::PaidMembership class SuccessRecurringController < SuccessController
 	protected
 	# @override
 	def confirm_payment
-		log 'CreateRecurringPaymentsProfile REQUEST', subscription_request_params
-		# https://github.com/nov/paypal-express/wiki/Recurring-Payment#create-recurring-profile
-		response = paypal_express_request.subscribe!(token, subscription_request_params)
-		log 'CreateRecurringPaymentsProfile RESPONSE', response.recurring
+		subscription_response
 	end
 	# @override
 	def invoice
@@ -55,7 +52,8 @@ module ::Df::PaidMembership class SuccessRecurringController < SuccessController
 			log 'CreateRecurringPaymentsProfile REQUEST', subscription_request_params
 			# https://github.com/nov/paypal-express/wiki/Recurring-Payment#create-recurring-profile
 			result = paypal_express_request.subscribe!(token, subscription_request_params)
-			log 'CreateRecurringPaymentsProfile RESPONSE', response
+			log 'CreateRecurringPaymentsProfile RESPONSE', result
+			result
 		end
 	end
 end end
