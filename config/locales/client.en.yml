@@ -4,16 +4,6 @@ en:
       site_settings:
         categories:
           df_paid_membership: 'Discourse.PRO Paid Membership'
-    paid_membership:
-      frontend:
-        login_or_register: 
-          after: ' first.'
-          before: 'Please ' 
-          log_in: 'log in'
-          or: ' or '
-          register: 'create account'                             
-        sign_up: 'Sign Up!'
-        title: 'Membership Plans'
       plan:
         add: 'Add a Membership Plan'
         delete: 'Delete the Membership Plan'
@@ -47,3 +37,28 @@ en:
       paid_membership:
         title: 'Membership'
         help: 'Paid Membership'
+    paid_membership:
+      frontend:
+        login_or_register:
+          after: ' first.'
+          before: 'Please '
+          log_in: 'log in'
+          or: ' or '
+          register: 'create account'
+        sign_up: 'Sign Up!'
+        title: 'Membership Plans'
+      price_tier:
+        for: 'for'
+        period_units:
+          d:
+            1: 'day'
+            many: 'days'
+            undefined: 'day(s)'
+          m:
+            1: 'month'
+            many: 'months'
+            undefined: 'month(s)'
+          y:
+            1: 'year'
+            many: 'years'
+            undefined: 'year(s)'

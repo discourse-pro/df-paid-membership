@@ -1,3 +1,4 @@
+import { cook } from 'discourse/lib/text';
 export default Ember.Component.extend({
 	_didInsertElement: function() {
 		// Вызывается после вызова всех init для всех компонентов.
@@ -7,6 +8,6 @@ export default Ember.Component.extend({
 	}.on('didInsertElement')
 	,_init: function() {
 		const plan = this.get('plan');
-		this.set('description', Discourse.Markdown.cook(plan.description));
+		this.set('description', cook(plan.description));
 	}.on('init')
 });

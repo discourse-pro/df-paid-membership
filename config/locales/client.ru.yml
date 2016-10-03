@@ -5,15 +5,6 @@ ru:
         categories:
           df_paid_membership: 'Discourse.PRO Платное членство'
     paid_membership:
-      frontend:
-        login_or_register: 
-          after: ' '
-          before: 'перед покупкой ' 
-          log_in: 'войдите'
-          or: ' или '
-          register: 'зарегистрируйтесь'       
-        sign_up: 'купить'
-        title: 'Членство на форуме'
       plan:
         add: 'добавить тарифный план'
         delete: 'удалить тарифный план'
@@ -50,3 +41,31 @@ ru:
       paid_membership:
         title: 'Членство'
         help: 'Членство на форуме'
+    paid_membership:
+      frontend:
+        login_or_register:
+          after: ' '
+          before: 'перед покупкой '
+          log_in: 'войдите'
+          or: ' или '
+          register: 'зарегистрируйтесь'
+        sign_up: 'купить'
+        title: 'Членство на форуме'
+      price_tier:
+        for: 'за'
+        period_units:
+          d:
+            1: 'день'
+            2: 'дня'
+            5: 'дней'
+            undefined: 'дней'
+          m:
+            1: 'месяц'
+            2: 'месяца'
+            5: 'месяцев'
+            undefined: 'месяцев'
+          y:
+            1: 'год'
+            2: 'года'
+            5: 'лет'
+            undefined: 'лет'
