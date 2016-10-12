@@ -4,6 +4,7 @@ en:
       site_settings:
         categories:
           df_paid_membership: 'Discourse.PRO Paid Membership'
+    paid_membership:
       plan:
         add: 'Add a Membership Plan'
         delete: 'Delete the Membership Plan'
