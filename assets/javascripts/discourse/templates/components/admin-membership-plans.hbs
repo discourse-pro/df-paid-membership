@@ -1,6 +1,12 @@
 {{#if items}}
 	<ul class='items plans'>
-		{{#each item in items}}
+{{! 2016-12-09
+Раньше использовал здесь синтаксис #each ... in ...,
+однако теперь он не работает, и даже в документации Handlebars больше не упоминается:
+http://handlebarsjs.com/builtin_helpers.html#iteration
+Короткий синтаксис с this вместо |...| тоже не работает.
+}}
+		{{#each items as |item|}}
 			<li class='item plan'>
 				<div class='field'>
 					{{d-button

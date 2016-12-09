@@ -6,7 +6,13 @@
 {{#if items}}
 	<div class='label'>{{i18n 'paid_membership.price_tier.heading_all'}}:</div>
 	<div class='items tiers'>
-		{{#each item in items}}
+{{! 2016-12-09
+Раньше использовал здесь синтаксис #each ... in ...,
+однако теперь он не работает, и даже в документации Handlebars больше не упоминается:
+http://handlebarsjs.com/builtin_helpers.html#iteration
+Короткий синтаксис с this вместо |...| тоже не работает.
+}}
+		{{#each items as |item|}}
 			<div class='item'>
 				<div class='field'>
 					{{d-button

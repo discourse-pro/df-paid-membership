@@ -1,5 +1,11 @@
 <div class='options-outer'>
-	{{#each tier in plan.priceTiers}}
+{{! 2016-12-09
+Раньше использовал здесь синтаксис #each ... in ...,
+однако теперь он не работает, и даже в документации Handlebars больше не упоминается:
+http://handlebarsjs.com/builtin_helpers.html#iteration
+Короткий синтаксис с this вместо |...| тоже не работает.
+}}
+	{{#each plan.priceTiers as |tier|}}
 		<label class='radio {{if notLoggedIn 'disabled'}}'>
 			{{radio-button value=tier.id name=optionName selection=selection}}
 			<div>

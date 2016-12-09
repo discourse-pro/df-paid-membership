@@ -1,5 +1,5 @@
 export default Ember.Controller.extend({
-	_init: function() {}.on('init')
+	_init: function(){}.on('init')
 	//,color: function() {return this.get('model.color');}.property('model.color')
 	//,description: function() {return this.get('model.description');}.property('model.description')
 	/*,style: function() {
