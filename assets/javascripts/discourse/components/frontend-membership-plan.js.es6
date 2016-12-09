@@ -1,4 +1,4 @@
-import { cook } from 'discourse/lib/text';
+import {cook} from 'discourse/lib/text';
 export default Ember.Component.extend({
 	_didInsertElement: function() {
 		// Вызывается после вызова всех init для всех компонентов.
