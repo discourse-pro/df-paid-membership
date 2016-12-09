@@ -1,4 +1,4 @@
-export default Ember.ArrayController.extend({
+export default Ember.Controller.extend({
 	_init: function() {
 		this.set('filterMode', 'paid_membership');
 	}.on('init')
