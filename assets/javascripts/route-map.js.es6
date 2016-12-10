@@ -12,6 +12,11 @@ export default function() {
 		 * Хотя в документации Ember.js сказано, что route «index» объявляется автоматически,
 		 * у меня без него шаблон plans/index.hbs не отображается.
 		 * https://guides.emberjs.com/v2.4.0/routing/defining-your-routes/#toc_index-routes
+		 *
+		 * 2016-12-10
+		 * Сегодня заметил, что эта же проблема 10 дней назад возникла и в ядре,
+		 * и там она была решена тем же способом:
+		 * https://github.com/discourse/discourse/commit/a97c59ed2
 		 */
     	this.route('index', {path: '/'});
  	});
