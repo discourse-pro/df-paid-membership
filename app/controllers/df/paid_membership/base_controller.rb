@@ -67,5 +67,10 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 		# defined? @sandbox ? @sandbox : @sandbox = 'sandbox' === SiteSetting.send('«PayPal»_Mode')
 		'sandbox' === SiteSetting.send('«PayPal»_Mode')
 	end
+	# 2016-12-12
+	# @return [Integer]
+	def trialPeriod
+		SiteSetting.send('«Paid_Membership»_Trial_Period').to_i
+	end
 end end
 

@@ -23,6 +23,7 @@ module ::Df::PaidMembership class BuyController < BaseController
 			result.tier_period_units = tier['periodUnits']
 			result.price = price
 			result.currency = currency
+			result.trial_period = trialPeriod
 			result.granted_group_ids = plan['grantedGroupIds'].join(',')
 			result.payment_method = 'PayPal'
 			result.save
