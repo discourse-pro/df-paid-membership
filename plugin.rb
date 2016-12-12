@@ -19,12 +19,11 @@ after_initialize do
 			end
 		end
 	end
-	successSuffix = SiteSetting.send('«Paid_Membership»_Recurring') ? 'recurring' : 'simple'
 	::Df::PaidMembership::Engine.routes.draw do
 		get '/' => 'index#index'
 		get '/buy' => 'buy#index'
 		get '/ipn' => 'ipn#index'
-		get '/success' => "success_#{successSuffix}#index"
+		get '/success' => "success_recurring#index"
 	end
 	Discourse::Application.routes.append do
 		mount ::Df::PaidMembership::Engine, at: '/plans'

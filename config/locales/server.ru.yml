@@ -1,6 +1,5 @@
 ru:
   site_settings:
     «Paid_Membership»_Enable: "Включить плагин «<a href='https://discourse.pro/t/35'>Платное членство</a>»?"
-    «Paid_Membership»_Recurring: "Продлевать ли подписку автоматически по завершению текущего периода подписки?<br/>Стоимость нового периода подписки будет списана со счёта клиента автоматически.<br/>Узнать об этой функциональности больше Вы можете на сайте PayPal в разделе <a href='https://www.paypal.com/ru/cgi-bin/webscr?cmd=p/xcl/rec/subscr-intro-outside'>подписки и регулярные платежи</a>."
     «Paid_Membership»_Text_Above: 'Этот текст будет отображаться над тарифными планами.'
     «Paid_Membership»_Plans: ""

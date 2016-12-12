@@ -55,9 +55,6 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 			[]
 		end
 	end
-	def recurring?
-		SiteSetting.send '«Paid_Membership»_Recurring'
-	end
 	def user
 		current_user
 	end

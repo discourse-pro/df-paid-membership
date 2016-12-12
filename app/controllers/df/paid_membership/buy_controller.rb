@@ -40,24 +40,25 @@ module ::Df::PaidMembership class BuyController < BaseController
 	def paypal_request_params
 		return @paypal_request_params if defined? @paypal_request_params
 		@paypal_request_params = begin
-			if recurring?
-				# https://github.com/nov/paypal-express/wiki/Recurring-Payment#setup-transaction
-				result = {
-					:currency_code => currency,
-					:billing_type  => :RecurringPayments,
-					:billing_agreement_description => invoice.description
-				}
-			else
-				result = {
-					:action => 'Sale',
-					:currency_code => currency,
-					:description => invoice.description,
-					:quantity => 1,
-					:amount => price,
-					:notify_url => "#{Discourse.base_url}/plans/ipn",
-					:invoice_number => invoice.id
-				}
-			end
+=begin
+2016-12-12
+Для неповторяющегося платежа код выглядел бы так:
+result = {
+	:action => 'Sale',
+	:currency_code => currency,
+	:description => invoice.description,
+	:quantity => 1,
+	:amount => price,
+	:notify_url => "#{Discourse.base_url}/plans/ipn",
+	:invoice_number => invoice.id
+}
+=end
+			# https://github.com/nov/paypal-express/wiki/Recurring-Payment#setup-transaction
+			result = {
+				:currency_code => currency,
+				:billing_type  => :RecurringPayments,
+				:billing_agreement_description => invoice.description
+			}
 			log 'SetExpressCheckout REQUEST', result
 			result
 		end

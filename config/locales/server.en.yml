@@ -1,6 +1,5 @@
 en:
   site_settings:
-    «Paid_Membership»_Enable: "Enable «<a href='https://discourse.pro/t/35'>Paid Membership</a>» plugin."
-    «Paid_Membership»_Recurring: "Enable <a href='https://www.paypal.com/pdn-recurring'>Recurring Payments</a>."
+    «Paid_Membership»_Enable: "Enable the «<a href='https://discourse.pro/t/35'>Paid Membership</a>» plugin."
     «Paid_Membership»_Text_Above: 'A text above the plans.'
     «Paid_Membership»_Plans: ""
