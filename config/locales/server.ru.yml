@@ -2,4 +2,5 @@ ru:
   site_settings:
     «Paid_Membership»_Enable: "Включить плагин «<a href='https://discourse.pro/t/35'>Платное членство</a>»?"
     «Paid_Membership»_Text_Above: 'Этот текст будет отображаться над тарифными планами.'
+    «Paid_Membership»_Trial_Period: 'Пробный период (дней).'
     «Paid_Membership»_Plans: ""
