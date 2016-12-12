@@ -8,6 +8,7 @@
  * больше не обрабатывается системой.
  * По этой причине изменил окончание, убрав дефис перед цифрой.
  */
+import {ajax} from 'discourse/lib/ajax';
 export default Ember.Component.extend({
 	_didInsertElement: function() {
 		const c = function(color) {return '#' + color;};
@@ -55,7 +56,7 @@ export default Ember.Component.extend({
 				// По невнимательности администратора
 				// у плана могут отсутствовать цены.
 				if (selected) {
-					Discourse.ajax('/plans/buy', {data: {
+					ajax('/plans/buy', {data: {
 						user: Discourse.User.current().id
 						,plan: this.get('plan').id
 						,tier: selected
