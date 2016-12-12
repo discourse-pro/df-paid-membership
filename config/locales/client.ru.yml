@@ -51,6 +51,7 @@ ru:
           register: 'зарегистрируйтесь'
         sign_up: 'купить'
         title: 'Членство на форуме'
+        trial_period_text: 'Пробный период: %{days} дней.'
       price_tier:
         for: 'за'
         period_units:

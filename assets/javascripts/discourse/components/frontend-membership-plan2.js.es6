@@ -11,8 +11,7 @@
 export default Ember.Component.extend({
 	classNames: ['options']
 	,_didInsertElement: function() {
-		const color = '#' + this.get('plan').get('color').background;
-		this.$().css({'border-color': color});
+		this.$().css({'border-color': '#' + this.get('plan').get('color').background});
 	}.on('didInsertElement')
 	,_init: function() {
 		const plan = this.get('plan');
@@ -40,5 +39,12 @@ export default Ember.Component.extend({
 		}
 		this.set('notLoggedIn', !Discourse.User.current());
 		this.set('optionName', 'plan_' + plan.id + '_price_tier');
+		/** @type {Number} */
+		const trialPeriod = Discourse.SiteSettings['«Paid_Membership»_Trial_Period'];
+		if (trialPeriod) {
+			this.set('trialPeriodText', I18n.t(
+				'paid_membership.frontend.trial_period_text', {days: trialPeriod}
+			));
+		}
 	}.on('init')
 });

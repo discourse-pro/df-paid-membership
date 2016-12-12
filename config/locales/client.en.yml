@@ -48,6 +48,7 @@ en:
           register: 'create account'
         sign_up: 'Sign Up!'
         title: 'Membership Plans'
+        trial_period_text: 'Free for %{days} days, then'
       price_tier:
         for: 'for'
         period_units:

@@ -59,8 +59,8 @@
 					text-align: left;
 				}
 				&.options {
-					padding: 0.35em 0.75em;
-					vertical-align: baseline;
+					padding: 0.75em 0.75em 0.35em 0.75em;
+					vertical-align: bottom;
 					// 2016-12-12
 					// Выравниваем опции горизонтально по центру плана:
 					// http://stackoverflow.com/a/4753609
@@ -68,6 +68,18 @@
 						width: 100%;
 						text-align: center;
 						.options-inner {display: inline-block;}
+					}
+					// 2016-12-12
+					// Текст «Free for X days, then».
+					// Ядро такой же стиль устанавливает для расположенных ниже опций.
+					> .trial {
+						font-size: 0.929em;
+						font-weight: normal;
+						line-height: 18px;
+						// 2016-12-12
+						// Чтобы сработал padding.
+						display: inline-block;
+						padding-bottom: 0.25em;
 					}
 					label {
 						// В ядре: margin-bottom: 5px;
