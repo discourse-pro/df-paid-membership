@@ -60,8 +60,15 @@
 				}
 				&.options {
 					padding: 0.35em 0.75em;
-					vertical-align: middle;
-					> .options-outer {margin: 0 auto;}
+					vertical-align: baseline;
+					// 2016-12-12
+					// Выравниваем опции горизонтально по центру плана:
+					// http://stackoverflow.com/a/4753609
+					> .options-outer {
+						width: 100%;
+						text-align: center;
+						.options-inner {display: inline-block;}
+					}
 					label {
 						// В ядре: margin-bottom: 5px;
 						margin: 0;

@@ -13,12 +13,6 @@ export default Ember.Component.extend({
 	,_didInsertElement: function() {
 		const color = '#' + this.get('plan').get('color').background;
 		this.$().css({'border-color': color});
-		const $currentRow = this.$().closest('tr');
-		const columnIndex = $currentRow.children('td').index(this.$());
-		const $nextRow = $currentRow.next();
-		const $cellBelow = $nextRow.children('td').eq(columnIndex);
-		const buttonWidth = $('a.sign-up', $cellBelow).outerWidth();
-		this.$('.options-outer').width(buttonWidth);
 	}.on('didInsertElement')
 	,_init: function() {
 		const plan = this.get('plan');

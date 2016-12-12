@@ -5,22 +5,29 @@
 шаблон *.hbs по-прежнему работает, но вот класс *.js.es6 больше не обрабатывается системой.
 По этой причине изменил окончание, убрав дефис перед цифрой.
 }}
-<div class='options-outer'>
-{{! 2016-12-09
-Раньше использовал здесь синтаксис #each ... in ...,
-однако теперь он не работает, и даже в документации Handlebars больше не упоминается:
-http://handlebarsjs.com/builtin_helpers.html#iteration
-Короткий синтаксис с this вместо |...| тоже не работает.
+{{! Free for 30 days, then }}
+{{! 2016-12-12
+	Вложенные дивы нужны, чтобы опции были горизонтально выровнены по центру плана:
+	http://stackoverflow.com/a/4753609
 }}
-	{{#each plan.priceTiers as |tier|}}
-		<label class='radio {{if notLoggedIn 'disabled'}}'>
-			{{radio-button value=tier.id name=optionName selection=selection}}
-			<div>
-				{{df-money tier.price}}
-				{{i18n 'paid_membership.price_tier.for'}}
-				<span class='period'>{{unbound tier.period}}</span>
-				<span class='periodUnits'>{{unbound tier.periodUnitsLabel}}</span>
-			</div>
-		</label>
-	{{/each}}
+<div class='options-outer'>
+	<div class='options-inner'>
+		{{! 2016-12-09
+			Раньше использовал здесь синтаксис #each ... in ...,
+			однако теперь он не работает, и даже в документации Handlebars больше не упоминается:
+			http://handlebarsjs.com/builtin_helpers.html#iteration
+			Короткий синтаксис с this вместо |...| тоже не работает.
+		}}
+		{{#each plan.priceTiers as |tier|}}
+			<label class='radio {{if notLoggedIn 'disabled'}}'>
+				{{radio-button value=tier.id name=optionName selection=selection}}
+				<div>
+					{{df-money tier.price}}
+					{{i18n 'paid_membership.price_tier.for'}}
+					<span class='period'>{{unbound tier.period}}</span>
+					<span class='periodUnits'>{{unbound tier.periodUnitsLabel}}</span>
+				</div>
+			</label>
+		{{/each}}
+	</div>
 </div>
