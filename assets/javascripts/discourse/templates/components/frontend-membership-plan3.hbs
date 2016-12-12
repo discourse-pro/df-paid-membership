@@ -14,5 +14,4 @@
 		{{i18n 'paid_membership.frontend.login_or_register.after'}}
 	</div>
 {{/if}}
-<a class='sign-up {{if notLoggedIn 'disabled'}}' {{action 'buy'}}
->{{i18n 'paid_membership.frontend.sign_up'}}</a>
+<a class='sign-up {{if notLoggedIn 'disabled'}}' {{action 'buy'}}>{{{signUpButtonLabel}}}</a>

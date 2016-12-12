@@ -3,4 +3,5 @@ en:
     «Paid_Membership»_Enable: "Enable the «<a href='https://discourse.pro/t/35'>Paid Membership</a>» plugin."
     «Paid_Membership»_Text_Above: 'A text above the plans.'
     «Paid_Membership»_Trial_Period: 'in days'
-    «Paid_Membership»_Plans: ""
+    «Paid_Membership»_Plans: ''
+    «Paid_Membership»_«Sign_Up»_Button_Label: 'If you provide a free trial period, then you can set a label like «<b>Try for FREE</b>» for the sign up buttons.'

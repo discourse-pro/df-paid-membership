@@ -1,6 +1,6 @@
 # name: df-paid-membership
 # about: You can automatically sell membership in particular user groups.
-# version: 3.1.1
+# version: 3.2.0
 # authors: Dmitry Fedyuk
 # url: https://discourse.pro/t/35
 # https://github.com/nov/paypal-express/wiki

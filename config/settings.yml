@@ -9,6 +9,9 @@ df_paid_membership:
     default: "A text above the plans.<br/>You can use <b>HTML tags</b>, [u]BBCodes[/u] and *Markdown* here."
     client: true
     type: df_editor
+  «Paid_Membership»_«Sign_Up»_Button_Label:
+    default: 'Sign Up!'
+    client: true
   «Paid_Membership»_Plans:
     default: ''
     client: true

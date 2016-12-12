@@ -41,6 +41,7 @@ export default Ember.Component.extend({
 	}.on('didInsertElement')
 	,_init: function() {
 		this.set('notLoggedIn', !Discourse.User.current());
+		this.set('signUpButtonLabel', Discourse.SiteSettings['«Paid_Membership»_«Sign_Up»_Button_Label'])
 	}.on('init')
 	,actions: {
 		buy() {
