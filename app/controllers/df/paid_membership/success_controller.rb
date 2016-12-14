@@ -16,7 +16,16 @@ module ::Df::PaidMembership class SuccessController < BaseController
 			invoice.save
 			log 'INVOICE UPDATED', invoice
 			grant_membership
-			redirect_to "#{Discourse.base_url}/users/#{current_user.username}"
+			# 2016-12-14
+			# Provides an ability to the administrators to choose a forum page
+			# where a customer will be redirected to
+			# after he has just subscribed to a membership plan in PayPal:
+			# https://github.com/discourse-pro/df-paid-membership/issues/7
+			url = SiteSetting.send('«Paid_Membership»_Success_URL').sub!(/^\//, '')
+			if 'profile' === url
+				url = "users/#{current_user.username}"
+			end
+			redirect_to url.start_with?('http') ? url : "#{Discourse.base_url}/#{url}"
 		rescue => e
 			log e
 			redirect_to "#{Discourse.base_url}/plans"

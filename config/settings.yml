@@ -12,6 +12,9 @@ df_paid_membership:
   «Paid_Membership»_«Sign_Up»_Button_Label:
     default: 'Sign Up!'
     client: true
+  «Paid_Membership»_Success_URL:
+    default: 'profile'
+    client: true
   «Paid_Membership»_Plans:
     default: ''
     client: true

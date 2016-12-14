@@ -5,3 +5,4 @@ en:
     «Paid_Membership»_Trial_Period: 'in days'
     «Paid_Membership»_Plans: ''
     «Paid_Membership»_«Sign_Up»_Button_Label: 'If you provide a free trial period, then you can set a label like «<b>Try for FREE</b>» for the sign up buttons.'
+    «Paid_Membership»_Success_URL: 'A customer will be redirected to this URL after he has just subscribed to a membership plan in PayPal.<br/>Use the special word «<b>profile</b>» as a value to redirect a customer to his profile page.'
