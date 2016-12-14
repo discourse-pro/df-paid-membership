@@ -14,3 +14,7 @@
 - [An integration with a custom **payment service** instead of PayPal](https://discourse.pro/t/60)
 - [A custom **feature** implementation](https://discourse.pro/t/61)
 - [A custom **frontend design** implementation](https://discourse.pro/t/59)
+
+## Screenshots
+### Backend
+![](https://discourse.pro/uploads/default/original/1X/43d8e0d70e00ab5da0bc69ae4a03519f1b229e04.png)
