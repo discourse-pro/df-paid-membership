@@ -4,6 +4,7 @@
 ## My paid services
 
 - [Installation](https://discourse.pro/t/58)
+- [1 year support](https://discourse.pro/t/63)
 - [An integration with a custom **payment service** instead of PayPal](https://discourse.pro/t/60)
 - [A custom **feature** implementation](https://discourse.pro/t/61)
 - [A custom **frontend design** implementation](https://discourse.pro/t/59)
