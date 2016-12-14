@@ -1,5 +1,6 @@
 # The «Paid Membership» plugin for Discourse
-[https://discourse.pro/c/paid-membership](https://discourse.pro/c/paid-membership)
+- Documentation: [https://discourse.pro/c/paid-membership](https://discourse.pro/c/paid-membership)  
+- Frontend demo: https://discourse.pro/plans
 
 ## Demo videos
 - [Subscription plans creation](http://www.youtube.com/watch?v=tVkyXZPU5ZM)
