@@ -1,6 +1,12 @@
 # The «Paid Membership» plugin for Discourse
 [https://discourse.pro/c/paid-membership](https://discourse.pro/c/paid-membership)
 
+## Demo videos
+- [Subscription plans creation](http://www.youtube.com/watch?v=tVkyXZPU5ZM)
+- [Currency setup](http://www.youtube.com/watch?v=vjqW0vgaAHY)
+- [Payment](http://www.youtube.com/watch?v=DwgUU1PqCoA)
+
+
 ## My paid services
 
 - [Installation](https://discourse.pro/t/58)
