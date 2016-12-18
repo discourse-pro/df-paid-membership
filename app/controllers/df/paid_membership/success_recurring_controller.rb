@@ -73,9 +73,21 @@ DESC
 https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/#schedule-details-fields
 =end
 			:description => invoice.description,
-			# https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/#id09BNA100BE6__id7bd11dfe-c599-4af2-aea0-cdea481bad4b
-			# SUBSCRIBERNAME
-			:name => user.name.empty? ? user.username : user.name,
+=begin
+2016-12-19
+SUBSCRIBERNAME
+https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/#recurring-payments-profile-details-fields
+«(Optional) Full name of the person receiving the product or service paid for by the recurring payment.
+If not present, the name in the buyer's PayPal account is used.
+Character length and limitations: 32 double-byte characters.»
+
+Я так понимаю, что если на форуме отключена функция «full name required»,
+и подписчик не указал своё реальное имя, то user.name может быть не только пустой строкой, но и nil,
+и поэтому выражение user.name.empty? приводит к исключительной ситуации:
+https://github.com/discourse-pro/df-paid-membership/issues/11
+http://stackoverflow.com/a/15988996
+=end
+			:name => (user.name.nil? || user.name.empty? ? %Q[@#{user.username}] : %Q[#{user.name} (@#{user.username})])[0,32],
 			# PROFILEREFERENCE
 			:reference => invoice.id,
 =begin
