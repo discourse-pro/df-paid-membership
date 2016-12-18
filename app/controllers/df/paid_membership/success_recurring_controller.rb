@@ -64,8 +64,14 @@ http://stackoverflow.com/a/25274645
 					:amount => 0
 				}
 			},
-			# https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/#id09BN9L00JPN__id156e9ad4-5e4d-463a-98fa-b34e350a1886
-			# DESC
+=begin
+2016-12-18
+DESC
+Значение этого параметра должно быть идентичным значению в предыдущем запросе (SetExpressCheckout):
+«You must ensure that this field matches the corresponding billing agreement description included in the SetExpressCheckout request.»
+По этой причине мы ранее сохранили описание в счёте, а теперь берём его оттуда.
+https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/#schedule-details-fields
+=end
 			:description => invoice.description,
 			# https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/#id09BNA100BE6__id7bd11dfe-c599-4af2-aea0-cdea481bad4b
 			# SUBSCRIBERNAME

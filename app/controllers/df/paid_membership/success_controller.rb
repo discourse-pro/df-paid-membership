@@ -21,7 +21,15 @@ module ::Df::PaidMembership class SuccessController < BaseController
 			# where a customer will be redirected to
 			# after he has just subscribed to a membership plan in PayPal:
 			# https://github.com/discourse-pro/df-paid-membership/issues/7
-			url = SiteSetting.send('«Paid_Membership»_Success_URL').sub!(/^\//, '')
+			#
+			# 2016-12-18
+			# Используем здесь коды Unicode вместо лапок исключительно для отладки:
+			# мой отладчик в Intellij IDEA не понимает вызовы методов с лапками,
+			# а вот реальный интерпретатор Ruby понимает.
+			url = SiteSetting.send("\u00ABPaid_Membership\u00BB_Success_URL").sub(/^\//, '')
+			if url.nil?
+				url = 'profile'
+			end
 			if 'profile' === url
 				url = "users/#{current_user.username}"
 			end

@@ -4,9 +4,26 @@ module ::Df::PaidMembership
 		self.table_name = 'df_paid_membership_invoices'
 		belongs_to :user
 		validates :user_id, presence: true
+=begin
+2016-12-18
+Описание подписки должно быть идентичным в запросе SetExpressCheckout
+и в последующем запросе CreateRecurringPaymentsProfile.
+
+Также у описания присутствуют ограничения:
+1) Required
+2) Character length and limitations: 127 single-byte alphanumeric characters
+https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/#schedule-details-fields
+https://github.com/discourse-pro/df-paid-membership/issues/9
+
+Что интересно, в примере официальной документации используется символ точки:
+«For example, buyer is billed at "9.99 per month for 2 years".»
+https://developer.paypal.com/docs/classic/api/merchant/SetExpressCheckout_API_Operation_NVP/#billing-agreement-details-type-fields
+=end
+		# @return [String]
 		def description
 			return @description if defined? @description
-			@description = %Q[#{plan_title}, #{tier_label}, @#{user.username}]
+			# http://stackoverflow.com/a/6104247
+			@description = %Q[#{plan_title}, #{tier_label}, @#{user.username}][0,127]
 		end
 		# https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/#id09BNA01I0E9__idd4198f0a-9b54-4cb2-90e9-2c7b4fdd0324
 		def paypal_billing_period

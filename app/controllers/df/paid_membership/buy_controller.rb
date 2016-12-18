@@ -58,6 +58,22 @@ result = {
 			result = {
 				:currency_code => currency,
 				:billing_type  => :RecurringPayments,
+=begin
+2016-12-18
+«L_BILLINGAGREEMENTDESCRIPTION»
+
+Значение этого параметра берётся не от балды,
+а должно быть идентичным в этом запросе (SetExpressCheckout)
+и в последующем запросе (CreateRecurringPaymentsProfile).
+
+«Description of goods or services associated with the billing agreement.
+This field is required for each recurring payment billing agreement.
+PayPal recommends that the description contain a brief summary of the billing agreement terms and conditions.
+For example, buyer is billed at "9.99 per month for 2 years".
+Character length and limitations: 127 single-byte alphanumeric characters.»
+
+https://developer.paypal.com/docs/classic/api/merchant/SetExpressCheckout_API_Operation_NVP/#billing-agreement-details-type-fields
+=end
 				:billing_agreement_description => invoice.description
 			}
 			log 'SetExpressCheckout REQUEST', result
