@@ -34,7 +34,8 @@ https://github.com/airbrake/airbrake-ruby/blob/v1.6.0/README.md#airbrakenotify
 	# Не кэшируем результат, потому что invoice может сначала не существовать,
 	# а потом существовать.
 	def log_prefix
-		result = ''
+		# 2016-12-19
+		result = "[#{Discourse.current_hostname}]"
 		if user
 			result += "[#{user.username}] "
 		end
