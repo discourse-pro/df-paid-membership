@@ -10,9 +10,6 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 	end
 	def log(message, params={})
 		if log?
-			if message.is_a?(Exception)
-				Airbrake.notify message
-			else
 =begin
 http://apidock.com/rails/Object/as_json
 http://api.rubyonrails.org/classes/ActiveModel/Serializers/JSON.html#method-i-as_json
@@ -20,9 +17,14 @@ http://api.rubyonrails.org/classes/ActiveModel/Serializers/JSON.html#method-i-as
 В Airbrake 5 синтаксис notify изменился:
 https://github.com/airbrake/airbrake/blob/v5.6.1/docs/Migration_guide_from_v4_to_v5.md#notify
 «The support for api_key, error_message, backtrace, parameters and session was removed.»
+https://github.com/airbrake/airbrake-ruby/blob/v1.6.0/README.md#airbrakenotify
 =end
-				Airbrake.notify log_prefix + message, params.as_json
-			end
+			Airbrake.notify message.is_a?(Exception) ? message : log_prefix + message, {
+				:environment => {
+					'Discourse URL' => Discourse.base_url
+				},
+				:params => params.as_json
+			}
 		end
 	end
 	def log?
