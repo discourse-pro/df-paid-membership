@@ -66,7 +66,6 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 	private
 	def paypal_init
 		Paypal.sandbox= sandbox?
-		log sandbox? ? 'SANDBOX MODE' : 'PRODUCTION MODE'
 	end
 	def sandbox?
 		'sandbox' === SiteSetting.send('«PayPal»_Mode')
@@ -78,6 +77,12 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 			params: params.to_unsafe_h,
 			'PayPal Mode' => sandbox? ? 'sandbox' : 'production',
 			url: request.url
+		)
+		# 2016-12-20
+		# https://docs.sentry.io/clients/ruby/context/#tags
+		Raven.tags_context(
+			'Domain' => Discourse.current_hostname,
+			'PayPal Mode' => sandbox? ? 'sandbox' : 'production'
 		)
 		# 2016-12-20
 		# https://docs.sentry.io/clients/ruby/context/#user-context
