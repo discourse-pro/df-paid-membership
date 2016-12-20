@@ -82,6 +82,10 @@
 						padding-bottom: 0.25em;
 					}
 					label {
+						// 2016-12-21
+						// https://github.com/discourse-pro/df-paid-membership/issues/14
+						// «A plan's options are wrongly positioned in a mobile browser».
+						clear: both;
 						// В ядре: margin-bottom: 5px;
 						margin: 0;
 						&:not(.disabled) {cursor: pointer;}
