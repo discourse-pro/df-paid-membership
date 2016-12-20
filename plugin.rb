@@ -5,7 +5,6 @@
 # url: https://discourse.pro/t/35
 # https://github.com/nov/paypal-express/wiki
 require 'paypal'
-require 'airbrake'
 require 'json'
 register_asset 'stylesheets/main.scss'
 pluginAppPath = "#{Rails.root}/plugins/df-paid-membership/app/"

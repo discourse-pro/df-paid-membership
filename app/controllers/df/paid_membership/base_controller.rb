@@ -1,5 +1,8 @@
 require_dependency 'application_controller'
 module ::Df::PaidMembership class BaseController < ::ApplicationController
+	# 2016-12-20
+	# https://docs.sentry.io/clients/ruby/integrations/rails/#params-and-sessions
+	before_action :set_raven_context
 	before_filter :paypal_init
 	protected
 	def currency
@@ -10,21 +13,18 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 	end
 	def log(message, params={})
 		if log?
-=begin
-http://apidock.com/rails/Object/as_json
-http://api.rubyonrails.org/classes/ActiveModel/Serializers/JSON.html#method-i-as_json
-2016-12-19
-В Airbrake 5 синтаксис notify изменился:
-https://github.com/airbrake/airbrake/blob/v5.6.1/docs/Migration_guide_from_v4_to_v5.md#notify
-«The support for api_key, error_message, backtrace, parameters and session was removed.»
-https://github.com/airbrake/airbrake-ruby/blob/v1.6.0/README.md#airbrakenotify
-=end
-			Airbrake.notify message.is_a?(Exception) ? message : log_prefix + message, {
-				:environment => {
-					'Discourse URL' => Discourse.base_url
-				},
-				:params => params.as_json
-			}
+			if message.is_a?(Exception)
+				# 2016-12-20
+				# https://docs.sentry.io/clients/ruby/#reporting-failures
+				Raven.capture_exception(message)
+			else
+				# 2016-12-20
+				# https://docs.sentry.io/clients/ruby/context/
+				Raven.capture_message message,
+					extra: params.as_json,
+					level: 'debug',
+					server_name: Discourse.current_hostname
+			end
 		end
 	end
 	def log?
@@ -69,8 +69,28 @@ https://github.com/airbrake/airbrake-ruby/blob/v1.6.0/README.md#airbrakenotify
 		log sandbox? ? 'SANDBOX MODE' : 'PRODUCTION MODE'
 	end
 	def sandbox?
-		# defined? @sandbox ? @sandbox : @sandbox = 'sandbox' === SiteSetting.send('«PayPal»_Mode')
 		'sandbox' === SiteSetting.send('«PayPal»_Mode')
+	end
+	# 2016-12-20
+	# https://docs.sentry.io/clients/ruby/integrations/rails/#params-and-sessions
+	def set_raven_context
+		Raven.extra_context(
+			params: params.to_unsafe_h,
+			'PayPal Mode' => sandbox? ? 'sandbox' : 'production',
+			url: request.url
+		)
+		# 2016-12-20
+		# https://docs.sentry.io/clients/ruby/context/#user-context
+		Raven.user_context({ip_address: request.ip}.merge(
+			!user \
+			? {id: session[:session_id]}
+			: {
+				email: user.email,
+				id: user.id,
+				name: user.name ? user.name : nil,
+				username: user.username
+			}
+		))
 	end
 	# 2016-12-12
 	# @return [Integer]
