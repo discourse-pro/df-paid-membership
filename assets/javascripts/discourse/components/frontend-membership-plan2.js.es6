@@ -12,6 +12,15 @@ export default Ember.Component.extend({
 	classNames: ['options']
 	,_didInsertElement: function() {
 		this.$().css({'border-color': '#' + this.get('plan').get('color').background});
+		// 2016-12-21
+		// https://github.com/discourse-pro/df-paid-membership/issues/14
+		// «A plan's options are wrongly positioned in a mobile browser».
+		var _this = this;
+		this.$(':radio').each(function() {
+			var $radio = _this.$(':radio');
+			var $div = $radio.siblings('div');
+			$radio.css('margin-top', ($div.height() - $radio.height()) / 2);
+		});
 	}.on('didInsertElement')
 	,_init: function() {
 		const plan = this.get('plan');
