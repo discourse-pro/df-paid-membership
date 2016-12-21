@@ -1,8 +1,9 @@
 en:
   site_settings:
     «Paid_Membership»_Enable: "Enable the «<a href='https://discourse.pro/t/35'>Paid Membership</a>» plugin."
-    «Paid_Membership»_Text_Above: 'A text above the plans.'
-    «Paid_Membership»_Trial_Period: 'in days'
     «Paid_Membership»_Plans: ''
     «Paid_Membership»_«Sign_Up»_Button_Label: 'If you provide a free trial period, then you can set a label like «<b>Try for FREE</b>» for the sign up buttons.'
     «Paid_Membership»_Success_URL: 'A customer will be redirected to this URL after he has just subscribed to a membership plan in PayPal.<br/>Use the special word «<b>profile</b>» as a value to redirect a customer to his profile page.'
+    «Paid_Membership»_Text_Above: 'A text above the plans.'
+    «Paid_Membership»_The_maximum_number_of_a_subscription_remaining_days_when_the_«Membership»_top_menu_ item_should_be_shown_again_to_an_already_subscribed_customer?: 'If you do not ever want to hide the «Membership» top menu item from the already subscribed customers, then set a big number like <b>999</b> as a value of this option.'
+    «Paid_Membership»_Trial_Period: 'in days'

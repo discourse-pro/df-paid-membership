@@ -1,8 +1,9 @@
 ru:
   site_settings:
     «Paid_Membership»_Enable: "Включить плагин «<a href='https://discourse.pro/t/35'>Платное членство</a>»?"
-    «Paid_Membership»_Text_Above: 'Этот текст будет отображаться над тарифными планами.'
-    «Paid_Membership»_Trial_Period: 'Пробный период (дней).'
     «Paid_Membership»_Plans: ''
     «Paid_Membership»_«Sign_Up»_Button_Label: 'Текст на кнопке выбора плана.<br/>Например: «<b>Купить</b>».'
     «Paid_Membership»_Success_URL: 'Покупатель будет перенаправлен на этот адрес после подписки на платное членство.<br/>Значение «<b>profile</b>» означает перенаправление покупателя на его собственную страницу на форуме.'
+    «Paid_Membership»_Text_Above: 'Этот текст будет отображаться над тарифными планами.'
+    «Paid_Membership»_The_maximum_number_of_a_subscription_remaining_days_when_the_«Membership»_top_menu_ item_should_be_shown_again_to_an_already_subscribed_customer?: 'Если Вы вообще не хотите скрывать пункт меню «Членство» от уже платящих клиентов, то установите значением этой опции какое-нибудь большое число типа <b>999</b>.'
+    «Paid_Membership»_Trial_Period: 'Пробный период (дней).'

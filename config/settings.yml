@@ -2,6 +2,9 @@ df_paid_membership:
   «Paid_Membership»_Enable:
     default: false
     client: true
+  «Paid_Membership»_The_maximum_number_of_a_subscription_remaining_days_when_the_«Membership»_top_menu_ item_should_be_shown_again_to_an_already_subscribed_customer?:
+    default: 7
+    client: true
   «Paid_Membership»_Trial_Period:
     default: 0
     client: true
