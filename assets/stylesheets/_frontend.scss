@@ -92,9 +92,9 @@
 						display: block;
 						font-size: 0.929em;
 						font-weight: normal;
-						line-height: 18px;
-						min-height: 18px;
-						padding-left: 18px;
+						line-height: 1.4em;//18px;
+						min-height: 1.4em;//18px;
+						padding-left: 1.4em;//18px;
 						// ***********
 						// В ядре: margin-bottom: 5px;
 						margin: 0;
@@ -117,8 +117,8 @@
 							box-shadow: none;
 							float: left;
 							line-height: normal;
-							margin: 3px 0;
-							margin-left: -18px;
+							margin: 0.25em 0;
+							margin-left: -1.4em;//-18px;
 							width: auto;
 						}
 					}
