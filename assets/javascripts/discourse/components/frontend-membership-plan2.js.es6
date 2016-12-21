@@ -19,11 +19,13 @@ export default Ember.Component.extend({
 		//noinspection PlatformDetectionJS
 		var isProblemMobile = /(android|iphone)/i.test(navigator.userAgent);
 		var isTheHornedFrog = 'forum.thehornedfrog.com' === location.hostname;
-		var adjustment = isProblemMobile && isTheHornedFrog ? -2 : 0;
+		var adjTop = isProblemMobile && isTheHornedFrog ? -1 : 0;
+		var adjLeft = isProblemMobile && isTheHornedFrog ? 2 : 0;
 		this.$(':radio').each(function() {
 			var $radio = _this.$(':radio');
 			var $div = $radio.siblings('div');
-			$radio.css('margin-top', ($div.height() - $radio.height()) / 2 + adjustment);
+			$radio.css('margin-top', (Math.round(($div.height() - $radio.height()) / 2) + adjTop) + 'px');
+			$div.css('margin-left', adjLeft + 'px');
 		});
 	}.on('didInsertElement')
 	,_init: function() {
