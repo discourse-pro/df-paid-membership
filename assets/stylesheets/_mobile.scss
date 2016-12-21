@@ -1,4 +1,6 @@
-.mobile-device .df-paid-membership-frontend {
-	padding-top: 0;
-	h1 {font-size: 1.5em;}
+.mobile-device, .mobile-view {
+	.df-paid-membership-frontend {
+		padding-top: 0;
+		h1 {font-size: 1.5em;}
+	}
 }

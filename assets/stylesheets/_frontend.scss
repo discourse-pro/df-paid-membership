@@ -86,6 +86,16 @@
 						// https://github.com/discourse-pro/df-paid-membership/issues/14
 						// «A plan's options are wrongly positioned in a mobile browser».
 						clear: both;
+						// 2016-12-21
+						// Расположенные ниже 6 правил ранее применялись только в полноформатном режиме.
+						// Теперь они будут применяться и в мобильном режиме.
+						display: block;
+						font-size: 0.929em;
+						font-weight: normal;
+						line-height: 18px;
+						min-height: 18px;
+						padding-left: 18px;
+						// ***********
 						// В ядре: margin-bottom: 5px;
 						margin: 0;
 						&:not(.disabled) {cursor: pointer;}
@@ -94,6 +104,23 @@
 							> input {cursor: not-allowed;}
 						}
 						> div {float: left;}
+						> input {
+							// 2016-12-21
+							// Расположенные ниже правила
+							// ранее применялись только в полноформатном режиме.
+							// Теперь они будут применяться и в мобильном режиме.
+							// https://github.com/discourse-pro/df-paid-membership/issues/14
+							// «A plan's options are wrongly positioned in a mobile browser».
+							background: transparent;
+							border: 0;
+							border-radius: 0;
+							box-shadow: none;
+							float: left;
+							line-height: normal;
+							margin: 3px 0;
+							margin-left: -18px;
+							width: auto;
+						}
 					}
 				}
 				.need-login {
