@@ -1,7 +1,8 @@
 ru:
   site_settings:
     «Paid_Membership»_Enable: "Включить плагин «<a href='https://discourse.pro/t/35'>Платное членство</a>»?"
-    «Paid_Membership»_Menu_Item_Label: 'Заголовок пункта меню.<br/>Например: «<b>Цены</b>».'
+    «Paid_Membership»_Menu_Item_Title: 'Заголовок пункта меню.<br/>Например: «<b>Цены</b>».'
+    «Paid_Membership»_Menu_Item_Tooltip: 'Текст всплывающей подсказки при наведении на заголовок пункта меню.<br/>Например: «<b>Имеется бесплатный тарифный план!</b>».'
     «Paid_Membership»_Plans: ''
     «Paid_Membership»_«Sign_Up»_Button_Label: 'Заголовок кнопки выбора плана.<br/>Например: «<b>Купить</b>».'
     «Paid_Membership»_Success_URL: 'Покупатель будет перенаправлен на этот адрес после подписки на платное членство.<br/>Значение «<b>profile</b>» означает перенаправление покупателя на его собственную страницу на форуме.'
