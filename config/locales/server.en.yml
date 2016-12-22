@@ -2,6 +2,7 @@ en:
   site_settings:
     «Paid_Membership»_Enable: "Enable the «<a href='https://discourse.pro/t/35'>Paid Membership</a>» plugin."
     «Paid_Membership»_Plans: ''
+    «Paid_Membership»_Menu_Item_Label: 'e.g., «<b>Pricing</b>»'
     «Paid_Membership»_«Sign_Up»_Button_Label: 'If you provide a free trial period, then you can set a label like «<b>Try for FREE</b>» for the sign up buttons.'
     «Paid_Membership»_Success_URL: 'A customer will be redirected to this URL after he has just subscribed to a membership plan in PayPal.<br/>Use the special word «<b>profile</b>» as a value to redirect a customer to his profile page.'
     «Paid_Membership»_Text_Above: 'A text above the plans.'
