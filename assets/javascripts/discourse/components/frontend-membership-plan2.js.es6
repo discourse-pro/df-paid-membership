@@ -17,12 +17,18 @@ export default Ember.Component.extend({
 		// «A plan's options are wrongly positioned in a mobile browser».
 		var _this = this;
 		//noinspection PlatformDetectionJS
+		/** @type {Boolean} */
 		var isProblemMobile = /(android|iphone)/i.test(navigator.userAgent);
+		/** @type {Boolean} */
 		var isTheHornedFrog = 'forum.thehornedfrog.com' === location.hostname;
+		/** @type {Number} */
 		var adjTop = isProblemMobile && isTheHornedFrog ? -1 : 0;
+		/** @type {Number} */
 		var adjLeft = isProblemMobile && isTheHornedFrog ? 2 : 0;
 		this.$(':radio').each(function() {
+			/** @type {jQuery} HTMLInputElement */
 			var $radio = _this.$(':radio');
+			/** @type {jQuery} HTMLDivElement */
 			var $div = $radio.siblings('div');
 			$radio.css('margin-top', (Math.round(($div.height() - $radio.height()) / 2) + adjTop) + 'px');
 			$div.css('margin-left', adjLeft + 'px');
