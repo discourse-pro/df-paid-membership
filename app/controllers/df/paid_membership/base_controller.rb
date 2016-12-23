@@ -24,6 +24,8 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 					extra: params.as_json,
 =begin
 2016-12-23
+«The record severity. Defaults to error.»
+https://docs.sentry.io/clientdev/attributes/#optional-attributes
 При использовании значения «debug»
 у сообщения в списке сообщений в интерфейсе Sentry не будет никакой метки.
 При использовании значения «info»
