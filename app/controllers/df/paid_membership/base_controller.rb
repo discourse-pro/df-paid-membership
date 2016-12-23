@@ -22,6 +22,14 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 				# https://docs.sentry.io/clients/ruby/context/
 				Raven.capture_message message,
 					extra: params.as_json,
+=begin
+2016-12-23
+При использовании значения «debug»
+у сообщения в списке сообщений в интерфейсе Sentry не будет никакой метки.
+При использовании значения «info»
+у сообщения в списке сообщений в интерфейсе Sentry будет синяя метка «Info».
+https://docs.sentry.io/clients/ruby/context/
+=end
 					level: 'debug',
 					server_name: Discourse.current_hostname
 			end
