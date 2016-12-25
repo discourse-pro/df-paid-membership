@@ -22,6 +22,10 @@ module ::Df::PaidMembership class BaseController < ::ApplicationController
 				# https://docs.sentry.io/clients/ruby/context/
 				Raven.capture_message message,
 					extra: params.as_json,
+					# 2016-12-25
+					# Чтобы события разных магазинов не группировались вместе.
+					# https://docs.sentry.io/learn/rollups/#customize-grouping-with-fingerprints
+					fingerprint: ["{{ default }}", Discourse.current_hostname],
 =begin
 2016-12-23
 «The record severity. Defaults to error.»
@@ -96,6 +100,7 @@ https://docs.sentry.io/clients/ruby/context/
 		)
 		# 2016-12-20
 		# https://docs.sentry.io/clients/ruby/context/#user-context
+		# https://docs.sentry.io/clientdev/interfaces/user/
 		Raven.user_context({ip_address: request.ip}.merge(
 			!user \
 			? {id: session[:session_id]}
