@@ -55,6 +55,7 @@ http://stackoverflow.com/a/25274645
 				:frequency => invoice.tier_period,
 				# BILLINGPERIOD
 				:period => invoice.paypal_billing_period,
+        :category => :Digital
 		}
     if trialPeriod > 0
       billing_params[:trial] = {
