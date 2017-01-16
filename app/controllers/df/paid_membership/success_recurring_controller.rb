@@ -46,9 +46,7 @@ http://stackoverflow.com/a/25274645
 	private
 	def subscription_request_params
 		return @subscription_request_params if defined? @subscription_request_params
-		@subscription_request_params = Paypal::Payment::Recurring.new(
-			# https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/#id09BNA01I0E9__idd4198f0a-9b54-4cb2-90e9-2c7b4fdd0324
-			:billing => {
+    billing_params = {
 				# AMT
 				:amount => invoice.price,
 				# CURRENCYCODE
@@ -57,13 +55,18 @@ http://stackoverflow.com/a/25274645
 				:frequency => invoice.tier_period,
 				# BILLINGPERIOD
 				:period => invoice.paypal_billing_period,
-				:trial => {
+		}
+    if trialPeriod > 0
+      billing_params[:trial] = {
 					:period => :Day,
 					:frequency => trialPeriod,
 					:total_cycles => 1,
 					:amount => 0
 				}
-			},
+    end
+		@subscription_request_params = Paypal::Payment::Recurring.new(
+			# https://developer.paypal.com/docs/classic/api/merchant/CreateRecurringPaymentsProfile_API_Operation_NVP/#id09BNA01I0E9__idd4198f0a-9b54-4cb2-90e9-2c7b4fdd0324
+			:billing => billing_params,
 =begin
 2016-12-18
 DESC
